@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.ntut.weshare.home.HomeFragment">
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/homeBody"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" >-->
+
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tx_wishPool" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tx_loveTo" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tx_changeStuff" />
+        </android.support.design.widget.TabLayout>
+    <!--</FrameLayout>-->
+    <ImageView
+        android:layout_width="320dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:background="#87CEFA"
+        android:padding="10dp"
+        android:layout_margin="25dp"
+        android:src="@drawable/hand" />
+    <ImageView
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="#ffaa00"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/hand" />
+
+</LinearLayout>

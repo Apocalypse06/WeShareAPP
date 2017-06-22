@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/item_home"
+            android:checked="true"
+            android:title="@string/tx_home" />
+        <item
+            android:id="@+id/item_memberCentre"
+            android:title="@string/tx_memberCentre">
+            <menu>
+                <item
+                    android:id="@+id/item_updateMember"
+                    android:title="@string/tx_updateMember" />
+                <item
+                    android:id="@+id/item_history"
+                    android:title="@string/tx_history" />
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/item_goodsManage"
+            android:title="@string/tx_goodsManage">
+            <menu>
+                <item
+                    android:id="@+id/item_goodsBox"
+                    android:title="@string/tx_goodsBox" />
+                <item
+                    android:id="@+id/item_goodsMsg"
+                    android:title="@string/tx_goodsMsg" />
+            </menu>
+        </item>
+        <item
+            android:id="@+id/item_feedback"
+            android:title="@string/tx_feedback" />
+        <item
+            android:id="@+id/item_login"
+            android:title="@string/tx_login" />
+        <item
+        android:id="@+id/item_register"
+        android:title="@string/tx_register" />
+        <item
+            android:id="@+id/item_logout"
+            android:title="@string/tx_logout" />
+
+    </group>
+</menu>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    card_view:cardBackgroundColor="#FFD306"
+    card_view:cardCornerRadius="15dp"
+    card_view:cardElevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivStuff"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:layout_margin="15dp"
+            android:src="@drawable/user" />
+
+        <TextView
+            android:id="@+id/tvStuffName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/ivStuff"
+            android:text="使用者名稱"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvStuffName"
+            android:layout_below="@id/tvStuffName"
+            android:layout_marginTop="15dp"
+            android:text="最後回覆"
+            android:textColor="#555555" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tvAccount"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignLeft="@id/tvAmount"-->
+        <!--android:layout_below="@id/tvAmount"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:text="捐贈帳號" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            android:layout_marginLeft="330dp"
+            android:layout_marginTop="50dp"
+            android:text="狀態" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
+

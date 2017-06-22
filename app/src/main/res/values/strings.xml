@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">WeShare</string>
+    <string name="tx_home">首頁</string>
+    <string name="tx_memberCentre">會員中心</string>
+    <string name="tx_goodsManage">物資管理</string>
+    <string name="tx_feedback">意見回饋</string>
+    <string name="tx_updateMember">修改會員</string>
+    <string name="tx_history">歷史評語</string>
+    <string name="tx_goodsBox">物資箱</string>
+    <string name="tx_goodsMsg">物流資訊</string>
+    <string name="tx_homeIndex">首頁</string>
+    <string name="tx_open">開啟</string>
+    <string name="tx_close">關閉</string>
+
+    <string name="tx_wishPool">許願池</string>
+    <string name="tx_loveTo">送愛心</string>
+    <string name="tx_changeStuff">以物易物</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tx_welfareInstitution">社福機構</string>
+    <string name="tx_search">探詢</string>
+    <string name="tx_message">訊息</string>
+    <string name="tx_account">帳號</string>
+    <string name="tx_passqord">密碼</string>
+    <string name="tx_login">登入</string>
+    <string name="tx_register">註冊</string>
+    <string name="tx_fpassword">忘記密碼</string>
+    <string name="tx_googleLogin">Google登入</string>
+    <string name="tx_facebookLogin">Fackbook登入</string>
+    <string name="tx_updatePictureNote">點選照片來進行更換</string>
+    <string name="tx_cancel">取消</string>
+    <string name="tx_enter">確認</string>
+    <string name="tx_stuffName">商品名稱</string>
+    <string name="tx_details">查看詳情</string>
+    <string name="tx_noUser">沒輸入帳密</string>
+    <string name="msg_accountNull">帳號空白</string>
+    <string name="msg_passwordNull">密碼空白</string>
+    <string name="msg_RegisterFail">註冊失敗</string>
+    <string name="msg_RegisterSuccess">註冊成功</string>
+    <string name="msg_NoNetwork">尚未連接網路</string>
+    <string name="msg_nameNull">名子空白</string>
+    <string name="tx_personal">個人</string>
+    <string name="tx_instiution">社福機構</string>
+    <string name="msg_AccountRepeat">帳號重複</string>
+    <string name="msg_LoginFail">登入失敗</string>
+    <string name="msg_LoginSuccess">登入成功</string>
+    <string name="msg_NoGoodsFound">找不到物資</string>
+    <string name="text_GoodsUpdate">goodsupdate</string>
+    <string name="msg_NoImage">No image was added</string>
+    <string name="msg_InsertFail">新增失敗</string>
+    <string name="msg_InsertSuccess">恭喜~新增成功!</string>
+    <string name="msg_NameIsInvalid">名稱不為空白</string>
+    <string name="tx_logout">登出</string>
+</resources>

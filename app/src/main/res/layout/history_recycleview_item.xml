@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    card_view:cardBackgroundColor="#87CEFA"
+    card_view:cardCornerRadius="15dp"
+    card_view:cardElevation="5dp">
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivStuff"
+            android:layout_width="250px"
+            android:layout_height="250px"
+            android:layout_margin="15dp"
+            android:src="@drawable/hand" />
+
+        <TextView
+            android:id="@+id/tvStuffName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/ivStuff"
+            android:text="商品名稱"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvCommentAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvStuffName"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/tvStuffName"
+            android:text="給評者"
+            android:textColor="#555555" />
+
+        <TextView
+            android:id="@+id/tvRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvCommentAccount"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/tvCommentAccount"
+            android:text="給評分數" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tx_details"
+            android:id="@+id/button2"
+            android:layout_toRightOf="@+id/tvStuffName"
+            android:layout_toEndOf="@+id/tvStuffName"
+            android:layout_below="@+id/tvCommentAccount" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
+

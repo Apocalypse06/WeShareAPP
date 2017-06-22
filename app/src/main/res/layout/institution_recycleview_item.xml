@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    card_view:cardBackgroundColor="#FFE66F"
+    card_view:cardCornerRadius="15dp"
+    card_view:cardElevation="5dp">
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivStuff"
+            android:layout_width="250px"
+            android:layout_height="250px"
+            android:layout_margin="15dp"
+            android:src="@drawable/prison" />
+
+        <TextView
+            android:id="@+id/tvStuffName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/ivStuff"
+            android:text="社福團體名稱"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvCommentAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvStuffName"
+            android:layout_below="@id/tvStuffName"
+            android:layout_marginTop="15dp"
+            android:text="社福類別"
+            android:textColor="#555555" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvCommentAccount"
+            android:layout_below="@id/tvCommentAccount"
+            android:layout_marginTop="15dp"
+            android:text="連絡電話" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvCommentAccount"
+            android:layout_below="@id/tvCommentAccount"
+            android:layout_marginTop="15dp"
+            android:text="連絡電話" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvCommentAccount"
+            android:layout_below="@id/tvCommentAccount"
+            android:layout_marginTop="40dp"
+            android:text="地區" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCommentAccount"
+            android:layout_toEndOf="@+id/tvStuffName"
+            android:layout_toRightOf="@+id/tvStuffName"
+            android:text="@string/tx_details" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
+
