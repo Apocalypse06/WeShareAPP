@@ -66,7 +66,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
         spLoc.setAdapter(locList);
         findViews();
 
-        final TextView tvDate = (TextView)findViewById(R.id.tv_showDate);
+        final Button backButton = (Button)findViewById(R.id.bt_BackGBList);
         final Button dateButton = (Button)findViewById(R.id.bt_date);
         dateButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -85,6 +85,12 @@ public class GoodsInsertActivity extends AppCompatActivity {
                 }, mYear,mMonth, mDay).show();
             }
 
+        });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
         });
 
     }
