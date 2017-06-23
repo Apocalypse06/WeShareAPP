@@ -238,3 +238,4 @@ public class MemberRegisterActivity extends AppCompatActivity {
         finish();
     }
 }
+//
