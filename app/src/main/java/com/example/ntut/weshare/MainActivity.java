@@ -1,22 +1,24 @@
 package com.example.ntut.weshare;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,53 +43,62 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private ImageView ivUser;
-    private TextView tvUserName;
+    private TextView testUser;
 
-    private MenuView.ItemView item_login;
-    private MenuView.ItemView item_logout;
-    private MenuView.ItemView item_register;
-
-    //SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+    private final static int REQ_PERMISSIONS = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findVV();
         setUpActionBar();
         initDrawer();//初始化抽屜
         initBody();
     }
 
-    private void findVV() {
 
-//        boolean kk = getSharedPreferences("data", MODE_PRIVATE).getBoolean("LoginOK", false);
-//        if (kk == true) {
-//            ivUser = (ImageView) findViewById(R.id.ivUser);
-//
-//            tvUserName = (TextView) findViewById(R.id.tvUserName);
-//            tvUserName.setText(getSharedPreferences("data", MODE_PRIVATE).getString("account", "您尚未登入"));
-//
-//        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        askPermissions();
+    }
+
+    private void askPermissions() {
+        String[] permissions = {
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+
+        int result = ContextCompat.checkSelfPermission(this, permissions[0]);
+        if (result != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    permissions,
+                    REQ_PERMISSIONS);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 從偏好設定檔中取得登入狀態來決定是否顯示「登出」
+        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+        boolean login = pref.getBoolean("login", false);
+    }
+
+    private void cleanPreferences() {
+        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE,
+                MODE_PRIVATE);
+        pref.edit()
+                .putString("user", "")
+                .putString("password", "")
+                .putBoolean("login", false)
+                .apply();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {//監聽menu的監聽器
         MenuInflater inflater = getMenuInflater();//getMenuInflater()載入器
         inflater.inflate(R.menu.icon_menu, menu);//將options_menu內容載入到menu
-
-
-//        Toast.makeText(this, "" + getSharedPreferences("data", MODE_PRIVATE).getString("LoginOK", "no"),
-//                Toast.LENGTH_LONG).show();
-        boolean kk = getSharedPreferences("data", MODE_PRIVATE).getBoolean("LoginOK", false);
-        if (kk == true) {
-            ivUser = (ImageView) findViewById(R.id.ivUser);
-
-            tvUserName = (TextView) findViewById(R.id.tvUserName);
-            tvUserName.setText(getSharedPreferences("data", MODE_PRIVATE).getString("account", "您尚未登入"));
-
-        }
-
         return true;
     }
 
@@ -152,28 +163,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    public void onLoginClick(View view) {
-//        Intent updateIntent;
-//        updateIntent = new Intent();
-//        updateIntent.setClass(MainActivity.this, MemberLoginActivity.class);
-//        startActivity(updateIntent);
-//    }
-//
-//    public void onRegisterClick(View view) {
-//        Intent updateIntent;
-//        updateIntent = new Intent();
-//        updateIntent.setClass(MainActivity.this, MemberRegisterActivity.class);
-//        startActivity(updateIntent);
-//    }
-
-
     private void initDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.home_index);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.tx_open, R.string.tx_close);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-
         NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
+        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+        boolean login = pref.getBoolean("login", false);
+        Toast.makeText(this, "" + login, Toast.LENGTH_LONG).show();
+        MenuItem loginItem = view.getMenu().findItem(R.id.item_login);
+        MenuItem registerItem = view.getMenu().findItem(R.id.item_register);
+        MenuItem logoutItem = view.getMenu().findItem(R.id.item_logout);
+        if (login) {
+            loginItem.setVisible(false);    // true 为显示，false 为隐藏
+            registerItem.setVisible(false);
+            logoutItem.setVisible(true);
+        } else {
+            loginItem.setVisible(true);
+            registerItem.setVisible(true);
+            logoutItem.setVisible(false);
+        }
         view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -222,12 +232,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(updateIntent);
                         break;
                     case R.id.item_logout:
-                        getSharedPreferences("data", MODE_PRIVATE).edit()
-                                .putString("account", "")
-                                .putString("password", "")
-                                .putBoolean("LoginOK", false)
-                                .apply();
-
+                        cleanPreferences();
                         updateIntent = new Intent();
                         updateIntent.setClass(MainActivity.this, MainActivity.class);
                         startActivity(updateIntent);

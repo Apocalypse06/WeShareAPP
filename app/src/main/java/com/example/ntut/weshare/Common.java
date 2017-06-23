@@ -10,9 +10,7 @@ import android.widget.Toast;
 public class Common {
     //public static String URL = "http://192.168.19.16:8080/Spot_MySQL_Web/";
     public static String URL = "http://10.0.2.2:8080/WeShare/";
-    public static boolean loginOK = false;
-    //    public static String urlLogin = "http://10.0.2.2:8080/WeShare/UserServlet";
-    public static SharedPreferences sharedPreferences;
+    public final static String PREF_FILE = "preference";
 
 
     // check if the device connect to the network

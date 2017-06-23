@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
 
 public class MemberLoginActivity extends AppCompatActivity {
@@ -59,15 +60,20 @@ public class MemberLoginActivity extends AppCompatActivity {
             if (count == 0) {
                 Common.showToast(MemberLoginActivity.this, R.string.msg_LoginFail);
             } else {
-                Common.showToast(MemberLoginActivity.this, R.string.msg_LoginSuccess);
-                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-                sharedPreferences.edit().putString("account", account)
-                                        .putString("password", password)
-                                        .putBoolean("LoginOK", true)
-                                        .apply();
-                Common.sharedPreferences = getSharedPreferences("data1", MODE_PRIVATE);
-//              Common.sharedPreferences.edit().putString("account", account).putString("password", password).apply();
-                finish();
+                //  Common.showToast(MemberLoginActivity.this, R.string.msg_LoginSuccess);
+
+                SharedPreferences pref = getSharedPreferences(Common.PREF_FILE,
+                        MODE_PRIVATE);
+                pref.edit()
+                        .putBoolean("login", true)
+                        .putString("user", account)
+                        .putString("password", password)
+                        .apply();
+                setResult(RESULT_OK);
+                Intent updateIntent = new Intent();
+                updateIntent.setClass(MemberLoginActivity.this, MainActivity.class);
+                startActivity(updateIntent);
+                //finish();
             }
         } else {
             Common.showToast(this, R.string.msg_NoNetwork);

@@ -1,5 +1,6 @@
 package com.example.ntut.weshare.member;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -14,8 +15,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
- class UserLoginTask extends AsyncTask<Object, Integer, Integer> {
+class UserLoginTask extends AsyncTask<Object, Integer, Integer> {
     private final static String TAG = "UserLoginTask";
+    private ProgressDialog progressDialog;
 
     @Override
     protected Integer doInBackground(Object... params) {
@@ -63,4 +65,13 @@ import java.net.URL;
         Log.d(TAG, "jsonIn: " + sb);
         return sb.toString();
     }
+
+//    @Override
+//    // invoked on the UI thread immediately after the task is executed.
+//    protected void onPreExecute() {
+//        super.onPreExecute();
+//        progressDialog = new ProgressDialog(.this);
+//        progressDialog.setMessage("Loading...");
+//        progressDialog.show();
+//    }
 }
