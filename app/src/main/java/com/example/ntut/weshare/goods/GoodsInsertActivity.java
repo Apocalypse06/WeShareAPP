@@ -166,22 +166,45 @@ public class GoodsInsertActivity extends AppCompatActivity {
             }
         }
     }
-    public void onFinishInsertClick(View view) {
+    public void onNewGoodsResult(View view) {
+        //物品名稱驗證
         String name = etName.getText().toString().trim();
         if (name.length() <= 0) {
             Toast.makeText(this, R.string.msg_NameIsInvalid,
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        int qty=Integer.parseInt(etQty.getText().toString().trim());
+        //數量驗證
         String comment=etComment.getText().toString().trim();
-        String loc=spLoc.getSelectedItem().toString().trim();
+        if (etQty.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, R.string.msg_QtyIsInvalid,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            int qty = Integer.parseInt(etQty.getText().toString().trim());
+        }catch (Exception e){
+            Toast.makeText(this, R.string.msg_QtyIncorrect,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        //日期選擇驗證
+        final Button dateButton = (Button)findViewById(R.id.bt_date);
+        if(dateButton.getText().equals("日期選擇")){
+            Toast.makeText(this, R.string.msg_DateIsInvalid,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        //相片驗證
     if (image == null) {
         Common.showToast(this, R.string.msg_NoImage);
         return;
     }
         if (Common.networkConnected(this)) {
+            int qty=Integer.parseInt(etQty.getText().toString().trim());
             String url = Common.URL + "GoodsServlet";
             Goods goods = new Goods(1, 1, now, "indId", "goodsName", 2,
             qty, 2, comment, 2, now);
