@@ -74,7 +74,7 @@ public class MemberLoginActivity extends AppCompatActivity {
         }
 
     }
-
+//
 
     public void onRegisterClick(View view) {
         Intent updateIntent;
