@@ -116,9 +116,9 @@ public class GoodsListFragment extends Fragment {
             myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
             myViewHolder.tvGoodsClass.setText("類型：" + good.getGoodsType());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String exdate = sdf.format(good.getDeadTime());
+            String exdate = sdf.format(good.getDeadLine());
             myViewHolder.tvNeedTime.setText("到期日：" + exdate);
-            myViewHolder.tvNeedNum.setText("數量：" + good.getGoodsQty());
+            myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
 
 
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {

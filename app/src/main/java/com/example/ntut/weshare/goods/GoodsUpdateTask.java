@@ -26,7 +26,7 @@ class GoodsUpdateTask extends AsyncTask<Object, Integer, Integer> {
         String result;
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("action", action);
-        jsonObject.addProperty("spot", new Gson().toJson(goods));
+        jsonObject.addProperty("goods", new Gson().toJson(goods));
         if (params[3] != null) {
             String imageBase64 = params[3].toString();
             jsonObject.addProperty("imageBase64", imageBase64);

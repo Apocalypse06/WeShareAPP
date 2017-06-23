@@ -28,6 +28,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class GoodsInsertActivity extends AppCompatActivity {
@@ -36,13 +37,15 @@ public class GoodsInsertActivity extends AppCompatActivity {
     private EditText etQty;
     private EditText etComment;
     private Spinner spClass;
+    int intspClass;
     private Spinner spLoc;
+    private int intspLoc;
     private ImageView ivImage;
     private int mYear,mMonth,mDay;
     private  byte[] image;
     private File file;
-    private String privider="privider";
-    Timestamp now=new Timestamp(1993-03-14);
+    private String indId="indId";
+    Timestamp now= new Timestamp(System.currentTimeMillis());
     private static final int REQUEST_TAKE_PICTURE = 0;
     private static final int REQUEST_PICK_IMAGE = 1;
 
@@ -57,6 +60,28 @@ public class GoodsInsertActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 classes);
         spClass.setAdapter(classList);
+        switch (spClass.getSelectedItem().toString()){
+           case "食":
+              int intspClass=6;
+               break;
+            case "衣":
+                intspClass=1;
+                break;
+            case "住":
+                intspClass=2;
+                break;
+            case "行":
+                intspClass=3;
+                break;
+            case "育":
+                intspClass=4;
+                break;
+            case "樂":
+                intspClass=5;
+                break;
+        }
+
+
 
         spLoc=(Spinner) findViewById(R.id.sp_loc);
         final String[] loc = {"北","中","南"};
@@ -65,7 +90,17 @@ public class GoodsInsertActivity extends AppCompatActivity {
                 loc);
         spLoc.setAdapter(locList);
         findViews();
-
+        switch (spLoc.getSelectedItem().toString()) {
+            case "食":
+                int intspLoc = 3;
+                break;
+            case "衣":
+                intspLoc = 1;
+                break;
+            case "住":
+                intspLoc = 2;
+                break;
+        }
         final Button backButton = (Button)findViewById(R.id.bt_BackGBList);
         final Button dateButton = (Button)findViewById(R.id.bt_date);
         dateButton.setOnClickListener(new View.OnClickListener(){
@@ -175,14 +210,14 @@ public class GoodsInsertActivity extends AppCompatActivity {
             return;
         }
         //數量驗證
-        String comment=etComment.getText().toString().trim();
+        String qty=etQty.getText().toString().trim();
         if (etQty.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, R.string.msg_QtyIsInvalid,
                     Toast.LENGTH_SHORT).show();
             return;
         }
         try {
-            int qty = Integer.parseInt(etQty.getText().toString().trim());
+            int qtyParseInt = Integer.parseInt(etQty.getText().toString().trim());
         }catch (Exception e){
             Toast.makeText(this, R.string.msg_QtyIncorrect,
                     Toast.LENGTH_SHORT).show();
@@ -203,13 +238,16 @@ public class GoodsInsertActivity extends AppCompatActivity {
         Common.showToast(this, R.string.msg_NoImage);
         return;
     }
+
+
         if (Common.networkConnected(this)) {
-            int qty=Integer.parseInt(etQty.getText().toString().trim());
+            int qtyParseInt=Integer.parseInt(etQty.getText().toString().trim());
+            String comment=etComment.toString().trim();
             String url = Common.URL + "GoodsServlet";
-            Goods goods = new Goods(1, 1, now, "indId", "goodsName", 2,
-            qty, 2, comment, 2, now);
+            Goods goods = new Goods(1, 1, now, "kitty","goodName" ,1,
+                    qtyParseInt, 1, comment, 2, 1995);
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
-            String action = "spotInsert";
+            String action = "goodsInsert";
             int count = 0;
             try {
                 count = new GoodsUpdateTask().execute(url, action, goods, imageBase64).get();
