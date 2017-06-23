@@ -68,6 +68,7 @@ public class MemberLoginActivity extends AppCompatActivity {
                         .putBoolean("login", true)
                         .putString("user", account)
                         .putString("password", password)
+//                        .putInt("type", true)
                         .apply();
                 setResult(RESULT_OK);
                 Intent updateIntent = new Intent();

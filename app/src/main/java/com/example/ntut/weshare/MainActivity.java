@@ -30,9 +30,9 @@ import com.example.ntut.weshare.home.HomeFragment;
 import com.example.ntut.weshare.icon.InstitutionkFragment;
 import com.example.ntut.weshare.icon.MessageFragment;
 import com.example.ntut.weshare.icon.SearchFragment;
-import com.example.ntut.weshare.member.MemberFragment;
 import com.example.ntut.weshare.member.MemberLoginActivity;
 import com.example.ntut.weshare.member.MemberRegisterActivity;
+import com.example.ntut.weshare.member.MemberUpdateActivity;
 import com.example.ntut.weshare.member.historyFragment;
 
 //import com.example.ntut.weshare.member.MemberLoginActivity;
@@ -197,9 +197,9 @@ public class MainActivity extends AppCompatActivity {
                         initBody();
                         break;
                     case R.id.item_updateMember:
-                        fragment = new MemberFragment();//取代舊的Fragment方法
-                        switchFragment(fragment);
-                        setTitle(R.string.tx_updateMember);
+                        updateIntent = new Intent();
+                        updateIntent.setClass(MainActivity.this, MemberUpdateActivity.class);
+                        startActivity(updateIntent);
                         break;
                     case R.id.item_history:
                         fragment = new historyFragment();
