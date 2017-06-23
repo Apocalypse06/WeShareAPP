@@ -102,6 +102,7 @@
                 android:layout_alignLeft="@+id/et_goodsname"
                 android:layout_alignStart="@+id/et_goodsname"
                 android:layout_below="@+id/textView9"
+                android:inputType="numberDecimal"
                 android:hint="請輸入數量"
                 android:textSize="15dp" />
 
@@ -192,6 +193,7 @@
                 android:text="新增物品"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onNewGoodsResult"
                 android:id="@+id/bt_newGoodSubmit"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/et_comment"

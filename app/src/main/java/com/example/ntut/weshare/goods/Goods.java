@@ -17,14 +17,15 @@ public class Goods implements Serializable {
     private String goodsNote;
     private int goodsShipWay;
     //    private Blob image = null;
-    private java.sql.Timestamp deadTime;
+    private java.sql.Timestamp deadLine;
+
 
     public Goods() {
     }
 
 
     public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType,
-                 int goodsQty, int goodsLoc, String goodsNote, int goodsShipWay, Timestamp deadTime) {
+                 int goodsQty, int goodsLoc, String goodsNote, int goodsShipWay, Timestamp deadLine) {
         super();
         this.goodsNo = goodsNo;
         this.goodsStatus = goodsStatus;
@@ -36,7 +37,7 @@ public class Goods implements Serializable {
         this.goodsLoc = goodsLoc;
         this.goodsNote = goodsNote;
         this.goodsShipWay = goodsShipWay;
-        this.deadTime = deadTime;
+        this.deadLine = deadLine;
     }
 
     public int getGoodsNo() {
@@ -121,10 +122,10 @@ public class Goods implements Serializable {
 
 
     public java.sql.Timestamp getDeadTime() {
-        return deadTime;
+        return deadLine;
     }
 
-    public void setDeadTime(java.sql.Timestamp deadTime) {
-        this.deadTime = deadTime;
+    public void setDeadTime(java.sql.Timestamp deadLine) {
+        this.deadLine = deadLine;
     }
 }
