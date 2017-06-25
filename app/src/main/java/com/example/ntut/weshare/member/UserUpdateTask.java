@@ -1,5 +1,6 @@
 package com.example.ntut.weshare.member;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;

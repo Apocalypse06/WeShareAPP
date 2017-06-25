@@ -1,9 +1,12 @@
 package com.example.ntut.weshare.member;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,8 +30,8 @@ public class MemberRegisterActivity extends AppCompatActivity {
     private final static String TAG = "UserInsertActivity";
 
     private ImageView ivUser;
-    private byte[] image = new byte[0];
-    //    private byte[] image = null;
+    //private byte[] image = new byte[0];
+    private byte[] image = null;
     private EditText etAccount;
     private EditText etPassword;
     private EditText etName;
@@ -42,7 +45,7 @@ public class MemberRegisterActivity extends AppCompatActivity {
 
 
     private ImageView ivIn;
-    private byte[] imageIn;
+    private byte[] imageIn = null;
     private EditText etLeader;
     private EditText etInType;
     private EditText etRegisterNo;
@@ -85,8 +88,6 @@ public class MemberRegisterActivity extends AppCompatActivity {
         etContext = (EditText) findViewById(R.id.etContext);
 
     }
-
-
 
 
     public void onPickPictureClick(View view) {
@@ -158,27 +159,53 @@ public class MemberRegisterActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             return;
         }
-//        if (image == null) {
+        if (image == null) {
+            Resources res = getResources();
+            Drawable drawable = res.getDrawable(R.drawable.user);
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            image = stream.toByteArray();
+
+            // ivUser.setImageResource(R.user_black);
 //            Common.showToast(this, "沒有圖片");
 //            return;
-//        }
-
-        //依選取項目顯示不同訊息
-        switch (rgType.getCheckedRadioButtonId()) {
-            case R.id.rbPersonal:
-                idType = 1;
-                action = "userRegister";
-                break;
-            case R.id.rbInstiution:
-                idType = 2;
-                action = "userInRegister";
-                leader = etLeader.getText().toString().trim();
-                orgType = etInType.getText().toString().trim();
-                registerNo = etRegisterNo.getText().toString().trim();
-                raiseNo = etRaiseNo.getText().toString().trim();
-                intRo = etContext.getText().toString().trim();
-                break;
         }
+        if (imageIn == null){
+            Resources res = getResources();
+            Drawable drawable = res.getDrawable(R.drawable.user_default);
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            imageIn = stream.toByteArray();
+        }
+
+            //依選取項目顯示不同訊息
+            switch (rgType.getCheckedRadioButtonId()) {
+                case R.id.rbPersonal:
+                    idType = 1;
+                    action = "userRegister";
+                    break;
+                case R.id.rbInstiution:
+                    idType = 2;
+
+                    if (imageIn == null){
+                        Resources res = getResources();
+                        Drawable drawable = res.getDrawable(R.drawable.org_default);
+                        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        imageIn = stream.toByteArray();
+                    }
+
+                    action = "userInRegister";
+                    leader = etLeader.getText().toString().trim();
+                    orgType = etInType.getText().toString().trim();
+                    registerNo = etRegisterNo.getText().toString().trim();
+                    raiseNo = etRaiseNo.getText().toString().trim();
+                    intRo = etContext.getText().toString().trim();
+                    break;
+            }
 
         String tal = etTal.getText().toString().trim();
         String email = etEmail.getText().toString().trim();

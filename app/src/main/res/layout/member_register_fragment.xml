@@ -45,7 +45,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:onClick="onPickPictureClick"
-            android:src="@drawable/user_black" />
+            android:src="@drawable/user_black"
+             />
 
         <TextView
             android:layout_width="wrap_content"

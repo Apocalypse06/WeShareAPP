@@ -41,6 +41,7 @@ public class MemberUpdateActivity extends AppCompatActivity {
 
     String action;
     List<User> user = null;
+    User uu ;
 
     private static final int REQUEST_PICK_IMAGE_IN = 0;
     private static final int REQUEST_PICK_IMAGE = 1;
@@ -71,23 +72,21 @@ public class MemberUpdateActivity extends AppCompatActivity {
                 // passing null and calling get() means not to run FindImageByIdTask.onPostExecute()
 //            bitmap = new UserGetImageTask(null).execute(url, account, imageSize).get();
                 user = new UserGetAllTask().execute(url, account).get();//.get()要請UserGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
+           // uu = user.get(0);
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
             if (user == null) {
-                Common.showToast(this, "sb");
+                Common.showToast(this, "不可能");
             } else {
                 //rvSpots.setAdapter(new SpotsRecyclerViewAdapter(getActivity(), spots));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
+                etNumber.setText(user.get(0).getTal());
+                etEmail.setText(user.get(0).getEmail());
+                etAddress.setText(user.get(0).getAddress());
             }
         } else {
             Common.showToast(this, R.string.msg_NoNetwork);
         }
-
-
-
-//        etNumber.setText(""+user.get(1));
-//        etEmail.setText(""+user.get(2));
-//        etAddress.setText(""+user.get(3));
     }
 
 
@@ -99,6 +98,7 @@ public class MemberUpdateActivity extends AppCompatActivity {
         etNumber = (EditText) findViewById(R.id.etNumber);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etAddress = (EditText) findViewById(R.id.etAddress);
+
 
         //showAllSpots();
 //        User user = (User) getIntent().getExtras().getSerializable("user");
