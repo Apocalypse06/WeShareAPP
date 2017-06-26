@@ -45,8 +45,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:onClick="onPickPictureClick"
-            android:src="@drawable/user_black"
-             />
+            android:src="@drawable/user_black" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -233,14 +232,16 @@
             android:id="@+id/llInstiution"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="----------------------社福資料----------------------"
                 android:textSize="15sp" />
+
             <ImageView
                 android:id="@+id/ivIn"
                 android:layout_width="wrap_content"
@@ -249,6 +250,7 @@
                 android:layout_marginTop="30dp"
                 android:onClick="onPickPictureInClick"
                 android:src="@drawable/user_black" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -284,14 +286,12 @@
                     android:text="機構類型："
                     android:textSize="25sp" />
 
-                <EditText
-                    android:id="@+id/etInType"
+                <Spinner
+                    android:id="@+id/spOrgType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:hint="選擇機構類型"
-                    android:text="jack-0619" />
+                    android:layout_marginLeft="30dp">
+                </Spinner>
 
             </LinearLayout>
 

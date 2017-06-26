@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -21,16 +20,15 @@ import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Member;
 import java.util.List;
 
+
 public class MemberUpdateActivity extends AppCompatActivity {
-    private final static String TAG = "UserInsertActivity";
+    private final static String TAG = "UserUpdateActivity";
 
 
     private ImageView ivUser;
-    private byte[] image = new byte[0];
-    //    private byte[] image = null;
+    private byte[] image = null;
     private EditText etOldPassword;
     private EditText etNewPassword1;
     private EditText etNewPassword2;
@@ -41,7 +39,6 @@ public class MemberUpdateActivity extends AppCompatActivity {
 
     String action;
     List<User> user = null;
-    User uu ;
 
     private static final int REQUEST_PICK_IMAGE_IN = 0;
     private static final int REQUEST_PICK_IMAGE = 1;
@@ -54,39 +51,16 @@ public class MemberUpdateActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        showAllSpots();
+    protected void onResume() {
+        super.onResume();
+        // 從偏好設定檔中取得登入狀態來決定是否顯示「登出」
+        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+        boolean login = pref.getBoolean("login", false);
     }
 
-    private void showAllSpots() {
-        if (Common.networkConnected(this)) {//檢查網路
-            String url = Common.URL + "UserServlet";
-            SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
-            String account = pref.getString("user", "aaa");
-            Toast.makeText(this, account, Toast.LENGTH_LONG).show();
-//            List<User> user = null;
-            int imageSize = 400;
-            Bitmap bitmap = null;
-            try {
-                // passing null and calling get() means not to run FindImageByIdTask.onPostExecute()
-//            bitmap = new UserGetImageTask(null).execute(url, account, imageSize).get();
-                user = new UserGetAllTask().execute(url, account).get();//.get()要請UserGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
-           // uu = user.get(0);
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
-            }
-            if (user == null) {
-                Common.showToast(this, "不可能");
-            } else {
-                //rvSpots.setAdapter(new SpotsRecyclerViewAdapter(getActivity(), spots));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
-                etNumber.setText(user.get(0).getTal());
-                etEmail.setText(user.get(0).getEmail());
-                etAddress.setText(user.get(0).getAddress());
-            }
-        } else {
-            Common.showToast(this, R.string.msg_NoNetwork);
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
 
@@ -99,25 +73,38 @@ public class MemberUpdateActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.etEmail);
         etAddress = (EditText) findViewById(R.id.etAddress);
 
+        showAllSpots();
+    }
 
-        //showAllSpots();
-//        User user = (User) getIntent().getExtras().getSerializable("user");
-//        if (user == null) {
-//            Common.showToast(this, "sb");
-//            finish();
-//            return;
-//        }
-
-
-//        if (bitmap != null) {
-//            ivSpot.setImageBitmap(bitmap);
-//            ByteArrayOutputStream out = new ByteArrayOutputStream();
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-//            image = out.toByteArray();
-//        } else {
-//            ivSpot.setImageResource(R.drawable.default_image);
-//        }
-//        ivSpot.setImageBitmap(bitmap);
+    private void showAllSpots() {
+        if (Common.networkConnected(this)) {//檢查網路
+            String url = Common.URL + "UserServlet";
+            SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+            String account = pref.getString("user", "");
+//            Toast.makeText(this, account, Toast.LENGTH_LONG).show();
+//            List<User> user = null;
+            int imageSize = 400;
+            Bitmap bitmap = null;
+            try {
+                // passing null and calling get() means not to run FindImageByIdTask.onPostExecute()
+//            bitmap = new UserGetImageTask(null).execute(url, account, imageSize).get();
+                user = new UserGetAllTask().execute(url, account).get();//.get()要請UserGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
+                bitmap = new UserGetImageTask().execute(url, account, imageSize).get();//.execute(網址, 圖片id, 這邊做縮圖imageSize，在server端縮圖完再傳過來)
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+            if (user == null) {
+                Common.showToast(this, "不可能");
+            } else {
+                //rvSpots.setAdapter(new SpotsRecyclerViewAdapter(getActivity(), spots));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
+                ivUser.setImageBitmap(bitmap);
+                etNumber.setText(user.get(0).getTal());
+                etEmail.setText(user.get(0).getEmail());
+                etAddress.setText(user.get(0).getAddress());
+            }
+        } else {
+            Common.showToast(this, R.string.msg_NoNetwork);
+        }
     }
 
     public void onPickPictureClick(View view) {
@@ -179,38 +166,40 @@ public class MemberUpdateActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.msg_passwordNull,
                     Toast.LENGTH_SHORT).show();
             return;
-        } else if (!oldPW.equals(oldPassword)) {
+        }
+        if (!oldPW.equals(oldPassword)) {
             Toast.makeText(this, R.string.msg_PWNotRight,
                     Toast.LENGTH_SHORT).show();
             return;
         }
         String NewPW = etNewPassword1.getText().toString().trim();
         if (NewPW.length() <= 0) {
-            Toast.makeText(this, R.string.msg_passwordNull,
+            Toast.makeText(this, R.string.msg_NewPasswordNull,
                     Toast.LENGTH_SHORT).show();
             return;
         }
         String NewPW2 = etNewPassword2.getText().toString().trim();
         if (NewPW2.length() <= 0) {
-            Toast.makeText(this, R.string.msg_passwordNull,
+            Toast.makeText(this, R.string.msg_checkPasswordNull,
                     Toast.LENGTH_SHORT).show();
             return;
         }
         if (!NewPW.equals(NewPW2)) {
             Toast.makeText(this, R.string.msg_PWNotSame,
                     Toast.LENGTH_SHORT).show();
+            return;
         }
 
-//        if (image == null) {
-//            Common.showToast(this, "沒有圖片");
-//            return;
-//        }
-
         //依選取項目顯示不同訊息
+        if (user.get(0).getIdType() == 1) {
+            action = "userUpdate";
+        } else if (user.get(0).getIdType() == 2) {
+            action = "userInUpdate";
+        }
 //        switch (rgType.getCheckedRadioButtonId()) {
 //            case R.id.rbPersonal:
 //                idType = 1;
-//                action = "userRegister";
+//
 //                break;
 //            case R.id.rbInstiution:
 //                idType = 2;
@@ -224,8 +213,6 @@ public class MemberUpdateActivity extends AppCompatActivity {
 //        }
 
 
-        action = "userUpdate";//暫時
-
         String tal = etNumber.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
@@ -235,8 +222,8 @@ public class MemberUpdateActivity extends AppCompatActivity {
 
         if (Common.networkConnected(this)) {//傳送到server端
 //            if (idType == 1) {
-
-            User user = new User(account, oldPW, tal, email, address);//傳送文字資料
+            account = pref.getString("user", "");
+            User user = new User(account, NewPW, tal, email, address);//傳送文字資料
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);//圖片資料
             try {
                 count = new UserUpdateTask().execute(url, action, user, imageBase64).get();
@@ -259,11 +246,9 @@ public class MemberUpdateActivity extends AppCompatActivity {
 //                }
 //            }
             if (count == 0) {
-                Common.showToast(MemberUpdateActivity.this, R.string.msg_RegisterFail);
-            } else if (count == -1) {
-                Common.showToast(MemberUpdateActivity.this, R.string.msg_AccountRepeat);
+                Common.showToast(MemberUpdateActivity.this, R.string.msg_updateFail);
             } else {
-                Common.showToast(MemberUpdateActivity.this, R.string.msg_RegisterSuccess);
+                Common.showToast(MemberUpdateActivity.this, R.string.msg_updateSuccess);
                 finish();
             }
         } else {
@@ -277,4 +262,3 @@ public class MemberUpdateActivity extends AppCompatActivity {
         finish();
     }
 }
-//

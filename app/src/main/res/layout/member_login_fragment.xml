@@ -47,6 +47,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:id="@+id/etPassword"
+        android:inputType="textPassword"
         android:hint="@string/tx_passqord" />
 
     <LinearLayout

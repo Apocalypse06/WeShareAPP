@@ -15,12 +15,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-class UserLoginTask extends AsyncTask<Object, Integer, Integer> {
+class UserLoginTask extends AsyncTask<Object, Integer, String> {
     private final static String TAG = "UserLoginTask";
     private ProgressDialog progressDialog;
 
     @Override
-    protected Integer doInBackground(Object... params) {
+    protected String doInBackground(Object... params) {
         String url = params[0].toString();
         String action = params[1].toString();
         User user = (User) params[2];
@@ -34,7 +34,8 @@ class UserLoginTask extends AsyncTask<Object, Integer, Integer> {
             Log.e(TAG, e.toString());
             return null;
         }
-        return Integer.parseInt(result);
+        //return Integer.parseInt(result);
+        return result;
     }
 
     private String getRemoteData(String url, String jsonOut) throws IOException {

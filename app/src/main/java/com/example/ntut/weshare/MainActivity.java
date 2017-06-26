@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -168,13 +169,25 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.tx_open, R.string.tx_close);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
+
         NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
         SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
         boolean login = pref.getBoolean("login", false);
         Toast.makeText(this, "" + login, Toast.LENGTH_LONG).show();
+
         MenuItem loginItem = view.getMenu().findItem(R.id.item_login);
         MenuItem registerItem = view.getMenu().findItem(R.id.item_register);
         MenuItem logoutItem = view.getMenu().findItem(R.id.item_logout);
+
+        View header = view.inflateHeaderView(R.layout.navigate_header);
+        TextView tvUserName = (TextView) header.findViewById(R.id.tvUserName);
+        String name = pref.getString("name", "尚未登入，請進行登入");
+        if (name != "尚未登入，請進行登入") {
+            tvUserName.setText(name + "歡迎回來");
+        }else{
+            tvUserName.setText(name);
+        }
+
         if (login) {
             loginItem.setVisible(false);    // true 为显示，false 为隐藏
             registerItem.setVisible(false);

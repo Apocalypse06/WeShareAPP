@@ -51,16 +51,17 @@ public class MemberLoginActivity extends AppCompatActivity {
             String url = Common.URL + "UserServlet";
             User user = new User(account, password);//傳送文字資料
             String action = "userLogin";
-            int count = 0;
+            //int count = 0;
+            String userName = null;
             try {
-                count = new UserLoginTask().execute(url, action, user).get();
+                userName = new UserLoginTask().execute(url, action, user).get();
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
-            if (count == 0) {
+            if (userName == null) {
                 Common.showToast(MemberLoginActivity.this, R.string.msg_LoginFail);
             } else {
-                //  Common.showToast(MemberLoginActivity.this, R.string.msg_LoginSuccess);
+                Common.showToast(MemberLoginActivity.this, R.string.msg_LoginSuccess);
 
                 SharedPreferences pref = getSharedPreferences(Common.PREF_FILE,
                         MODE_PRIVATE);
@@ -68,7 +69,7 @@ public class MemberLoginActivity extends AppCompatActivity {
                         .putBoolean("login", true)
                         .putString("user", account)
                         .putString("password", password)
-//                        .putInt("type", true)
+                        .putString("name", userName)
                         .apply();
                 setResult(RESULT_OK);
                 Intent updateIntent = new Intent();

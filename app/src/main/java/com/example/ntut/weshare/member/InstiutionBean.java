@@ -9,14 +9,14 @@ public class InstiutionBean implements Serializable {
 
     private String indId;
     private String leader;
-    private String orgType;
+    private int orgType;
     private String registerNo;
     private String raiseNo;
     private String intRo;
     private Blob image = null;
     private java.sql.Timestamp updatetime = null;
 
-    public InstiutionBean(String indId, String leader, String orgType, String registerNo, String raiseNo, String intRo, Timestamp updatetime) {
+    public InstiutionBean(String indId, String leader, int orgType, String registerNo, String raiseNo, String intRo, Timestamp updatetime) {
         this.indId = indId;
         this.leader = leader;
         this.orgType = orgType;
@@ -42,11 +42,11 @@ public class InstiutionBean implements Serializable {
         this.leader = leader;
     }
 
-    public String getOrgType() {
+    public int getOrgType() {
         return orgType;
     }
 
-    public void setOrgType(String orgType) {
+    public void setOrgType(int orgType) {
         this.orgType = orgType;
     }
 

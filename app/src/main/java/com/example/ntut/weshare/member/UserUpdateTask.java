@@ -29,7 +29,7 @@ class UserUpdateTask extends AsyncTask<Object, Integer, Integer> {
         String action = params[1].toString();
         jsonObject.addProperty("action", action);//動作，新增
 
-        if(action.equals("userRegister") ) {
+        if(action.equals("userRegister") || action.equals("userUpdate")) {
             User user = (User) params[2];
             jsonObject.addProperty("user", new Gson().toJson(user));//純文字
             if (params[3] != null) {

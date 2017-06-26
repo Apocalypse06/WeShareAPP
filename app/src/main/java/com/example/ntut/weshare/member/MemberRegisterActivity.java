@@ -14,14 +14,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
+import com.example.ntut.weshare.goods.GoodsInsertActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Timestamp;
@@ -48,11 +51,12 @@ public class MemberRegisterActivity extends AppCompatActivity {
     private byte[] imageIn = null;
     private EditText etLeader;
     private EditText etInType;
+    private Spinner spOrgType;
     private EditText etRegisterNo;
     private EditText etRaiseNo;
     private EditText etContext;
     String leader;
-    String orgType;
+    int orgType;
     String registerNo;
     String raiseNo;
     String intRo;
@@ -82,11 +86,37 @@ public class MemberRegisterActivity extends AppCompatActivity {
 
         ivIn = (ImageView) findViewById(R.id.ivIn);
         etLeader = (EditText) findViewById(R.id.etLeader);
-        etInType = (EditText) findViewById(R.id.etInType);
+        //etInType = (EditText) findViewById(R.id.etInType);
+        spOrgType = (Spinner) findViewById(R.id.spOrgType);
         etRegisterNo = (EditText) findViewById(R.id.etRegisterNo);
         etRaiseNo = (EditText) findViewById(R.id.etRaiseNo);
         etContext = (EditText) findViewById(R.id.etContext);
 
+        final String[] classes = {"兒少福利", "偏鄉教育", "老人福利", "身障福利", "其他"};
+        ArrayAdapter<String> classList = new ArrayAdapter<>(MemberRegisterActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                classes);
+        spOrgType.setAdapter(classList);
+    }
+
+    private void ChoseOreType() {
+        switch (spOrgType.getSelectedItem().toString()) {
+            case "兒少福利":
+                orgType = 1;
+                break;
+            case "偏鄉教育":
+                orgType = 1;
+                break;
+            case "老人福利":
+                orgType = 2;
+                break;
+            case "身障福利":
+                orgType = 3;
+                break;
+            case "其他":
+                orgType = 4;
+                break;
+        }
     }
 
 
@@ -171,7 +201,7 @@ public class MemberRegisterActivity extends AppCompatActivity {
 //            Common.showToast(this, "沒有圖片");
 //            return;
         }
-        if (imageIn == null){
+        if (imageIn == null) {
             Resources res = getResources();
             Drawable drawable = res.getDrawable(R.drawable.user_default);
             Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
@@ -180,32 +210,33 @@ public class MemberRegisterActivity extends AppCompatActivity {
             imageIn = stream.toByteArray();
         }
 
-            //依選取項目顯示不同訊息
-            switch (rgType.getCheckedRadioButtonId()) {
-                case R.id.rbPersonal:
-                    idType = 1;
-                    action = "userRegister";
-                    break;
-                case R.id.rbInstiution:
-                    idType = 2;
+        //依選取項目顯示不同訊息
+        switch (rgType.getCheckedRadioButtonId()) {
+            case R.id.rbPersonal:
+                idType = 1;
+                action = "userRegister";
+                break;
+            case R.id.rbInstiution:
+                idType = 2;
+                ChoseOreType();
 
-                    if (imageIn == null){
-                        Resources res = getResources();
-                        Drawable drawable = res.getDrawable(R.drawable.org_default);
-                        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                        imageIn = stream.toByteArray();
-                    }
+                if (imageIn == null) {
+                    Resources res = getResources();
+                    Drawable drawable = res.getDrawable(R.drawable.org_default);
+                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    imageIn = stream.toByteArray();
+                }
 
-                    action = "userInRegister";
-                    leader = etLeader.getText().toString().trim();
-                    orgType = etInType.getText().toString().trim();
-                    registerNo = etRegisterNo.getText().toString().trim();
-                    raiseNo = etRaiseNo.getText().toString().trim();
-                    intRo = etContext.getText().toString().trim();
-                    break;
-            }
+                action = "userInRegister";
+                leader = etLeader.getText().toString().trim();
+//                orgType = etInType.getText().toString().trim();
+                registerNo = etRegisterNo.getText().toString().trim();
+                raiseNo = etRaiseNo.getText().toString().trim();
+                intRo = etContext.getText().toString().trim();
+                break;
+        }
 
         String tal = etTal.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
