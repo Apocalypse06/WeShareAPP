@@ -64,5 +64,8 @@
     <string name="msg_NewPasswordNull">新密碼空白</string>
     <string name="msg_updateFail">更新失敗</string>
     <string name="msg_updateSuccess">更新成功</string>
+    <string name="tx_changePassword">更改密碼</string>
+    <string name="msg_updateSuccessAndLogin">修改成功，請重新登入</string>
+    <string name="tx_cancelChange">取消更改密碼</string>
 
 </resources>

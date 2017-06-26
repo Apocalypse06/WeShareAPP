@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -16,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,17 +36,25 @@ import com.example.ntut.weshare.icon.SearchFragment;
 import com.example.ntut.weshare.member.MemberLoginActivity;
 import com.example.ntut.weshare.member.MemberRegisterActivity;
 import com.example.ntut.weshare.member.MemberUpdateActivity;
+import com.example.ntut.weshare.member.User;
 import com.example.ntut.weshare.member.historyFragment;
+
+import java.util.List;
+
+import static com.example.ntut.weshare.R.id.etNumber;
 
 //import com.example.ntut.weshare.member.MemberLoginActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private final static String TAG = "MainActivity";
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private ImageView ivUser;
     private TextView testUser;
+
+    Bitmap bitmap = null;
 
     private final static int REQ_PERMISSIONS = 0;
 
@@ -57,12 +67,54 @@ public class MainActivity extends AppCompatActivity {
         initBody();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 從偏好設定檔中取得登入狀態來決定是否顯示「登出」
+        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+        boolean login = pref.getBoolean("login", false);
+        if(login == true){
+
+        }
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
         askPermissions();
     }
+
+
+    private void showAllSpots() {
+        if (Common.networkConnected(this)) {//檢查網路
+            String url = Common.URL + "UserServlet";
+            SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+            String account = pref.getString("user", "");
+//            Toast.makeText(this, account, Toast.LENGTH_LONG).show();
+//            List<User> user = null;
+            int imageSize = 100;
+//            Bitmap bitmap = null;
+            try {
+                // passing null and calling get() means not to run FindImageByIdTask.onPostExecute()
+//            bitmap = new UserGetImageTask(null).execute(url, account, imageSize).get();
+                //user = new UserGetAllTask().execute(url, account).get();//.get()要請UserGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
+                bitmap = new UserGetImageTask().execute(url, account, imageSize).get();//.execute(網址, 圖片id, 這邊做縮圖imageSize，在server端縮圖完再傳過來)
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+            if (bitmap == null) {
+                Common.showToast(this, "不可能");
+            } else {
+                //rvSpots.setAdapter(new SpotsRecyclerViewAdapter(getActivity(), spots));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
+//
+            }
+        } else {
+            Common.showToast(this, R.string.msg_NoNetwork);
+        }
+    }
+
+
+
 
     private void askPermissions() {
         String[] permissions = {
@@ -78,13 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // 從偏好設定檔中取得登入狀態來決定是否顯示「登出」
-        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
-        boolean login = pref.getBoolean("login", false);
-    }
+
 
     private void cleanPreferences() {
         SharedPreferences pref = getSharedPreferences(Common.PREF_FILE,
@@ -92,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         pref.edit()
                 .putString("user", "")
                 .putString("password", "")
+                .putString("name", "")
                 .putBoolean("login", false)
                 .apply();
     }
@@ -180,13 +227,18 @@ public class MainActivity extends AppCompatActivity {
         MenuItem logoutItem = view.getMenu().findItem(R.id.item_logout);
 
         View header = view.inflateHeaderView(R.layout.navigate_header);
+        ImageView ivUser = (ImageView) header.findViewById(R.id.ivUser);
         TextView tvUserName = (TextView) header.findViewById(R.id.tvUserName);
+
+        pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
         String name = pref.getString("name", "尚未登入，請進行登入");
-        if (name != "尚未登入，請進行登入") {
+        login = pref.getBoolean("login", false);
+        if(login == true){
+            showAllSpots();
+            ivUser.setImageBitmap(bitmap);
             tvUserName.setText(name + "歡迎回來");
-        }else{
-            tvUserName.setText(name);
         }
+
 
         if (login) {
             loginItem.setVisible(false);    // true 为显示，false 为隐藏

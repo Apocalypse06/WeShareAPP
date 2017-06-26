@@ -61,10 +61,12 @@ public class MemberLoginActivity extends AppCompatActivity {
             if (userName == null) {
                 Common.showToast(MemberLoginActivity.this, R.string.msg_LoginFail);
             } else {
-                Common.showToast(MemberLoginActivity.this, R.string.msg_LoginSuccess);
+                //Common.showToast(MemberLoginActivity.this, R.string.msg_LoginSuccess);
 
                 SharedPreferences pref = getSharedPreferences(Common.PREF_FILE,
                         MODE_PRIVATE);
+
+                Common.showToast(MemberLoginActivity.this, userName);
                 pref.edit()
                         .putBoolean("login", true)
                         .putString("user", account)

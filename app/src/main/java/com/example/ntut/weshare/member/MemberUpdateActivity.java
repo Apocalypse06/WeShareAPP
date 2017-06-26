@@ -12,11 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
 
 import java.io.ByteArrayOutputStream;
@@ -35,10 +38,14 @@ public class MemberUpdateActivity extends AppCompatActivity {
     private EditText etNumber;
     private EditText etEmail;
     private EditText etAddress;
+    private Button btChange;
+    private Button btCancel;
+    private LinearLayout llchangePassword;
 
 
     String action;
     List<User> user = null;
+    boolean changePassword = false;
 
     private static final int REQUEST_PICK_IMAGE_IN = 0;
     private static final int REQUEST_PICK_IMAGE = 1;
@@ -72,8 +79,28 @@ public class MemberUpdateActivity extends AppCompatActivity {
         etNumber = (EditText) findViewById(R.id.etNumber);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etAddress = (EditText) findViewById(R.id.etAddress);
+        btChange = (Button) findViewById(R.id.btChange);
+        btCancel = (Button) findViewById(R.id.btCancel);
+        btCancel.setVisibility(View.GONE);
+        llchangePassword = (LinearLayout) findViewById(R.id.llchangePassword);
+        llchangePassword.setVisibility(View.GONE);
+
 
         showAllSpots();
+    }
+
+    public void onChangeClick(View view) {
+        llchangePassword.setVisibility(View.VISIBLE);
+        btCancel.setVisibility(View.VISIBLE);
+        btChange.setVisibility(View.GONE);
+        changePassword = true;
+    }
+
+    public void onCancelChangeClick(View view) {
+        llchangePassword.setVisibility(View.GONE);
+        btChange.setVisibility(View.VISIBLE);
+        btCancel.setVisibility(View.GONE);
+        changePassword = false;
     }
 
     private void showAllSpots() {
@@ -105,6 +132,16 @@ public class MemberUpdateActivity extends AppCompatActivity {
         } else {
             Common.showToast(this, R.string.msg_NoNetwork);
         }
+    }
+
+    private void cleanPreferences() {
+        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE,
+                MODE_PRIVATE);
+        pref.edit()
+                .putString("user", "")
+                .putString("password", "")
+                .putBoolean("login", false)
+                .apply();
     }
 
     public void onPickPictureClick(View view) {
@@ -160,34 +197,40 @@ public class MemberUpdateActivity extends AppCompatActivity {
     public void onUpdateClick(View view) {
         SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
         String account = pref.getString("account", "aaa");
-        String oldPassword = pref.getString("password", "123");
+        String oldPassword = pref.getString("password", "");
         String oldPW = etOldPassword.getText().toString().trim();
-        if (oldPW.length() <= 0) {
-            Toast.makeText(this, R.string.msg_passwordNull,
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (!oldPW.equals(oldPassword)) {
-            Toast.makeText(this, R.string.msg_PWNotRight,
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
         String NewPW = etNewPassword1.getText().toString().trim();
-        if (NewPW.length() <= 0) {
-            Toast.makeText(this, R.string.msg_NewPasswordNull,
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
         String NewPW2 = etNewPassword2.getText().toString().trim();
-        if (NewPW2.length() <= 0) {
-            Toast.makeText(this, R.string.msg_checkPasswordNull,
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (!NewPW.equals(NewPW2)) {
-            Toast.makeText(this, R.string.msg_PWNotSame,
-                    Toast.LENGTH_SHORT).show();
-            return;
+        if (changePassword == true) {
+            if (oldPW.length() <= 0) {
+                Toast.makeText(this, R.string.msg_passwordNull,
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!oldPW.equals(oldPassword)) {
+                Toast.makeText(this, R.string.msg_PWNotRight,
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (NewPW.length() <= 0) {
+                Toast.makeText(this, R.string.msg_NewPasswordNull,
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (NewPW2.length() <= 0) {
+                Toast.makeText(this, R.string.msg_checkPasswordNull,
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!NewPW.equals(NewPW2)) {
+                Toast.makeText(this, R.string.msg_PWNotSame,
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else {
+            NewPW = oldPassword;
         }
 
         //依選取項目顯示不同訊息
@@ -248,8 +291,17 @@ public class MemberUpdateActivity extends AppCompatActivity {
             if (count == 0) {
                 Common.showToast(MemberUpdateActivity.this, R.string.msg_updateFail);
             } else {
-                Common.showToast(MemberUpdateActivity.this, R.string.msg_updateSuccess);
-                finish();
+                if (changePassword == true) {
+                    Common.showToast(MemberUpdateActivity.this, R.string.msg_updateSuccessAndLogin);
+                    cleanPreferences();
+                    Intent updateIntent = new Intent();
+                    updateIntent.setClass(MemberUpdateActivity.this, MemberLoginActivity.class);
+                    startActivity(updateIntent);
+                }
+                else{
+                    Common.showToast(MemberUpdateActivity.this, R.string.msg_updateSuccess);
+                    finish();
+                }
             }
         } else {
             Common.showToast(this, R.string.msg_NoNetwork);
