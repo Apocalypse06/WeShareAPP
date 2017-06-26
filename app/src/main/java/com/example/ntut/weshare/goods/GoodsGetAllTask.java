@@ -25,9 +25,11 @@ private final static String ACTION = "getAll";
     @Override
     protected List<Goods> doInBackground (Object...params){
         String url = params[0].toString();
+        String user = params[1].toString();
         String jsonIn;
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("action", ACTION);
+        jsonObject.addProperty("user", user);
         try {
             jsonIn = getRemoteData(url, jsonObject.toString());
         } catch (IOException e) {

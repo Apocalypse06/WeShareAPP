@@ -1,11 +1,15 @@
 package com.example.ntut.weshare.goods;
 
+import android.app.FragmentHostCallback;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,8 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +34,26 @@ public class GoodsListFragment extends Fragment {
     private static final String TAG = "GoodsListFragment";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvGoods;
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 從偏好設定檔中取得登入狀態來決定是否顯示「登出」
+
+        SharedPreferences pref = this.getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
+        String user = pref.getString("user","");
+        if(user==""){
+            Toast.makeText(this.getActivity(), "請註冊登入WeShare後，再過來設定您的物資箱喔~",
+                    Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+            Intent MainIntent = new Intent(getActivity(), MainActivity.class);
+            startActivity(MainIntent);
+        }else{
+            Toast.makeText(this.getActivity(), user,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     @Nullable
@@ -62,14 +88,16 @@ public class GoodsListFragment extends Fragment {
     private void showAllGoods() {
         if (Common.networkConnected(getActivity())) {
             String url = Common.URL + "GoodsServlet";
+            SharedPreferences pref = this.getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
+            String user = pref.getString("user","");
             List<Goods> goods = null;
             try {
-                goods = new GoodsGetAllTask().execute(url).get();
+                goods = new GoodsGetAllTask().execute(url,user).get();
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
             if (goods == null || goods.isEmpty()) {
-                Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
+               // Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
             } else {
                 rvGoods.setAdapter(new GoodsRecyclerViewAdapter(getActivity(), goods));
             }
@@ -77,7 +105,6 @@ public class GoodsListFragment extends Fragment {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
         }
     }
-
     @Override
     public void onStart() {
         super.onStart();
