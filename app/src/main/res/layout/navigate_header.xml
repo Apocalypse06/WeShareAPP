@@ -31,41 +31,4 @@
 
     </LinearLayout>
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/llLoginNot"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginLeft="30dp"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:text="尚未登入\n是否進行登入"-->
-            <!--android:textColor="#FFFFFF"-->
-            <!--android:textSize="20sp" />-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="10dp">-->
-
-            <!--&lt;!&ndash;<Button&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:onClick="onLoginClick"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:text="@string/tx_login" />&ndash;&gt;-->
-
-            <!--&lt;!&ndash;<Button&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_marginLeft="40dp"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:onClick="onRegisterClick"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:text="@string/tx_register" />&ndash;&gt;-->
-        <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
 </LinearLayout>
