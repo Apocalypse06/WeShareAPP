@@ -73,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
         // 從偏好設定檔中取得登入狀態來決定是否顯示「登出」
         SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
         boolean login = pref.getBoolean("login", false);
-        if(login == true){
-
-        }
     }
 
     @Override
@@ -106,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 Common.showToast(this, "不可能");
             } else {
                 //rvSpots.setAdapter(new SpotsRecyclerViewAdapter(getActivity(), spots));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
-//
             }
         } else {
             Common.showToast(this, R.string.msg_NoNetwork);
@@ -177,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.item_welfareInstitution:
-//              Fragment fragment = new InstitutionkFragment();
                 fragment = new InstitutionkFragment();
                 switchFragment(fragment);
                 setTitle(R.string.tx_welfareInstitution);
@@ -220,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
         SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
         boolean login = pref.getBoolean("login", false);
-        Toast.makeText(this, "" + login, Toast.LENGTH_LONG).show();
 
         MenuItem loginItem = view.getMenu().findItem(R.id.item_login);
         MenuItem registerItem = view.getMenu().findItem(R.id.item_register);
@@ -236,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         if(login == true){
             showAllSpots();
             ivUser.setImageBitmap(bitmap);
-            tvUserName.setText(name + "歡迎回來");
+            tvUserName.setText(name + "  歡迎回來");
         }
 
 
