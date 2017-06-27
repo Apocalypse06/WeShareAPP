@@ -35,8 +35,9 @@ class UserUpdateTask extends AsyncTask<Object, Integer, Integer> {
             if (params[3] != null) {
                 String imageBase64 = params[3].toString();
                 jsonObject.addProperty("imageBase64", imageBase64);//圖片
-            } else {
-                String imageBase64 = "0";
+            }
+            else {
+                String imageBase64 = "NoImageChange";
                 jsonObject.addProperty("imageBase64", imageBase64);//圖片
             }
 
@@ -46,19 +47,21 @@ class UserUpdateTask extends AsyncTask<Object, Integer, Integer> {
             if (params[3] != null) {
                 String imageBase64 = params[3].toString();
                 jsonObject.addProperty("imageBase64", imageBase64);//圖片
-            } else {
-                String imageBase64 = "0";
-                jsonObject.addProperty("imageBase64", imageBase64);//圖片
             }
+//            else {
+//                String imageBase64 = "0";
+//                jsonObject.addProperty("imageBase64", imageBase64);//圖片
+//            }
             InstiutionBean ins = (InstiutionBean) params[4];
             jsonObject.addProperty("ins", new Gson().toJson(ins));//純文字
             if (params[5] != null) {
                 String imageBase64In = params[5].toString();
                 jsonObject.addProperty("imageBase64In", imageBase64In);//圖片
-            } else {
-                String imageBase64 = "0";
-                jsonObject.addProperty("imageBase64In", imageBase64);//圖片
             }
+//            else {
+//                String imageBase64 = "0";
+//                jsonObject.addProperty("imageBase64In", imageBase64);//圖片
+//            }
         }
         try {
             result = getRemoteData(url, jsonObject.toString());

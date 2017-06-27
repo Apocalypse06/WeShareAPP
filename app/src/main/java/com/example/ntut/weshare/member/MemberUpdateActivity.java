@@ -2,9 +2,12 @@ package com.example.ntut.weshare.member;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,6 +38,7 @@ public class MemberUpdateActivity extends AppCompatActivity {
     private EditText etOldPassword;
     private EditText etNewPassword1;
     private EditText etNewPassword2;
+    private EditText etName;
     private EditText etNumber;
     private EditText etEmail;
     private EditText etAddress;
@@ -44,8 +48,9 @@ public class MemberUpdateActivity extends AppCompatActivity {
 
 
     String action;
-    List<User> user = null;
+    List<User> userOld = null;
     boolean changePassword = false;
+    boolean changePicture = false;
 
     private static final int REQUEST_PICK_IMAGE_IN = 0;
     private static final int REQUEST_PICK_IMAGE = 1;
@@ -76,6 +81,7 @@ public class MemberUpdateActivity extends AppCompatActivity {
         etOldPassword = (EditText) findViewById(R.id.etOldPassword);
         etNewPassword1 = (EditText) findViewById(R.id.etNewPassword1);
         etNewPassword2 = (EditText) findViewById(R.id.etNewPassword2);
+        etName = (EditText) findViewById(R.id.etName);
         etNumber = (EditText) findViewById(R.id.etNumber);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etAddress = (EditText) findViewById(R.id.etAddress);
@@ -115,19 +121,26 @@ public class MemberUpdateActivity extends AppCompatActivity {
             try {
                 // passing null and calling get() means not to run FindImageByIdTask.onPostExecute()
 //            bitmap = new UserGetImageTask(null).execute(url, account, imageSize).get();
-                user = new UserGetAllTask().execute(url, account).get();//.get()要請UserGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
+                userOld = new UserGetAllTask().execute(url, account).get();//.get()要請UserGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
                 bitmap = new UserGetImageTask().execute(url, account, imageSize).get();//.execute(網址, 圖片id, 這邊做縮圖imageSize，在server端縮圖完再傳過來)
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
-            if (user == null) {
+            if (userOld == null) {
                 Common.showToast(this, "不可能");
             } else {
                 //rvSpots.setAdapter(new SpotsRecyclerViewAdapter(getActivity(), spots));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
+
                 ivUser.setImageBitmap(bitmap);
-                etNumber.setText(user.get(0).getTal());
-                etEmail.setText(user.get(0).getEmail());
-                etAddress.setText(user.get(0).getAddress());
+
+                ByteArrayOutputStream out2 = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out2);
+                image = out2.toByteArray();
+
+                etName.setText(userOld.get(0).getName());
+                etNumber.setText(userOld.get(0).getTal());
+                etEmail.setText(userOld.get(0).getEmail());
+                etAddress.setText(userOld.get(0).getAddress());
             }
         } else {
             Common.showToast(this, R.string.msg_NoNetwork);
@@ -196,7 +209,7 @@ public class MemberUpdateActivity extends AppCompatActivity {
 
     public void onUpdateClick(View view) {
         SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
-        String account = pref.getString("account", "aaa");
+        String account = pref.getString("user", "");
         String oldPassword = pref.getString("password", "");
         String oldPW = etOldPassword.getText().toString().trim();
         String NewPW = etNewPassword1.getText().toString().trim();
@@ -232,11 +245,25 @@ public class MemberUpdateActivity extends AppCompatActivity {
         } else {
             NewPW = oldPassword;
         }
+//        if (image == null) {
+//            changePicture = true;
+//            Resources res = getResources();
+//            Drawable drawable = res.getDrawable(R.drawable.user);
+//            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//            image = stream.toByteArray();
+
+            // ivUser.setImageResource(R.user_black);
+//            Common.showToast(this, "沒有圖片");
+//            return;
+//        }
+
 
         //依選取項目顯示不同訊息
-        if (user.get(0).getIdType() == 1) {
+        if (userOld.get(0).getIdType() == 1) {
             action = "userUpdate";
-        } else if (user.get(0).getIdType() == 2) {
+        } else if (userOld.get(0).getIdType() == 2) {
             action = "userInUpdate";
         }
 //        switch (rgType.getCheckedRadioButtonId()) {
@@ -254,25 +281,34 @@ public class MemberUpdateActivity extends AppCompatActivity {
 //                intRo = etContext.getText().toString().trim();
 //                break;
 //        }
-
-
+        String name = etName.getText().toString().trim();
         String tal = etNumber.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
+
+        User user = new User(account, NewPW, name, tal, email, address);//傳送文字資料
 
         int count = 0;
         String url = Common.URL + "UserServlet";
 
         if (Common.networkConnected(this)) {//傳送到server端
-//            if (idType == 1) {
-            account = pref.getString("user", "");
-            User user = new User(account, NewPW, tal, email, address);//傳送文字資料
+            // if (changePicture == true) {
+//                User user = new User(account, NewPW, name, tal, email, address);//傳送文字資料
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);//圖片資料
             try {
                 count = new UserUpdateTask().execute(url, action, user, imageBase64).get();
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
+//            } else if (changePicture == false) {
+//                try {
+//                    String imageBase64 = null;
+//                    count = new UserUpdateTask().execute(url, action, user, imageBase64).get();
+//                } catch (Exception e) {
+//                    Log.e(TAG, e.toString());
+//                }
+//            }
+//         else {
 //            }
 //            else if (idType == 2) {
 //                if (idType == 2) {
@@ -287,7 +323,7 @@ public class MemberUpdateActivity extends AppCompatActivity {
 //                        Log.e(TAG, e.toString());
 //                    }
 //                }
-//            }
+//        }
             if (count == 0) {
                 Common.showToast(MemberUpdateActivity.this, R.string.msg_updateFail);
             } else {
@@ -297,13 +333,14 @@ public class MemberUpdateActivity extends AppCompatActivity {
                     Intent updateIntent = new Intent();
                     updateIntent.setClass(MemberUpdateActivity.this, MemberLoginActivity.class);
                     startActivity(updateIntent);
-                }
-                else{
+                } else {
                     Common.showToast(MemberUpdateActivity.this, R.string.msg_updateSuccess);
                     finish();
                 }
             }
-        } else {
+        } else
+
+        {
             Common.showToast(this, R.string.msg_NoNetwork);
         }
 

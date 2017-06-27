@@ -30,9 +30,6 @@ class UserUpdateInTask extends AsyncTask<Object, Integer, Integer> {
         if (params[3] != null) {
             String imageBase64 = params[3].toString();
             jsonObject.addProperty("imageBase64In", imageBase64);//圖片
-        } else {
-            String imageBase64 = "0";
-            jsonObject.addProperty("imageBase64In", imageBase64);//圖片
         }
         try {
             result = getRemoteData(url, jsonObject.toString());

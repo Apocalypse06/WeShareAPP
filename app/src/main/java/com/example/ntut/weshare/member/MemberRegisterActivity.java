@@ -191,7 +191,7 @@ public class MemberRegisterActivity extends AppCompatActivity {
         }
         if (image == null) {
             Resources res = getResources();
-            Drawable drawable = res.getDrawable(R.drawable.user);
+            Drawable drawable = res.getDrawable(R.drawable.member_default);
             Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
