@@ -38,6 +38,7 @@ import com.example.ntut.weshare.member.MemberRegisterActivity;
 import com.example.ntut.weshare.member.MemberUpdateActivity;
 import com.example.ntut.weshare.member.User;
 import com.example.ntut.weshare.member.historyFragment;
+import com.example.ntut.weshare.viewtest.ViewActivity;
 
 import java.util.List;
 
@@ -276,9 +277,12 @@ public class MainActivity extends AppCompatActivity {
                         setTitle(R.string.tx_goodsMsg);
                         break;
                     case R.id.item_feedback:
-                        fragment = new FeedbackFragment();
-                        switchFragment(fragment);
-                        setTitle(R.string.tx_feedback);
+//                        fragment = new FeedbackFragment();
+//                        switchFragment(fragment);
+//                        setTitle(R.string.tx_feedback);
+                        updateIntent = new Intent();
+                        updateIntent.setClass(MainActivity.this, ViewActivity.class);
+                        startActivity(updateIntent);
                         break;
                     case R.id.item_login:
                         updateIntent = new Intent();
