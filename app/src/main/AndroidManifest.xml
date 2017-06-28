@@ -49,9 +49,21 @@
             android:label="@string/text_GoodsUpdate"
             android:launchMode="singleTask" />
         <activity
-            android:name=".viewtest.ViewActivity"
-            android:label="@string/text_GoodsUpdate"
-            android:launchMode="singleTask"></activity>
+            android:name=".member.MemberRegisterTypeActivity"
+            android:label="@string/tx_register"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".member.MemberRegisterIndActivity"
+            android:label="@string/tx_registerInd"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".member.MemberRegisterOrgActivity"
+            android:label="@string/tx_registerOrg"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".member.Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -28,30 +28,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ntut.weshare.feedback.FeedbackFragment;
 import com.example.ntut.weshare.goods.GoodsListFragment;
 import com.example.ntut.weshare.goods.GoodsMsgFragment;
-import com.example.ntut.weshare.home.HomeFragment;
 import com.example.ntut.weshare.icon.InstitutionkFragment;
 import com.example.ntut.weshare.icon.MessageFragment;
 import com.example.ntut.weshare.icon.SearchFragment;
 import com.example.ntut.weshare.member.MemberLoginActivity;
-import com.example.ntut.weshare.member.MemberRegisterActivity;
+import com.example.ntut.weshare.member.MemberRegisterTypeActivity;
 import com.example.ntut.weshare.member.MemberUpdateActivity;
-import com.example.ntut.weshare.member.User;
 import com.example.ntut.weshare.member.historyFragment;
-import com.example.ntut.weshare.viewtest.PageOne;
-import com.example.ntut.weshare.viewtest.PageThree;
-import com.example.ntut.weshare.viewtest.PageTwo;
-import com.example.ntut.weshare.viewtest.PageView;
-import com.example.ntut.weshare.viewtest.ViewActivity;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.ntut.weshare.R.id.etNumber;
 
 //import com.example.ntut.weshare.member.MemberLoginActivity;
 
@@ -211,9 +200,9 @@ public class MainActivity extends AppCompatActivity {
         //會跟viewPage衝突
 
         mTablayout = (TabLayout) findViewById(R.id.tabs);
-        mTablayout.addTab(mTablayout.newTab().setText("Page one"));
-        mTablayout.addTab(mTablayout.newTab().setText("Page two"));
-        mTablayout.addTab(mTablayout.newTab().setText("Page three"));
+        mTablayout.addTab(mTablayout.newTab().setText("許願池"));
+        mTablayout.addTab(mTablayout.newTab().setText("送愛心"));
+        mTablayout.addTab(mTablayout.newTab().setText("以物易物"));
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(new SamplePagerAdapter());
@@ -262,26 +251,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-//    private void initListener() {
-//        mTablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                mViewPager.setCurrentItem(tab.getPosition());
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-//        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTablayout));
-//    }
 
 
     private void switchFragment(Fragment fragment) {
@@ -374,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
 //                        switchFragment(fragment);
 //                        setTitle(R.string.tx_feedback);
                         updateIntent = new Intent();
-                        updateIntent.setClass(MainActivity.this, ViewActivity.class);
+                        updateIntent.setClass(MainActivity.this, FeedbackFragment.class);
                         startActivity(updateIntent);
                         break;
                     case R.id.item_login:
@@ -384,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.item_register:
                         updateIntent = new Intent();
-                        updateIntent.setClass(MainActivity.this, MemberRegisterActivity.class);
+                        updateIntent.setClass(MainActivity.this, MemberRegisterTypeActivity.class);
                         startActivity(updateIntent);
                         break;
                     case R.id.item_logout:

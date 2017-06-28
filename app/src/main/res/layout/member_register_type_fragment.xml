@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.ntut.weshare.home.HomeFragment">
+
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:background="#87cefa" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/weshare_logo" />
+
+        <Button
+            android:id="@+id/btReInd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="15dp"
+            android:drawableRight="@drawable/ind_icon"
+            android:onClick="onReIndClick"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/tx_registerInd" />
+
+        <Button
+            android:id="@+id/btReOrg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="15dp"
+            android:drawableRight="@drawable/org_icon"
+            android:onClick="onReOrgClick"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/tx_registerOrg" />
+
+        <Button
+            android:id="@+id/btLater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="15dp"
+            android:drawableRight="@drawable/later_icon"
+            android:onClick="onLeaveClick"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/tx_registerLater" />
+    </LinearLayout>
+
+
+</RelativeLayout>

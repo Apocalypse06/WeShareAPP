@@ -87,7 +87,7 @@ public class MemberLoginActivity extends AppCompatActivity {
     public void onRegisterClick(View view) {
         Intent updateIntent;
         updateIntent = new Intent();
-        updateIntent.setClass(MemberLoginActivity.this, MemberRegisterActivity.class);
+        updateIntent.setClass(MemberLoginActivity.this, MemberRegisterTypeActivity.class);
         startActivity(updateIntent);
     }
 }

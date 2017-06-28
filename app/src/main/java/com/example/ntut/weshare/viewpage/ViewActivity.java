@@ -1,11 +1,10 @@
-package com.example.ntut.weshare.viewtest;
+package com.example.ntut.weshare.viewpage;
 
-import android.support.design.widget.Snackbar;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,7 +21,7 @@ public class ViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view);
+        setContentView(R.layout.activity_main);
         initData();
         initView();
     }
@@ -41,7 +40,6 @@ public class ViewActivity extends AppCompatActivity {
         mTablayout.addTab(mTablayout.newTab().setText("Page three"));
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(new SamplePagerAdapter());
         mViewPager.setAdapter(new SamplePagerAdapter());
         initListener();
     }
@@ -66,7 +64,6 @@ public class ViewActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTablayout));
     }
 
-
     private class SamplePagerAdapter extends PagerAdapter {
 
         @Override
@@ -83,7 +80,6 @@ public class ViewActivity extends AppCompatActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             container.addView(pageList.get(position));
             return pageList.get(position);
-            //return null;
         }
 
         @Override

@@ -11,41 +11,15 @@
         android:orientation="vertical"
         tools:context="com.example.ntut.weshare.MainActivity">
 
-        <!--<FrameLayout-->
-        <!--android:id="@+id/homeBody"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <android.support.design.widget.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tx_wishPool" />
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tx_loveTo" />
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tx_changeStuff" />
-        </android.support.design.widget.TabLayout>
-        <!--</FrameLayout>-->
-
 
         <ImageView
             android:id="@+id/ivUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150sp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:onClick="onPickPictureClick"
-            android:src="@drawable/user_black" />
+            android:src="@drawable/member_default" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -290,8 +264,7 @@
                     android:id="@+id/spOrgType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp">
-                </Spinner>
+                    android:layout_marginLeft="30dp"></Spinner>
 
             </LinearLayout>
 

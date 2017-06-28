@@ -1,14 +1,16 @@
-package com.example.ntut.weshare.viewtest;
+package com.example.ntut.weshare.viewpage;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.ntut.weshare.R;
+
 /**
  * Created by rick on 2016/7/9.
  */
-import com.example.ntut.weshare.R;
+
 public class PageThree extends PageView {
     public PageThree(Context context) {
         super(context);

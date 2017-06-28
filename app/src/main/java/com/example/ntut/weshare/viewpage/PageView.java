@@ -1,4 +1,4 @@
-package com.example.ntut.weshare.viewtest;
+package com.example.ntut.weshare.viewpage;
 
 import android.content.Context;
 import android.widget.RelativeLayout;
