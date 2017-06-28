@@ -1,56 +1,74 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.ntut.weshare.home.HomeFragment">
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context="com.example.ntut.weshare.home.HomeFragment">-->
 
-    <!--<FrameLayout-->
-        <!--android:id="@+id/homeBody"-->
+    <!--&lt;!&ndash;<FrameLayout&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/homeBody"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content" >&ndash;&gt;-->
+
+        <!--<android.support.design.widget.TabLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<android.support.design.widget.TabItem-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/tx_wishPool" />-->
+
+            <!--<android.support.design.widget.TabItem-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/tx_loveTo" />-->
+
+            <!--<android.support.design.widget.TabItem-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/tx_changeStuff" />-->
+        <!--</android.support.design.widget.TabLayout>-->
+    <!--&lt;!&ndash;</FrameLayout>&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:id="@+id/testUser"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" >-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="帳號"/>-->
+    <!--<ImageView-->
+        <!--android:layout_width="320dp"-->
+        <!--android:layout_height="180dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="#87CEFA"-->
+        <!--android:padding="10dp"-->
+        <!--android:layout_margin="25dp"-->
+        <!--android:src="@drawable/hand" />-->
+    <!--<ImageView-->
+        <!--android:layout_width="320dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="#ffaa00"-->
+        <!--android:padding="10dp"-->
+        <!--android:layout_margin="10dp"-->
+        <!--&lt;!&ndash;android:src="@drawable/hand" />&ndash;&gt;-->
 
-        <android.support.design.widget.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+<!--</LinearLayout>-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tx_wishPool" />
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tx_loveTo" />
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tx_changeStuff" />
-        </android.support.design.widget.TabLayout>
-    <!--</FrameLayout>-->
-    <TextView
-        android:id="@+id/testUser"
+    <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="帳號"/>
-    <ImageView
-        android:layout_width="320dp"
-        android:layout_height="180dp"
-        android:layout_gravity="center"
-        android:background="#87CEFA"
-        android:padding="10dp"
-        android:layout_margin="25dp"
-        android:src="@drawable/hand" />
-    <ImageView
-        android:layout_width="320dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="#ffaa00"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/hand" />
-
-</LinearLayout>
+        android:id="@+id/tabs"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_below="@id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

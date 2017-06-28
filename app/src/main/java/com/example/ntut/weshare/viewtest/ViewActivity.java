@@ -18,6 +18,7 @@ public class ViewActivity extends AppCompatActivity {
     private TabLayout mTablayout;
     private ViewPager mViewPager;
     private List<PageView> pageList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,8 @@ public class ViewActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(new SamplePagerAdapter());
-        initListener();
+//        mViewPager.setAdapter(new SamplePagerAdapter());
+//        initListener();
     }
 
     private void initListener() {
@@ -82,6 +84,7 @@ public class ViewActivity extends AppCompatActivity {
             container.addView(pageList.get(position));
             return pageList.get(position);
         }
+
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);

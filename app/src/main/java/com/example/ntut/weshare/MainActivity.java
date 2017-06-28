@@ -7,12 +7,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +42,13 @@ import com.example.ntut.weshare.member.MemberRegisterActivity;
 import com.example.ntut.weshare.member.MemberUpdateActivity;
 import com.example.ntut.weshare.member.User;
 import com.example.ntut.weshare.member.historyFragment;
+import com.example.ntut.weshare.viewtest.PageOne;
+import com.example.ntut.weshare.viewtest.PageThree;
+import com.example.ntut.weshare.viewtest.PageTwo;
+import com.example.ntut.weshare.viewtest.PageView;
 import com.example.ntut.weshare.viewtest.ViewActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.ntut.weshare.R.id.etNumber;
@@ -56,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView testUser;
 
     Bitmap bitmap = null;
+
+    private TabLayout mTablayout;
+    private ViewPager mViewPager;
+    private List<PageView> pageList;
+
 
     private final static int REQ_PERMISSIONS = 0;
 
@@ -111,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     private void askPermissions() {
         String[] permissions = {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -126,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
                     REQ_PERMISSIONS);
         }
     }
-
 
 
     private void cleanPreferences() {
@@ -197,7 +208,63 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = new HomeFragment();
         switchFragment(fragment);
         setTitle(R.string.tx_homeIndex);
+
+        mTablayout = (TabLayout) findViewById(R.id.tabs);
+        mTablayout.addTab(mTablayout.newTab().setText("Page one"));
+        mTablayout.addTab(mTablayout.newTab().setText("Page two"));
+        mTablayout.addTab(mTablayout.newTab().setText("Page three"));
+
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(new SamplePagerAdapter());
+        initListener();
+
     }
+
+    private class SamplePagerAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return pageList.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object o) {
+            return o == view;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            container.addView(pageList.get(position));
+            return pageList.get(position);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+    }
+
+    private void initListener() {
+        mTablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTablayout));
+    }
+
 
     private void switchFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -212,6 +279,12 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.tx_open, R.string.tx_close);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
+        ///
+        pageList = new ArrayList<>();
+        pageList.add(new PageOne(MainActivity.this));
+        pageList.add(new PageTwo(MainActivity.this));
+        pageList.add(new PageThree(MainActivity.this));
+        ///
 
         NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
         SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
@@ -228,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
         pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
         String name = pref.getString("name", "尚未登入，請進行登入");
         login = pref.getBoolean("login", false);
-        if(login == true){
+        if (login == true) {
             showAllSpots();
             ivUser.setImageBitmap(bitmap);
             tvUserName.setText(name + "  歡迎回來");
