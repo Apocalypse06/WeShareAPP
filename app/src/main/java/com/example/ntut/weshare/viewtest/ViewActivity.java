@@ -42,8 +42,8 @@ public class ViewActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(new SamplePagerAdapter());
-//        mViewPager.setAdapter(new SamplePagerAdapter());
-//        initListener();
+        mViewPager.setAdapter(new SamplePagerAdapter());
+        initListener();
     }
 
     private void initListener() {
@@ -83,6 +83,7 @@ public class ViewActivity extends AppCompatActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             container.addView(pageList.get(position));
             return pageList.get(position);
+            //return null;
         }
 
         @Override

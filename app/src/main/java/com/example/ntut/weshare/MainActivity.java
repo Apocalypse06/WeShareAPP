@@ -205,9 +205,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initBody() {
-        Fragment fragment = new HomeFragment();
-        switchFragment(fragment);
-        setTitle(R.string.tx_homeIndex);
+//        Fragment fragment = new HomeFragment();
+//        switchFragment(fragment);
+//        setTitle(R.string.tx_homeIndex);
+        //會跟viewPage衝突
 
         mTablayout = (TabLayout) findViewById(R.id.tabs);
         mTablayout.addTab(mTablayout.newTab().setText("Page one"));
@@ -216,7 +217,24 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(new SamplePagerAdapter());
-        initListener();
+
+        mTablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTablayout));
 
     }
 
@@ -245,25 +263,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initListener() {
-        mTablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTablayout));
-    }
+//    private void initListener() {
+//        mTablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                mViewPager.setCurrentItem(tab.getPosition());
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
+//        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTablayout));
+//    }
 
 
     private void switchFragment(Fragment fragment) {
@@ -327,7 +345,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent updateIntent;
                 switch (menuItem.getItemId()) {
                     case R.id.item_home:
-                        initBody();
+                        updateIntent = new Intent();
+                        updateIntent.setClass(MainActivity.this, MainActivity.class);
+                        startActivity(updateIntent);
                         break;
                     case R.id.item_updateMember:
                         updateIntent = new Intent();
