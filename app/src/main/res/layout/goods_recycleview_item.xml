@@ -9,12 +9,13 @@
     card_view:cardCornerRadius="6dp"
     card_view:cardElevation="6dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:orientation="horizontal"
         android:background="#87CEFA"
         android:padding="6dp"
         android:weightSum="1">
@@ -22,61 +23,67 @@
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_height="140dp"
             android:layout_weight="0.16"
-
+            android:layout_marginRight="20dp"
             android:src="@drawable/house" />
 
-        <TextView
-            android:id="@+id/tv_needTime"
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_goodsClass"
-            android:layout_alignStart="@+id/tv_goodsClass"
-            android:layout_below="@+id/tv_goodsClass"
-            android:paddingTop="8dp"
-            android:text="需求期限："
-            android:textSize="15dp" />
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/tv_goodsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="75dp"
+                android:layout_marginRight="75dp"
+                android:text="物品標題"
+                android:textSize="25dp" />
+            <TextView
+                android:id="@+id/tv_goodsClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_goodsTitle"
+                android:layout_alignStart="@+id/tv_goodsTitle"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:text="物資類別："
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/tv_needNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_needTime"
+                android:layout_alignStart="@+id/tv_needTime"
+                android:layout_below="@+id/tv_needTime"
+                android:layout_marginTop="10dp"
+                android:text="需求數量："
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/tv_needTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_goodsClass"
+                android:layout_alignStart="@+id/tv_goodsClass"
+                android:layout_below="@+id/tv_goodsClass"
 
-        <TextView
-            android:id="@+id/tv_goodsClass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_goodsTitle"
-            android:layout_alignStart="@+id/tv_goodsTitle"
-            android:layout_centerVertical="true"
-            android:paddingTop="8dp"
-            android:text="物資類別："
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/tv_needNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_needTime"
-            android:layout_alignStart="@+id/tv_needTime"
-            android:layout_below="@+id/tv_needTime"
-            android:paddingTop="8dp"
-            android:text="需求數量："
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/tv_goodsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="75dp"
-            android:layout_marginRight="75dp"
-            android:text="物品標題"
-            android:textSize="25dp" />
+                android:layout_marginTop="10dp"
+                android:text="需求期限："
+                android:textSize="15dp" />
+        </LinearLayout>
 
 
-    </RelativeLayout>
+
+
+
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

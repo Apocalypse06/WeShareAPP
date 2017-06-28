@@ -136,9 +136,9 @@ public class GoodsListFragment extends Fragment {
         public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
             final Goods good = goods.get(position);
             String url = Common.URL + "GoodsServlet";
-            int id = good.getGoodsNo();
+            int gid = good.getGoodsNo();
             int imageSize = 250;
-            new GoodsGetImageTask(myViewHolder.imageView).execute(url, id, imageSize);
+            new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
 
             myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
             myViewHolder.tvGoodsClass.setText("類型：" + good.getGoodsType());

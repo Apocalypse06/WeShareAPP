@@ -65,6 +65,32 @@ public class Goods implements Serializable {
         this.deadLine = deadLine;
     }
 
+    public Goods(int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, int deadLine) {
+        this.goodsStatus = goodsStatus;
+        this.updateTime = updateTime;
+        this.indId = indId;
+        this.goodsName = goodsName;
+        this.goodsType = goodsType;
+        Qty = qty;
+        this.goodsLoc = goodsLoc;
+        this.goodsNote = goodsNote;
+        this.goodsShipWay = goodsShipWay;
+        this.deadLine = deadLine;
+    }
+
+    public Goods(int goodsNo, int goodsStatus, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, int deadLine) {
+        this.goodsNo = goodsNo;
+        this.goodsStatus = goodsStatus;
+        this.indId = indId;
+        this.goodsName = goodsName;
+        this.goodsType = goodsType;
+        Qty = qty;
+        this.goodsLoc = goodsLoc;
+        this.goodsNote = goodsNote;
+        this.goodsShipWay = goodsShipWay;
+        this.deadLine = deadLine;
+    }
+
     public int getGoodsNo() {
         return goodsNo;
     }
