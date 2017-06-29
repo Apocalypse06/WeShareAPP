@@ -151,7 +151,7 @@ public class GoodsListFragment extends Fragment {
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Fragment fragment = new GoodsBoxFragment();
+                    Fragment fragment = new GoodsInfoFragment();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("goods", good);
                     fragment.setArguments(bundle);

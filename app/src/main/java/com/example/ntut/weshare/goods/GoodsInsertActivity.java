@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
+import com.example.ntut.weshare.icon.InstitutionkFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,9 +49,11 @@ public class GoodsInsertActivity extends AppCompatActivity {
     private int intspDlvWay;
     private ImageView ivImage;
     private int mYear,mMonth,mDay;
+    private long deadlinedate;
     private  byte[] image;
     private String fileName;
     private File file;
+    private Calendar cld;
     Timestamp now= new Timestamp(System.currentTimeMillis());
     private static final int REQUEST_TAKE_PICTURE = 0;
     private static final int REQUEST_PICK_IMAGE = 1;
@@ -94,18 +97,28 @@ public class GoodsInsertActivity extends AppCompatActivity {
                 new DatePickerDialog(GoodsInsertActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String format =  setDateFormat(year,month,day);
+                        String format = setDateFormat(year, month, day);
 //                        tvDate.setText(format);
                         dateButton.setText(format);
+                        cld=c;
+                        cld.set(year,month,day);
+                        long nowtime=c.getTime().getTime();
+                        deadlinedate=cld.getTime().getTime();
+                        Log.e("d",""+cld.getTime().getTime());
+                        if(deadlinedate<=nowtime){
+                            
+
+                        }
                     }
                 }, mYear,mMonth, mDay).show();
             }
-
         });
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Fragment fragment = new GoodsListFragment();
+                switchFragment(fragment);
             }
         });
 
@@ -283,7 +296,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
 
             String url = Common.URL + "GoodsServlet";
             Goods goods = new Goods(1, 1, now, "kitty",goodName ,intspClass,
-                    qtyParseInt, intspLoc, comment, intspDlvWay, 1995);
+                    qtyParseInt, intspLoc, comment, intspDlvWay, deadlinedate);
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
             String action = "goodsInsert";
             int count = 0;

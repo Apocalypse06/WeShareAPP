@@ -17,13 +17,13 @@ public class Goods implements Serializable {
     private String goodsNote;
     private int goodsShipWay;
     private Blob goodsImage = null;
-    private int deadLine;
+    private long deadLine;
 
 
     public Goods() {
     }
 
-    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, Blob goodsImage, int deadLine) {
+    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, Blob goodsImage, long deadLine) {
         this.goodsNo = goodsNo;
         this.goodsStatus = goodsStatus;
         this.updateTime = updateTime;
@@ -38,7 +38,7 @@ public class Goods implements Serializable {
         this.deadLine = deadLine;
     }
 
-    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, int deadLine) {
+    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine) {
         this.goodsNo = goodsNo;
         this.goodsStatus = goodsStatus;
         this.updateTime = updateTime;
@@ -52,7 +52,7 @@ public class Goods implements Serializable {
         this.deadLine = deadLine;
     }
 
-    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, int deadLine) {
+    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine) {
         this.goodsNo = goodsNo;
         this.goodsStatus = goodsStatus;
         this.updateTime = updateTime;
@@ -65,7 +65,7 @@ public class Goods implements Serializable {
         this.deadLine = deadLine;
     }
 
-    public Goods(int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, int deadLine) {
+    public Goods(int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine) {
         this.goodsStatus = goodsStatus;
         this.updateTime = updateTime;
         this.indId = indId;
@@ -78,7 +78,7 @@ public class Goods implements Serializable {
         this.deadLine = deadLine;
     }
 
-    public Goods(int goodsNo, int goodsStatus, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, int deadLine) {
+    public Goods(int goodsNo, int goodsStatus, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine) {
         this.goodsNo = goodsNo;
         this.goodsStatus = goodsStatus;
         this.indId = indId;
@@ -135,7 +135,7 @@ public class Goods implements Serializable {
         return goodsImage;
     }
 
-    public int getDeadLine() {
+    public long getDeadLine() {
         return deadLine;
     }
 
@@ -183,7 +183,7 @@ public class Goods implements Serializable {
         this.goodsImage = goodsImage;
     }
 
-    public void setDeadLine(int deadLine) {
+    public void setDeadLine(long deadLine) {
         this.deadLine = deadLine;
     }
 }
