@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:background="@drawable/edittext_update">
+                android:background="@drawable/edittext_update_y">
 
 
                 <TableLayout
@@ -48,13 +48,13 @@
 
 
                             <ImageView
-                                android:id="@+id/ivUser"
+                                android:id="@+id/ivOrg"
                                 android:layout_width="150dp"
                                 android:layout_height="150dp"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="20dp"
                                 android:onClick="onPickPictureClick"
-                                android:src="@drawable/member_default" />
+                                android:src="@drawable/org_house_default" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -98,42 +98,17 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:text="密碼"
+                                android:text="負責人"
                                 android:textColor="#000000"
                                 android:textSize="20sp" />
 
-                            <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginLeft="10dp"-->
-                            <!--android:inputType="textPassword"-->
-                            <!--android:text="zxcvb1123"-->
-                            <!--android:textColor="#777"-->
-                            <!--android:textSize="18sp" />-->
-
                             <EditText
-                                android:id="@+id/etNewPassword1"
+                                android:id="@+id/etLeader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/edittext_c"
-                                android:hint="輸入新密碼"
-                                android:inputType="textPassword"
+                                android:hint="負責人更新"
                                 android:padding="5dp" />
-                            <EditText
-                                android:id="@+id/etNewPassword2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:background="@drawable/edittext_c"
-                                android:hint="驗證新密碼"
-                                android:inputType="textPassword"
-                                android:padding="5dp" />
-                            <!--<ImageView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_gravity="center"-->
-                            <!--android:layout_marginLeft="130dp"-->
-                            <!--android:background="@drawable/arrow_icon" />-->
                         </LinearLayout>
 
 
@@ -157,31 +132,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="姓名"
+                            android:text="機構類型"
                             android:textColor="#000000"
                             android:textSize="18sp" />
 
-                        <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:text="Jack"-->
-                        <!--android:textColor="#777"-->
-                        <!--android:textSize="18sp" />-->
-
-                        <EditText
-                            android:id="@+id/etName"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/edittext_c"
-                            android:hint="輸入名稱"
-                            android:padding="5dp" />
-                        <!--<ImageView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center"-->
-                        <!--android:layout_marginLeft="180dp"-->
-                        <!--android:background="@drawable/arrow_icon" />-->
+                            android:background="@drawable/edittext_c">
+
+                            <Spinner
+                                android:id="@+id/spOrgType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"></Spinner>
+                        </LinearLayout>
                     </LinearLayout>
 
 
@@ -199,7 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="電話"
+                            android:text="立案核准"
                             android:textColor="#000000"
                             android:textSize="18sp" />
 
@@ -212,11 +176,11 @@
                         <!--android:textSize="18sp" />-->
 
                         <EditText
-                            android:id="@+id/etNumber"
+                            android:id="@+id/etRegisterNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_c"
-                            android:hint="輸入電話號碼"
+                            android:hint="輸入立案核准"
                             android:inputType="number"
                             android:padding="5dp" />
 
@@ -237,7 +201,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="Email"
+                            android:text="請勸募許可"
                             android:textColor="#000000"
                             android:textSize="18sp" />
 
@@ -251,11 +215,11 @@
                         <!--android:textSize="18sp" />-->
 
                         <EditText
-                            android:id="@+id/etEmail"
+                            android:id="@+id/etRaiseNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_c"
-                            android:hint="輸入Email"
+                            android:hint="請輸入勸募許可"
                             android:padding="5dp" />
 
                     </LinearLayout>
@@ -275,7 +239,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="地址"
+                            android:text="簡介"
                             android:textColor="#000000"
                             android:textSize="18sp" />
 
@@ -288,11 +252,14 @@
                         <!--android:textSize="18sp" />-->
 
                         <EditText
-                            android:id="@+id/etAddress"
+                            android:id="@+id/etIntRo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_c"
-                            android:hint="輸入地址"
+                            android:hint="簡介更新"
+                            android:inputType="textMultiLine"
+                            android:maxLines="10"
+                            android:minLines="3"
                             android:padding="5dp" />
 
                     </LinearLayout>

@@ -78,5 +78,8 @@
     <string name="tx_registerOrgOne">註冊社福</string>
     <string name="tx_next">下一步</string>
     <string name="tx_UpState">上一步</string>
+    <string name="tx_enterUpdate">確認修改</string>
+    <string name="tx_updateOrg">修改社福資訊</string>
+    <string name="tx_updateInd">修改會員資訊</string>
 
 </resources>

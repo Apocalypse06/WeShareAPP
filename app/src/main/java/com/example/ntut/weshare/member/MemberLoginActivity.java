@@ -13,6 +13,8 @@ import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
 
+import java.util.List;
+
 public class MemberLoginActivity extends AppCompatActivity {
     private final static String TAG = "UserLoginActivity";
 
@@ -53,8 +55,10 @@ public class MemberLoginActivity extends AppCompatActivity {
             String action = "userLogin";
             //int count = 0;
             String userName = null;
+            List<User> users = null;
             try {
                 userName = new UserLoginTask().execute(url, action, user).get();
+                users = new UserGetAllTask().execute(url, account).get();
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
@@ -62,14 +66,14 @@ public class MemberLoginActivity extends AppCompatActivity {
                 Common.showToast(MemberLoginActivity.this, R.string.msg_LoginFail);
             } else {
                 Common.showToast(MemberLoginActivity.this, R.string.msg_LoginSuccess);
-
                 SharedPreferences pref = getSharedPreferences(Common.PREF_FILE,
                         MODE_PRIVATE);
                 pref.edit()
                         .putBoolean("login", true)
                         .putString("user", account)
                         .putString("password", password)
-                        .putString("name", userName)
+                        .putString("name", users.get(0).getName())
+                        .putInt("type", users.get(0).getIdType())
                         .apply();
                 setResult(RESULT_OK);
                 Intent updateIntent = new Intent();

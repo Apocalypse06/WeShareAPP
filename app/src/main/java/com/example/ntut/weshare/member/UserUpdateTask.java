@@ -23,25 +23,13 @@ class UserUpdateTask extends AsyncTask<Object, Integer, Integer> {
 
     @Override
     protected Integer doInBackground(Object... params) {
-        String result ;
+        String result;
         JsonObject jsonObject = new JsonObject();
         String url = params[0].toString();
         String action = params[1].toString();
         jsonObject.addProperty("action", action);//動作，新增
 
-        if(action.equals("userRegister") || action.equals("userUpdate")) {
-            User user = (User) params[2];
-            jsonObject.addProperty("user", new Gson().toJson(user));//純文字
-            if (params[3] != null) {
-                String imageBase64 = params[3].toString();
-                jsonObject.addProperty("imageBase64", imageBase64);//圖片
-            }
-            else {
-                String imageBase64 = "NoImageChange";
-                jsonObject.addProperty("imageBase64", imageBase64);//圖片
-            }
-
-        }else if(action.equals("userInRegister") ){
+        if (action.equals("userRegister") || action.equals("userUpdate")) {
             User user = (User) params[2];
             jsonObject.addProperty("user", new Gson().toJson(user));//純文字
             if (params[3] != null) {
@@ -49,19 +37,30 @@ class UserUpdateTask extends AsyncTask<Object, Integer, Integer> {
                 jsonObject.addProperty("imageBase64", imageBase64);//圖片
             }
 //            else {
-//                String imageBase64 = "0";
+//                String imageBase64 = "NoImageChange";
 //                jsonObject.addProperty("imageBase64", imageBase64);//圖片
 //            }
+
+        } else if (action.equals("userInRegister")) {
+            User user = (User) params[2];
+            jsonObject.addProperty("user", new Gson().toJson(user));//純文字
+            if (params[3] != null) {
+                String imageBase64 = params[3].toString();
+                jsonObject.addProperty("imageBase64", imageBase64);//圖片
+            }
             InstiutionBean ins = (InstiutionBean) params[4];
             jsonObject.addProperty("ins", new Gson().toJson(ins));//純文字
             if (params[5] != null) {
                 String imageBase64In = params[5].toString();
                 jsonObject.addProperty("imageBase64In", imageBase64In);//圖片
             }
-//            else {
-//                String imageBase64 = "0";
-//                jsonObject.addProperty("imageBase64In", imageBase64);//圖片
-//            }
+        } else if (action.equals("updateOrg")) {
+            InstiutionBean org = (InstiutionBean) params[2];
+            jsonObject.addProperty("org", new Gson().toJson(org));//純文字
+            if (params[3] != null) {
+                String imageBase64Org = params[3].toString();
+                jsonObject.addProperty("imageBase64Org", imageBase64Org);//圖片
+            }
         }
         try {
             result = getRemoteData(url, jsonObject.toString());

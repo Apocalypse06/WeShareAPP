@@ -38,6 +38,8 @@ import com.example.ntut.weshare.icon.SearchFragment;
 import com.example.ntut.weshare.member.MemberLoginActivity;
 import com.example.ntut.weshare.member.MemberRegisterTypeActivity;
 import com.example.ntut.weshare.member.MemberUpdateActivity;
+import com.example.ntut.weshare.member.MemberUpdateIndActivity;
+import com.example.ntut.weshare.member.MemberUpdateOrgActivity;
 import com.example.ntut.weshare.member.historyFragment;
 import java.util.ArrayList;
 import java.util.List;
@@ -320,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.item_updateMember:
                         updateIntent = new Intent();
-                        updateIntent.setClass(MainActivity.this, MemberUpdateActivity.class);
+                        updateIntent.setClass(MainActivity.this, MemberUpdateIndActivity.class);
                         startActivity(updateIntent);
                         break;
                     case R.id.item_history:
@@ -343,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 //                        switchFragment(fragment);
 //                        setTitle(R.string.tx_feedback);
                         updateIntent = new Intent();
-                        updateIntent.setClass(MainActivity.this, FeedbackFragment.class);
+                        updateIntent.setClass(MainActivity.this, MemberUpdateOrgActivity.class);
                         startActivity(updateIntent);
                         break;
                     case R.id.item_login:
