@@ -1,8 +1,17 @@
 package com.example.ntut.weshare.goods;
 
-/**
- * Created by NTUT on 2017/6/20.
- */
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-public class GoodsUpdateActivity {
+import com.example.ntut.weshare.R;
+
+
+public class GoodsUpdateActivity extends AppCompatActivity {
+    private static final String TAG = "GoodsUpdateActivity";
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.goods_update_fragment);
+    }
+
+
 }

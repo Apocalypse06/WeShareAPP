@@ -21,19 +21,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
-import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
-import com.example.ntut.weshare.icon.InstitutionkFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class GoodsInsertActivity extends AppCompatActivity {
@@ -63,21 +59,21 @@ public class GoodsInsertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_new_fragment);
 
-        spClass=(Spinner) findViewById(R.id.sp_class);
+        spClass=(Spinner) findViewById(R.id.sp_upclass);
         final String[] classes = {"食","衣","住","行","育","樂"};
         ArrayAdapter<String> classList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, classes);
         spClass.setAdapter(classList);
 
 
-        spLoc=(Spinner) findViewById(R.id.sp_loc);
+        spLoc=(Spinner) findViewById(R.id.upsp_loc);
         final String[] loc = {"北","中","南"};
         ArrayAdapter<String> locList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, loc);
         spLoc.setAdapter(locList);
         findViews();
 
-        spDlvWay=(Spinner) findViewById(R.id.sp_dlvWay);
+        spDlvWay=(Spinner) findViewById(R.id.sp_updlvWay);
         final  String[] dlv={"面交","寄送","面交寄送皆可"};
         ArrayAdapter<String> dlvList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, dlv);
@@ -86,7 +82,8 @@ public class GoodsInsertActivity extends AppCompatActivity {
 
 
         final Button backButton = (Button)findViewById(R.id.bt_BackGBList);
-        final Button dateButton = (Button)findViewById(R.id.bt_date);
+        final Button dateButton = (Button)findViewById(R.id.bt_update);
+
         dateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -131,9 +128,9 @@ public class GoodsInsertActivity extends AppCompatActivity {
 
     private void findViews() {
         ivImage = (ImageView) findViewById(R.id.iv_image);
-        etName = (EditText) findViewById(R.id.et_goodsname);
-        etQty = (EditText) findViewById(R.id.et_qty);
-        etComment = (EditText) findViewById(R.id.et_comment);
+        etName = (EditText) findViewById(R.id.et_upgoodsname);
+        etQty = (EditText) findViewById(R.id.et_upqty);
+        etComment = (EditText) findViewById(R.id.et_upcomment);
 
 
     }
@@ -224,7 +221,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
         }
 
         //日期選擇驗證
-        final Button dateButton = (Button)findViewById(R.id.bt_date);
+        final Button dateButton = (Button)findViewById(R.id.bt_update);
         if(dateButton.getText().equals("日期選擇")){
             Toast.makeText(this, R.string.msg_DateIsInvalid,
                     Toast.LENGTH_SHORT).show();

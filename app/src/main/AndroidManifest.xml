@@ -45,8 +45,16 @@
             android:label="@string/tx_updateMember"
             android:launchMode="singleTask" />
         <activity
+            android:name=".goods.GoodsInfoActivity"
+            android:label="@string/tx_GoodsInfo"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".goods.GoodsInsertActivity"
-            android:label="@string/text_GoodsUpdate"
+            android:label="@string/text_GoodsInsert"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".goods.GoodsUpdateActivity"
+            android:label="@string/tx_GoodsUpdate"
             android:launchMode="singleTask" />
         <activity
             android:name=".member.MemberRegisterTypeActivity"
