@@ -17,6 +17,10 @@ public class User implements Serializable {
     private int idType = 1;
     private java.sql.Timestamp createDate;
 
+    public User(String userId) {
+        this.userId = userId;
+    }
+
     public User(String userId, String password, String name, String tal, String email, String address) {
         this.userId = userId;
         this.password = password;

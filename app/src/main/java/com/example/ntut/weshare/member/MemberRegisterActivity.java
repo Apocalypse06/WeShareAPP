@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
-import com.example.ntut.weshare.goods.GoodsInsertActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Timestamp;

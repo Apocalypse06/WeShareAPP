@@ -64,6 +64,15 @@
             android:name=".member.Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".member.MamberRegisterOrgPageOneActivity"
+            android:label="@string/tx_registerOrg"
+            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".member.MamberRegisterOrgPageTwoActivity"
+            android:label="@string/tx_registerOrg"
+            android:launchMode="singleTask"></activity>
+
     </application>
 
 </manifest>

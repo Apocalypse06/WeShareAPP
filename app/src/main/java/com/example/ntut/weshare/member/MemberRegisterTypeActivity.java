@@ -26,7 +26,7 @@ public class MemberRegisterTypeActivity extends AppCompatActivity {
 
     public void onReOrgClick(View view) {
         Intent updateIntent = new Intent();
-        updateIntent.setClass(MemberRegisterTypeActivity.this, MemberRegisterOrgActivity.class);
+        updateIntent.setClass(MemberRegisterTypeActivity.this, MamberRegisterOrgPageOneActivity.class);
         startActivity(updateIntent);
     }
 

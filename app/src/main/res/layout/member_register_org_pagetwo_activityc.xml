@@ -8,26 +8,40 @@
         android:id="@+id/activity_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.example.ntut.weshare.MainActivity"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        tools:context="com.example.ntut.weshare.MainActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/tx_defualtPicture" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="180dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/tx_defualtPicture" />
+
+            <ImageView
+                android:id="@+id/ivHelp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="130dp"
+                android:onClick="onHelpClick"
+                android:src="@drawable/weshare_logo" />
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/ivUser"
+            android:id="@+id/ivOrg"
             android:layout_width="150dp"
             android:layout_height="150sp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:onClick="onPickPictureClick"
+            android:onClick="onPickPictureOrgClick"
             android:src="@drawable/org_house_default" />
 
         <TextView
@@ -150,14 +164,33 @@
                 android:layout_marginRight="30dp"
                 android:background="@drawable/edittext_c"
                 android:hint="請輸入簡介"
-                android:minLines="3"
-                android:maxLines="10"
                 android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:minLines="3"
                 android:padding="5dp" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
+                android:onClick="onUpStateClick"
+                android:text="@string/tx_UpState" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRegisterClick"
+                android:text="@string/tx_register" />
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>
