@@ -42,14 +42,14 @@ public class GoodsListFragment extends Fragment {
         // 從偏好設定檔中取得登入狀態來決定是否顯示「登出」
 
         SharedPreferences pref = this.getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
-        String user = pref.getString("user","");
-        if(user==""){
+        String user = pref.getString("user", "");
+        if (user == "") {
             Toast.makeText(this.getActivity(), "請註冊登入WeShare後，再過來設定您的物資箱喔~",
                     Toast.LENGTH_SHORT).show();
             getActivity().finish();
             Intent MainIntent = new Intent(getActivity(), MainActivity.class);
             startActivity(MainIntent);
-        }else{
+        } else {
             Toast.makeText(this.getActivity(), user,
                     Toast.LENGTH_SHORT).show();
         }
@@ -89,15 +89,15 @@ public class GoodsListFragment extends Fragment {
         if (Common.networkConnected(getActivity())) {
             String url = Common.URL + "GoodsServlet";
             SharedPreferences pref = this.getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
-            String user = pref.getString("user","");
+            String user = pref.getString("user", "");
             List<Goods> goods = null;
             try {
-                goods = new GoodsGetAllTask().execute(url,user).get();
+                goods = new GoodsGetAllTask().execute(url, user).get();
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
             if (goods == null || goods.isEmpty()) {
-               // Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
+                // Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
             } else {
                 rvGoods.setAdapter(new GoodsRecyclerViewAdapter(getActivity(), goods));
             }
@@ -105,6 +105,7 @@ public class GoodsListFragment extends Fragment {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -143,7 +144,7 @@ public class GoodsListFragment extends Fragment {
             myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
             myViewHolder.tvGoodsClass.setText("類型：" + good.getGoodsType());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String exdate = sdf.format(good.getDeadLine());
+            final String exdate = sdf.format(good.getDeadLine());
             myViewHolder.tvNeedTime.setText("到期日：" + exdate);
             myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
 
@@ -151,14 +152,16 @@ public class GoodsListFragment extends Fragment {
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Fragment fragment = new GoodsInfoFragment();
+
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), GoodsInfoActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("goods", good);
-                    fragment.setArguments(bundle);
-                    switchFragment(fragment);
+
+                    bundle.putSerializable("goods",good);
+                   intent.putExtra("intentGoods",bundle);
+                    startActivity(intent);
                 }
             });
-
 
         }
 
@@ -177,16 +180,6 @@ public class GoodsListFragment extends Fragment {
             }
         }
     }
-
-    private void switchFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction =
-                getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.body, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
-
-
 }
 
 
