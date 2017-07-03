@@ -17,7 +17,7 @@ public class FeedbackFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 //        View view = inflater.inflate(R.layout., container, false);
-        View view = inflater.inflate(R.layout.member_uadate_org_activity, container, false);
+        View view = inflater.inflate(R.layout.message_sent_item, container, false);
 
         return view;
     }

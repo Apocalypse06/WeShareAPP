@@ -1,97 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:card_view="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/gb_cardviewboard"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_margin="6dp"--><!--android:padding="6dp"--><!--card_view:cardBackgroundColor="#ffdddddd"--><!--card_view:cardCornerRadius="6dp"--><!--card_view:cardElevation="6dp">-->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@drawable/chat"
     android:orientation="horizontal"
     android:weightSum="1">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/llsend"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:background="@drawable/edittext_update">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="15dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/user_black" />
+            android:src="@drawable/member_default" />
 
-        <ScrollView
-            android:layout_width="200dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="5dp">
 
-            <TextView
-                android:layout_width="230dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                android:hint="文字內容"
-                android:text="劍之初-石抽地雷
-屬性、種族：木/人類
-隊長技：
-主動技：
+        <TextView
+            android:id="@+id/tvsendMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:hint="文字內容" />
 
-★百世經綸·一頁書-石抽大獎
-屬性、種族：光/人類
-隊長技：玄光雄傑闖天下
-光、暗屬性攻擊力3.5倍，隊伍只有光、暗屬性成員時，光符石兼具暗符石效果，且人類成員的攻擊力有50%機率提升1.5倍(機率可疊加)。
-主動技：笑盡英雄-技12/CD8
-2回合內，所有人類成員的攻擊力與隊伍中攻擊力最高的人類成員相同。若首批消除所有光符石，下回合將心符石轉為光強化符石。
-隊伍技：以「百世經綸·一頁書」、「刀狂劍痴·葉小釵」做為隊長、戰友，且隊伍只有3個光屬性人類及3個暗屬性人類，全隊生命、回復提升1.5倍，隊長、戰友進場時的技能CD減少5。
+    </LinearLayout>
 
-★刀狂劍痴·葉小釵-石抽大獎
-屬性、種族：暗/人類
-隊長技：幽冥雄傑闖天下
-光、暗屬性攻擊力3.5倍，隊伍只有光、暗屬性成員時，暗符石兼具光符石效果，且人類成員的攻擊力有50%機率提升1.5倍(機率可疊加)。
-主動技：天劍三絕-技12/CD5
-將光屬性人類、暗屬性人類的攻擊力減少50%，並將減少的攻擊力加入自身的攻擊力，效果直到再次開啟技能或死亡後消失。發動技能時，將隨機3粒符石轉為暗符石(水、火、木符石優先轉換)。
-隊伍技：以「百世經綸·一頁書」、「刀狂劍痴·葉小釵」做為隊長、戰友，且隊伍只有3個光屬性人類及3個暗屬性人類，全隊生命、回復提升1.5倍，隊長、戰友進場時的技能CD減少5。
-隊伍技：以「百世經綸·一頁書」、「刀狂劍痴·葉小釵」做為隊長、戰友，葉小釵的技能「天劍三絕」改為「天劍三絕·強」：吸收的攻擊力變100%再多1.5倍、轉的珠子是強化的，還多了1組光珠。
+    <LinearLayout
+        android:id="@+id/llget"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="65dp"
+        android:background="@drawable/edittext_update">
 
-道教頂峰·劍子仙跡-雙週副本
-屬性、種族：水/人類
-隊長技：
-主動技：仙影飄跡-技12/CD5
-將場上隨機9粒符石轉為3粒水強化符石、3粒火符石、3粒木符石，當水、火、木屬性成員同時發動攻擊時，當前技能CD減少3。
-隊伍技：當「道教頂峰·劍子仙跡」、「儒門龍首·疏樓龍宿」、「聖行者·佛劍分說」同在一個隊伍，三人的三圍提升1.2倍。
+        <TextView
+            android:id="@+id/tvgetMsg"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:hint="文字內容" />
 
-儒門龍首·疏樓龍宿-雙週副本
-屬性、種族：火/
-隊長技：
-主動技：
-
-聖行者·佛劍分說-雙週副本
-屬性、種族：木/
-隊長技：
-主動技：
-
-六絃之首·蒼-修羅場「道境絃首現身」取得
-屬性、種族：光/人類
-隊長技：玄光怒嘯
-光屬性攻擊力3.5倍
-主動技：怒海蒼流-技12/CD8
-光屬性攻擊力1.5倍、光屬性人類攻擊力2倍，效果持續直到沒有首批消除所有光符石。
-
-天策真龍
-屬性、種族：光/
-隊長技：
-主動技：
-
-風之痕
-屬性、種族：暗/
-隊長技：
-主動技：
-
-毀滅之神·棄天帝-地獄級關卡取得
-屬性、種族：暗/神族
-隊長技：
-主動技：" />
-        </ScrollView>
     </LinearLayout>
 
 
-</LinearLayout>
+</LinearLayout><!--</android.support.v7.widget.CardView>-->

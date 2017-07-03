@@ -236,6 +236,7 @@ public class MemberUpdateOrgActivity extends AppCompatActivity {
                 Common.showToast(MemberUpdateOrgActivity.this, R.string.msg_updateFail);
             } else {
                 Common.showToast(MemberUpdateOrgActivity.this, R.string.msg_updateSuccessAndLogin);
+                finish();
             }
         } else
 

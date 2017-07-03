@@ -6,41 +6,25 @@
     tools:context="com.example.ntut.weshare.home.HomeFragment">
 
 
-    <android.support.design.widget.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tx_wishPool" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tx_loveTo" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tx_changeStuff" />
-    </android.support.design.widget.TabLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="500dp"
+        android:background="#ffffff">
         <!--SwipeRefreshLayout下拉更新-->
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvNews"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvMsgs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
 
     </RelativeLayout>
@@ -49,15 +33,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <EditText
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/edittext_c"
+            android:gravity="top"
             android:hint="請輸入文字內容"
-            android:textSize="25sp"/>
-        <Button
-            android:layout_width="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:minLines="3"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:id="@+id/edText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="確定送出" />
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="確定送出" />
+
+            <Button
+                android:id="@+id/btPic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="圖片選擇" />
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

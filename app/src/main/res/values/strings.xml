@@ -81,5 +81,12 @@
     <string name="tx_enterUpdate">確認修改</string>
     <string name="tx_updateOrg">修改社福資訊</string>
     <string name="tx_updateInd">修改會員資訊</string>
+    <string name="tx_UpdateOrg">社福修改</string>
+    <string name="tx_UpdateInd">個人修改</string>
+    <string name="tx_back">返回</string>
+    <string name="tx_update">修改資料</string>
+    <string name="msg_NoMsgsFound">尚未有訊息</string>
+    <string name="tx_replyMsg">回復訊息</string>
+    <string name="msg_SendFail">寄送失敗</string>
 
 </resources>

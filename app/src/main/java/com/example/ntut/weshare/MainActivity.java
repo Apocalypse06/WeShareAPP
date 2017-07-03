@@ -33,14 +33,14 @@ import com.example.ntut.weshare.feedback.FeedbackFragment;
 import com.example.ntut.weshare.goods.GoodsListFragment;
 import com.example.ntut.weshare.goods.GoodsMsgFragment;
 import com.example.ntut.weshare.icon.InstitutionkFragment;
-import com.example.ntut.weshare.icon.MessageFragment;
+import com.example.ntut.weshare.message.MessageFragment;
 import com.example.ntut.weshare.icon.SearchFragment;
 import com.example.ntut.weshare.member.MemberLoginActivity;
 import com.example.ntut.weshare.member.MemberRegisterTypeActivity;
-import com.example.ntut.weshare.member.MemberUpdateActivity;
 import com.example.ntut.weshare.member.MemberUpdateIndActivity;
-import com.example.ntut.weshare.member.MemberUpdateOrgActivity;
+import com.example.ntut.weshare.member.MemberUpdateOrgChooseActivity;
 import com.example.ntut.weshare.member.historyFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -321,9 +321,17 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(updateIntent);
                         break;
                     case R.id.item_updateMember:
-                        updateIntent = new Intent();
-                        updateIntent.setClass(MainActivity.this, MemberUpdateIndActivity.class);
-                        startActivity(updateIntent);
+                        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+                        int type = pref.getInt("type", 1);
+                        if (type == 1) {
+                            updateIntent = new Intent();
+                            updateIntent.setClass(MainActivity.this, MemberUpdateIndActivity.class);
+                            startActivity(updateIntent);
+                        } else if (type == 2) {
+                            updateIntent = new Intent();
+                            updateIntent.setClass(MainActivity.this, MemberUpdateOrgChooseActivity.class);
+                            startActivity(updateIntent);
+                        }
                         break;
                     case R.id.item_history:
                         fragment = new historyFragment();
@@ -341,12 +349,9 @@ public class MainActivity extends AppCompatActivity {
                         setTitle(R.string.tx_goodsMsg);
                         break;
                     case R.id.item_feedback:
-//                        fragment = new FeedbackFragment();
-//                        switchFragment(fragment);
-//                        setTitle(R.string.tx_feedback);
-                        updateIntent = new Intent();
-                        updateIntent.setClass(MainActivity.this, MemberUpdateOrgActivity.class);
-                        startActivity(updateIntent);
+                        fragment = new FeedbackFragment();
+                        switchFragment(fragment);
+                        setTitle(R.string.tx_feedback);
                         break;
                     case R.id.item_login:
                         updateIntent = new Intent();

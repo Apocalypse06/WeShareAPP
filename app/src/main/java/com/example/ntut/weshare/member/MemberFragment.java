@@ -14,7 +14,6 @@ public class MemberFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.member_uadate_fragment, container, false);
-
         return view;
     }
 

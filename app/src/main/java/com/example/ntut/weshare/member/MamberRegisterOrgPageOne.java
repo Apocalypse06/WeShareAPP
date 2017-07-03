@@ -67,7 +67,7 @@ public class MamberRegisterOrgPageOne extends Fragment {
             //String OK = getArguments().getString("Enter");
             Common.showToast(getActivity(), "OK");
         } else {
-            Common.showToast(getActivity(), "幹");
+            Common.showToast(getActivity(), "");
         }
     }
 

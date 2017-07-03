@@ -41,8 +41,8 @@
             android:label="@string/tx_login"
             android:launchMode="singleTask" />
         <activity
-            android:name=".member.MemberUpdateActivity"
-            android:label="@string/tx_updateMember"
+            android:name=".member.MemberUpdateOrgChooseActivity"
+            android:label="@string/tx_updateOrg"
             android:launchMode="singleTask" />
         <activity
             android:name=".member.MemberUpdateIndActivity"
@@ -50,7 +50,7 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".member.MemberUpdateOrgActivity"
-            android:label="@string/tx_updateOrg"
+            android:label="@string/tx_update"
             android:launchMode="singleTask" />
         <activity
             android:name=".goods.GoodsInsertActivity"
@@ -69,16 +69,16 @@
             android:label="@string/tx_registerOrg"
             android:launchMode="singleTask" />
         <activity
-            android:name=".member.Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".member.MamberRegisterOrgPageOneActivity"
             android:label="@string/tx_registerOrg"
             android:launchMode="singleTask"></activity>
         <activity
             android:name=".member.MamberRegisterOrgPageTwoActivity"
             android:label="@string/tx_registerOrg"
+            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".message.MessageReplyActivity"
+            android:label="@string/tx_replyMsg"
             android:launchMode="singleTask"></activity>
 
     </application>

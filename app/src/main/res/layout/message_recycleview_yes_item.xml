@@ -14,32 +14,31 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/ivStuff"
+            android:id="@+id/ivUserPic"
             android:layout_width="200px"
             android:layout_height="200px"
             android:layout_margin="15dp"
-            android:src="@drawable/user" />
+            android:src="@drawable/member_default" />
 
         <TextView
-            android:id="@+id/tvStuffName"
+            android:id="@+id/tvMsgName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/ivStuff"
             android:text="使用者名稱"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_alignTop="@+id/ivUserPic"
+            android:layout_centerHorizontal="true" />
 
         <TextView
-            android:id="@+id/tvAmount"
+            android:id="@+id/tvText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/tvStuffName"
-            android:layout_below="@id/tvStuffName"
-            android:layout_marginTop="15dp"
             android:text="最後回覆"
-            android:textColor="#555555" />
+            android:textColor="#555555"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/tvMsgName"
+            android:layout_alignStart="@+id/tvMsgName" />
 
         <!--<TextView-->
         <!--android:id="@+id/tvAccount"-->
