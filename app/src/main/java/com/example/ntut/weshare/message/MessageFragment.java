@@ -2,6 +2,7 @@ package com.example.ntut.weshare.message;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -116,6 +117,7 @@ public class MessageFragment extends Fragment {
                 accountId = msg.getMsgSourceId();//取的文字的id
             }
             int imageSize = 250;//要縮圖的大小像素，要放在250*250的框
+
             //這邊啟動AsyncTask，抓圖片
             //不用.get()，不然會卡畫面，這邊利用SpotGetImageTask(myViewHolder.imageView)放圖，myViewHolder.imageView將imageView元件傳給AsyncTask，再用onPostExecute()將圖貼上
             new UserGetImageTask(myViewHolder.ivUserPic).execute(url, accountId, imageSize);//.execute(網址, 圖片id, 這邊做縮圖imageSize，在server端縮圖完再傳過來)
@@ -145,53 +147,6 @@ public class MessageFragment extends Fragment {
                     switchFragment(fragment);
                 }
             });
-//            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View view) {
-//                    PopupMenu popupMenu = new PopupMenu(getActivity(), view, Gravity.END);
-//                    popupMenu.inflate(R.menu.popup_menu);
-//                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                        @Override
-//                        public boolean onMenuItemClick(MenuItem item) {
-//                            switch (item.getItemId()) {
-//                                case R.id.update:
-//                                    Intent updateIntent = new Intent(getActivity(),
-//                                            SpotUpdateActivity.class);
-//                                    Bundle bundle = new Bundle();
-//                                    bundle.putSerializable("spot", spot);
-//                                    updateIntent.putExtras(bundle);
-//                                    startActivity(updateIntent);
-//                                    break;
-//                                case R.id.delete:
-//                                    if (Common.networkConnected(getActivity())) {
-//                                        String url = Common.URL + "SpotServlet";
-//                                        String action = "spotDelete";
-//                                        int count = 0;
-//                                        try {
-//                                            count = new SpotUpdateTask().execute(url, action, spot, null).get();
-//                                        } catch (Exception e) {
-//                                            Log.e(TAG, e.toString());
-//                                        }
-//                                        if (count == 0) {
-//                                            Common.showToast(getActivity(), R.string.msg_DeleteFail);
-//                                        } else {
-//                                            spots.remove(spot);
-//                                            SpotsRecyclerViewAdapter.this.notifyDataSetChanged();
-//                                            Common.showToast(getActivity(), R.string.msg_DeleteSuccess);
-//                                        }
-//                                    } else {
-//                                        Common.showToast(getActivity(), R.string.msg_NoNetwork);
-//                                    }
-//                            }
-//                            return true;
-//                        }
-//                    });
-//                    popupMenu.show();
-//                    return true;
-//                }
-//                }
-
-//                );
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {

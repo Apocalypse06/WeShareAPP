@@ -11,10 +11,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -25,7 +25,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout mTablayout;
     private ViewPager mViewPager;
-    private List<PageView> pageList;
+    private List<Fragment> fragmentList;
+    private FragmentManager fragmentManager;
 
 
     private final static int REQ_PERMISSIONS = 0;
@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Fragment fragment;
+        drawerLayout.closeDrawers();
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -206,8 +207,10 @@ public class MainActivity extends AppCompatActivity {
         mTablayout.addTab(mTablayout.newTab().setText("送愛心"));
         mTablayout.addTab(mTablayout.newTab().setText("以物易物"));
 
+        MainActivity.FragmentAdapter fAdapter = new MainActivity.FragmentAdapter(getSupportFragmentManager(), fragmentList);//Adapter有多個項目，(,顯示內容)
+
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(new SamplePagerAdapter());
+        mViewPager.setAdapter(fAdapter);
 
         mTablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -229,29 +232,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private class SamplePagerAdapter extends PagerAdapter {
+    private class FragmentAdapter extends FragmentStatePagerAdapter {//FragmentManager
+        List<Fragment> fragmentList;
+
+        private FragmentAdapter(FragmentManager fm, List<Fragment> memberList) {
+            super(fm);
+            this.fragmentList = memberList;
+        }
 
         @Override
         public int getCount() {
-            return pageList.size();
+            return fragmentList.size();
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object o) {
-            return o == view;
+        public Fragment getItem(int position) {//position第幾個項目
+            Fragment member = fragmentList.get(position);
+            //MemberFragment fragment = new MemberFragment();//View圖片
+            //Bundle args = new Bundle();
+            //args.putSerializable("member", member);//資料Data
+            //fragment.setArguments(args);
+            return fragmentList.get(position);
         }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(pageList.get(position));
-            return pageList.get(position);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
     }
 
 
@@ -269,10 +271,10 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
         ///
-        pageList = new ArrayList<>();
-        pageList.add(new PageOne(MainActivity.this));
-        pageList.add(new PageTwo(MainActivity.this));
-        pageList.add(new PageThree(MainActivity.this));
+        fragmentList = new ArrayList<>();
+        fragmentList.add(new wishFragment());
+        fragmentList.add(new loveFragment());
+        fragmentList.add(new loveFragment());
         ///
 
         NavigationView view = (NavigationView) findViewById(R.id.navigation_view);

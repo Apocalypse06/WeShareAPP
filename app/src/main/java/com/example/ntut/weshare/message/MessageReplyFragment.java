@@ -2,6 +2,7 @@ package com.example.ntut.weshare.message;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,10 +35,9 @@ public class MessageReplyFragment extends Fragment {
     private Button btPic;
     private MessageBean msg;
     List<MessageBean> msgs = null;
+    Bitmap bitmap = null;
 
-    private ImageView ivUserPic;
     private TextView tvsendMsg, tvgetMsg;
-    private LinearLayout llsend, llget;
 
 
     @Nullable
@@ -77,41 +77,43 @@ public class MessageReplyFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
     public void onSendClick(View view) {
-        String text = edText.getText().toString().trim();
-        int count = 0;
-        String url = Common.URL + "MsgServlet";
-        String action = "sendMsg";
-        MessageBean msgg = null;
-        if (Common.networkConnected(getActivity())) {//傳送到server端
-            SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
-            String account = pref.getString("user", "");
-            if(account.equalsIgnoreCase(msgs.get(0).getMsgSourceId())){
-                msgg = new MessageBean(1, 1, account, msgs.get(0).getMsgEndId(), text, msgs.get(0).getRoomNo());
-            }else if (account.equalsIgnoreCase(msgs.get(0).getMsgEndId())){
-                msgg = new MessageBean(1, 1, account, msgs.get(0).getMsgSourceId(), text, msgs.get(0).getRoomNo());
-            }
-            //String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);//圖片資料
-            try {
-                count = new SendMsgTask().execute(url, action, msgg).get();
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
-            }
+        if (!"".equals(edText.getText().toString().trim())) {
+            String text = edText.getText().toString().trim();
+            int count = 0;
+            String url = Common.URL + "MsgServlet";
+            String action = "sendMsg";
+            MessageBean msgg = null;
+            if (Common.networkConnected(getActivity())) {//傳送到server端
+                SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+                String account = pref.getString("user", "");
+                if (account.equalsIgnoreCase(msgs.get(0).getMsgSourceId())) {
+                    msgg = new MessageBean(1, 1, account, msgs.get(0).getMsgEndId(), text, msgs.get(0).getRoomNo());
+                } else if (account.equalsIgnoreCase(msgs.get(0).getMsgEndId())) {
+                    msgg = new MessageBean(1, 1, account, msgs.get(0).getMsgSourceId(), text, msgs.get(0).getRoomNo());
+                }
+                //String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);//圖片資料
+                try {
+                    count = new SendMsgTask().execute(url, action, msgg).get();
+                } catch (Exception e) {
+                    Log.e(TAG, e.toString());
+                }
 
-            if (count == 0) {
-                Common.showToast(getActivity(), R.string.msg_SendFail);
-            }else {
-                //Common.showToast(getActivity(), R.string.msg_RegisterSuccess);
-                showAllMsgs();
+                if (count == 0) {
+                    Common.showToast(getActivity(), R.string.msg_SendFail);
+                } else {
+                    //Common.showToast(getActivity(), R.string.msg_RegisterSuccess);
+                    edText.setText("");
+                    rvMsgs.scrollToPosition(msgs.size() - 1);
+                    showAllMsgs();
+                }
+            } else {
+                Common.showToast(getActivity(), R.string.msg_NoNetwork);
             }
-        } else {
-            Common.showToast(getActivity(), R.string.msg_NoNetwork);
         }
-
     }
 
 
@@ -120,11 +122,16 @@ public class MessageReplyFragment extends Fragment {
             String url = Common.URL + "MsgServlet";
             SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
             String account = pref.getString("user", "");
+
+            String urll = Common.URL + "UserServlet";
+            int imageSize = 80;
             try {
                 if (account.equalsIgnoreCase(msg.getMsgSourceId())) {
                     msgs = new MsgGetOneTask().execute(url, account, msg.getMsgEndId()).get();
+                    bitmap = new UserGetImageTask(null).execute(urll, msg.getMsgEndId(), imageSize).get();//.execute(網址, 圖片id, 這邊做縮圖imageSize，在server端縮圖完再傳過來)
                 } else if (account.equalsIgnoreCase(msg.getMsgEndId())) {
                     msgs = new MsgGetOneTask().execute(url, account, msg.getMsgSourceId()).get();
+                    bitmap = new UserGetImageTask(null).execute(urll, msg.getMsgSourceId(), imageSize).get();
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
@@ -132,8 +139,8 @@ public class MessageReplyFragment extends Fragment {
             if (msgs == null || msgs.isEmpty()) {
                 Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
             } else {
-                //Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
                 rvMsgs.setAdapter(new MessageReplyFragment.MsgsRecyclerViewAdapter(getActivity(), msgs));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
+                rvMsgs.scrollToPosition(msgs.size() - 1);
             }
         } else {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
@@ -169,35 +176,36 @@ public class MessageReplyFragment extends Fragment {
         @Override
         public void onBindViewHolder(MessageReplyFragment.MsgsRecyclerViewAdapter.MyViewHolder myViewHolder, int position) {//將圖文顯示出來
             final MessageBean msg = msgs.get(position);//文字資料
-//            String url = Common.URL + "MsgServlet";
-//            int id = msg.getMsgNo();//取的文字的id
-//            int imageSize = 250;//要縮圖的大小像素，要放在250*250的框
-//            //這邊啟動AsyncTask，抓圖片
-            //不用.get()，不然會卡畫面，這邊利用SpotGetImageTask(myViewHolder.imageView)放圖，myViewHolder.imageView將imageView元件傳給AsyncTask，再用onPostExecute()將圖貼上
-            //new MsgGetImageTask(myViewHolder.ivUserPic).execute(url, id, imageSize);//.execute(網址, 圖片id, 這邊做縮圖imageSize，在server端縮圖完再傳過來)
+            //要縮圖的大小像素，要放在250*250的框
+            //這邊啟動AsyncTask，抓圖片
 
             SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
             String account = pref.getString("user", "");
             if (account.equalsIgnoreCase(msg.getMsgSourceId())) {
-                llsend.setVisibility(View.GONE);
-                llget.setVisibility(View.VISIBLE);
+                myViewHolder.llsend.setVisibility(View.GONE);
+                myViewHolder.llget.setVisibility(View.VISIBLE);
                 myViewHolder.tvgetMsg.setText(msg.getMsgText());
             } else if (account.equalsIgnoreCase(msg.getMsgEndId())) {
-                llsend.setVisibility(View.VISIBLE);
-                llget.setVisibility(View.GONE);
+                myViewHolder.llsend.setVisibility(View.VISIBLE);
+                myViewHolder.llget.setVisibility(View.GONE);
+                myViewHolder.ivUserOnePic.setImageBitmap(bitmap);
                 myViewHolder.tvsendMsg.setText(msg.getMsgText());
             }
-            //myViewHolder.tvMsgOne.setText(msg.getMsgText());
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            //            ImageView ivUserPic;
+            ImageView ivUserOnePic;
             TextView tvsendMsg, tvgetMsg;
-//            LinearLayout llsend,llget;
+            LinearLayout llsend, llget;
+
+            SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+            String account = pref.getString("user", "");
+            String urll = Common.URL + "UserServlet";
+            int imageSize = 80;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                ivUserPic = (ImageView) itemView.findViewById(R.id.ivUserPic);
+                ivUserOnePic = (ImageView) itemView.findViewById(R.id.ivUserOnePic);
                 llsend = (LinearLayout) itemView.findViewById(R.id.llsend);
                 llget = (LinearLayout) itemView.findViewById(R.id.llget);
                 tvsendMsg = (TextView) itemView.findViewById(R.id.tvsendMsg);

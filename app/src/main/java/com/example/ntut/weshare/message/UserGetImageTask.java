@@ -22,11 +22,6 @@ class UserGetImageTask extends AsyncTask<Object, Integer, Bitmap> {
     private final static String ACTION = "getImage";
     private final WeakReference<ImageView> imageViewWeakReference;
     //WeakReference<ImageView>是避免在極端的狀態下(user快速滑動造成大量載入)造成OOM，WeakReference是會在資料沒有再參照下，馬上會直接回收資源(記憶體)
-//    private final WeakReference<ImageView> imageViewWeakReference;
-//
-//    UserGetImageTask(ImageView imageView) {
-//        this.imageViewWeakReference = new WeakReference<>(imageView);
-//    }
 
     UserGetImageTask(ImageView imageView) {
         this.imageViewWeakReference = new WeakReference<>(imageView);
