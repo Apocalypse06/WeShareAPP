@@ -29,7 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/iv_image">
+        android:layout_below="@+id/iv_upimage">
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -104,21 +104,8 @@
                 android:hint="請輸入數量"
                 android:textSize="15dp" />
 
-            <EditText
-                android:id="@+id/et_upgoodsname"
-                android:layout_width="180dp"
-                android:layout_height="25dp"
-                android:layout_above="@+id/et_upqty"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="25dp"
-                android:layout_marginRight="25dp"
-                android:hint="請輸入名稱"
-                android:textSize="15dp" />
-
             <Spinner
-                android:id="@+id/upsp_loc"
+                android:id="@+id/sp_uploc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/sp_upclass"
@@ -132,7 +119,7 @@
                 android:id="@+id/sp_upclass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/upsp_loc"
+                android:layout_above="@+id/sp_uploc"
                 android:layout_alignEnd="@+id/et_upqty"
                 android:layout_alignLeft="@+id/et_upqty"
                 android:layout_alignRight="@+id/et_upqty"
@@ -167,8 +154,8 @@
                 android:text="日期選擇"
                 android:layout_alignBaseline="@+id/textView13"
                 android:layout_alignBottom="@+id/textView13"
-                android:layout_alignLeft="@+id/upsp_loc"
-                android:layout_alignStart="@+id/upsp_loc" />
+                android:layout_alignLeft="@+id/sp_uploc"
+                android:layout_alignStart="@+id/sp_uploc" />
 
             <EditText
                 android:id="@+id/et_upcomment"
@@ -182,8 +169,8 @@
                 android:minLines="3"
                 android:maxLines="10"
                 android:layout_below="@+id/bt_update"
-                android:layout_alignRight="@+id/upsp_loc"
-                android:layout_alignEnd="@+id/upsp_loc"
+                android:layout_alignRight="@+id/sp_uploc"
+                android:layout_alignEnd="@+id/sp_uploc"
                 android:layout_alignLeft="@+id/bt_update"
                 android:layout_alignStart="@+id/bt_update" />
 
@@ -201,25 +188,14 @@
                 android:text="新增物品"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onNewGoodsResult"
-                android:id="@+id/bt_newGoodSubmit"
+                android:onClick="onUpdateGoodsResult"
+                android:id="@+id/bt_updateGoodSubmit"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/et_upcomment"
                 android:layout_alignRight="@id/et_upcomment"
                 android:layout_alignEnd="@id/et_upcomment"
                 android:layout_marginBottom="51dp"
                 android:layout_marginRight="15dp"/>
-            <Button
-                android:text="取消並返回"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bt_BackGBList"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/et_upcomment"
-                android:layout_alignLeft="@id/textView14"
-                android:layout_alignStart="@id/textView14"
-                android:layout_marginBottom="51dp"
-                android:layout_marginLeft="15dp"/>
 
 
             <Spinner
@@ -228,20 +204,44 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/sp_updlvWay"
                 android:layout_above="@+id/bt_update"
-                android:layout_below="@+id/upsp_loc"
-                android:layout_alignRight="@+id/upsp_loc"
-                android:layout_alignEnd="@+id/upsp_loc"
-                android:layout_alignLeft="@+id/upsp_loc"
-                android:layout_alignStart="@+id/upsp_loc" />
+                android:layout_below="@+id/sp_uploc"
+                android:layout_alignRight="@+id/sp_uploc"
+                android:layout_alignEnd="@+id/sp_uploc"
+                android:layout_alignLeft="@+id/sp_uploc"
+                android:layout_alignStart="@+id/sp_uploc" />
+
+            <Button
+                android:text="取消並返回"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_BackGood"
+                android:onClick="onBackgood"
+                android:layout_alignBaseline="@+id/bt_updateGoodSubmit"
+                android:layout_alignBottom="@+id/bt_updateGoodSubmit"
+                android:layout_alignRight="@+id/textView14"
+                android:layout_alignEnd="@+id/textView14" />
+
+            <EditText
+                android:id="@+id/et_upgoodsname"
+                android:layout_width="180dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="23dp"
+                android:layout_marginRight="23dp"
+                android:hint="請輸入名稱"
+                android:textSize="15dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_above="@+id/et_upqty" />
 
         </RelativeLayout>
     </ScrollView>
 
     <ImageView
-        android:id="@+id/iv_image"
+        android:id="@+id/iv_upimage"
         android:layout_width="320dp"
         android:layout_height="180dp"
-        android:onClick="onPickPictureClick"
+        android:onClick="onPickUpPictureClick"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="79dp"

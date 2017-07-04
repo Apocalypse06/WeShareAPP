@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,230 +25,230 @@
             android:text="@string/tx_changeStuff" />
     </android.support.design.widget.TabLayout>
 
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="211dp"
+            android:onClick="onPickPictureClick"
+
+            app:srcCompat="@mipmap/ic_launcher"
+             />
+
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="200px"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/iv_image">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView10"
-                android:layout_alignStart="@+id/textView10"
-                android:layout_below="@+id/textView10"
-                android:paddingBottom="15dp"
-                android:text="類別"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/textView12"
-                android:layout_alignRight="@+id/textView12"
-                android:layout_below="@+id/textView15"
-                android:paddingBottom="15dp"
-                android:text="有效日期"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView13"
-                android:layout_alignStart="@+id/textView13"
-                android:layout_below="@+id/textView13"
-                android:text="詳細說明"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView9"
-                android:layout_alignStart="@+id/textView9"
-                android:layout_below="@+id/textView9"
-                android:paddingBottom="15dp"
-                android:text="數量"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="33dp"
-                android:layout_marginStart="33dp"
-                android:paddingBottom="15dp"
-                android:text="物品名稱"
-                android:textSize="25dp" />
-
-            <EditText
-                android:id="@+id/et_upqty"
-                android:layout_width="180dp"
-                android:layout_height="25dp"
-                android:layout_above="@+id/sp_upclass"
-                android:layout_alignLeft="@+id/et_upgoodsname"
-                android:layout_alignStart="@+id/et_upgoodsname"
-                android:layout_below="@+id/textView9"
-                android:inputType="numberDecimal"
-                android:hint="請輸入數量"
-                android:textSize="15dp" />
-
-            <EditText
-                android:id="@+id/et_upgoodsname"
-                android:layout_width="180dp"
-                android:layout_height="25dp"
-                android:layout_above="@+id/et_upqty"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="25dp"
-                android:layout_marginRight="25dp"
-                android:hint="請輸入名稱"
-                android:textSize="15dp" />
-
-            <Spinner
-                android:id="@+id/upsp_loc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:id="@+id/sv_newgood"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/sp_upclass"
-                android:layout_alignLeft="@+id/sp_upclass"
-                android:layout_alignRight="@+id/sp_upclass"
-                android:layout_alignStart="@+id/sp_upclass"
-                android:layout_below="@+id/textView11"
-                android:layout_above="@+id/textView15" />
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-            <Spinner
-                android:id="@+id/sp_upclass"
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="物品名稱"
+                    android:textSize="25dp"
+                    android:paddingBottom="25dp"
+                    />
+
+                <EditText
+                    android:id="@+id/et_goodsname"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:hint="請輸入名稱"
+                    android:textSize="25dp"
+                    android:layout_weight="0.31"
+                    android:layout_marginLeft="50dp"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/upsp_loc"
-                android:layout_alignEnd="@+id/et_upqty"
-                android:layout_alignLeft="@+id/et_upqty"
-                android:layout_alignRight="@+id/et_upqty"
-                android:layout_alignStart="@+id/et_upqty"
-                android:layout_below="@+id/textView10" />
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="15dp"
-                android:text="商品地點"
-                android:textSize="25dp"
-                android:layout_below="@+id/textView11"
-                android:layout_alignLeft="@+id/textView11"
-                android:layout_alignStart="@+id/textView11" />
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="25dp"
+                    android:text="數量"
+                    android:textSize="25dp" />
+                <EditText
+                    android:id="@+id/et_qty"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:hint="請輸入數量"
+                    android:textSize="25dp"
+                    android:layout_weight="0.23"
+                    android:layout_marginLeft="100dp"/>
 
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="15dp"
-                android:text="運送方式"
-                android:textSize="25dp"
-                android:layout_below="@+id/textView12"
-                android:layout_alignLeft="@+id/textView11"
-                android:layout_alignStart="@+id/textView11" />
-            <Button
-                android:id="@+id/bt_update"
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:text="日期選擇"
-                android:layout_alignBaseline="@+id/textView13"
-                android:layout_alignBottom="@+id/textView13"
-                android:layout_alignLeft="@+id/upsp_loc"
-                android:layout_alignStart="@+id/upsp_loc" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/et_upcomment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textMultiLine"
-                android:hint="請輸入內容"
-                android:gravity="top|left"
-                android:lines="8"
-                android:minLines="3"
-                android:maxLines="10"
-                android:layout_below="@+id/bt_update"
-                android:layout_alignRight="@+id/upsp_loc"
-                android:layout_alignEnd="@+id/upsp_loc"
-                android:layout_alignLeft="@+id/bt_update"
-                android:layout_alignStart="@+id/bt_update" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_showDate"
-                android:layout_alignBaseline="@+id/bt_update"
-                android:layout_alignBottom="@+id/bt_update"
-                android:layout_alignRight="@+id/et_upcomment"
-                android:layout_alignEnd="@+id/et_upcomment"
-                android:layout_marginRight="12dp"
-                android:layout_marginEnd="12dp" />
-            <Button
-                android:text="新增物品"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onNewGoodsResult"
-                android:id="@+id/bt_newGoodSubmit"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/et_upcomment"
-                android:layout_alignRight="@id/et_upcomment"
-                android:layout_alignEnd="@id/et_upcomment"
-                android:layout_marginBottom="51dp"
-                android:layout_marginRight="15dp"/>
-            <Button
-                android:text="取消並返回"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bt_BackGBList"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/et_upcomment"
-                android:layout_alignLeft="@id/textView14"
-                android:layout_alignStart="@id/textView14"
-                android:layout_marginBottom="51dp"
-                android:layout_marginLeft="15dp"/>
-
-
-            <Spinner
-
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/sp_updlvWay"
-                android:layout_above="@+id/bt_update"
-                android:layout_below="@+id/upsp_loc"
-                android:layout_alignRight="@+id/upsp_loc"
-                android:layout_alignEnd="@+id/upsp_loc"
-                android:layout_alignLeft="@+id/upsp_loc"
-                android:layout_alignStart="@+id/upsp_loc" />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/txgoodstate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="供需型態"
+                    android:paddingBottom="25dp"
+                    android:textSize="25dp"/>
+                <Spinner
+                    android:id="@+id/sp_state"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="50dp"/>
+            </LinearLayout>
 
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="物資類別"
+                    android:paddingBottom="25dp"
+                    android:textSize="25dp" />
+
+                <Spinner
+                    android:id="@+id/sp_class"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="50dp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="25dp"
+                    android:text="商品地點"
+                    android:textSize="25dp"
+                    />
+
+                <Spinner
+                    android:id="@+id/sp_loc"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="50dp"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="25dp"
+                    android:text="運送方式"
+                    android:textSize="25dp"
+                    />
+
+                <Spinner
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/sp_dlvWay"
+                    android:layout_marginLeft="50dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="25dp"
+                    android:text="有效日期"
+                    android:textSize="25dp" />
+                <Button
+                    android:id="@+id/bt_date"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="日期選擇"
+                    android:layout_marginLeft="100dp"
+                    android:layout_weight="0.05" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="詳細說明"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"/>
+                <EditText
+                    android:id="@+id/et_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:hint="請輸入內容"
+                    android:gravity="top|left"
+                    android:lines="8"
+                    android:minLines="3"
+                    android:maxLines="10"
+                    android:layout_marginLeft="50dp"
+                    />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <Button
+                        android:text="取消並返回"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bt_BackGBList"
+                        android:onClick="onBackgood"
+                        android:layout_marginLeft="25dp"
+                         />
+                    <Button
+                        android:text="新增物品"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onNewGoodsResult"
+                        android:id="@+id/bt_NewGoodsResult"
+                        android:layout_marginLeft="100dp"
+                        />
+                    </LinearLayout>
+
+
+            </LinearLayout>
+
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="320dp"
-        android:layout_height="180dp"
-        android:onClick="onupPickPictureClick"
+</LinearLayout>
 
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="79dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        />
-
-</RelativeLayout>

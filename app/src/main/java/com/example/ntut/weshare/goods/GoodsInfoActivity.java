@@ -47,6 +47,7 @@ public class GoodsInfoActivity extends AppCompatActivity{
     public TextView tvplace;
     public Goods good;
 
+
     String action;
     List<Goods> GoodsOrigin = null;
 
@@ -75,7 +76,7 @@ public class GoodsInfoActivity extends AppCompatActivity{
         setContentView(R.layout.goodsbox_info_fragment);
         final Button updateButton = (Button) findViewById(R.id.btUpdate);
         final Button infobackButton = (Button) findViewById(R.id.btBack);
-        final Button deleteButton = (Button) findViewById(R.id.btDel);
+        //final Button deleteButton = (Button) findViewById(R.id.btDel);
         Bundle bundleFromList=this.getIntent().getBundleExtra("intentGoods");
         good =(Goods) bundleFromList.getSerializable("goods");
 
@@ -102,15 +103,33 @@ public class GoodsInfoActivity extends AppCompatActivity{
             }
         });
 
-        //刪除按鈕
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        //刪除按鈕
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (Common.networkConnected(new GoodsInfoActivity())) {
+//                    String url = Common.URL + "GoodsServlet";
+//                    String action = "goodsDelete";
+//                    int count = 0;
+//                    try {
+//                        count = new GoodsUpdateTask().execute(url, action, good).get();
+//                    } catch (Exception e) {
+//                        Log.e(TAG, e.toString());
+//                    }
+//                    if (count == 0) {
+//                        Common.showToast(new GoodsInfoActivity(), R.string.msg_DeleteFail);
+//                    } else {
+//                        Common.showToast(new GoodsInfoActivity(), R.string.msg_DeleteSuccess);
+//                    }
+//                } else {
+//                    Common.showToast(new GoodsInfoActivity(), R.string.msg_NoNetwork);
+//                }
+//            }
+//        });
         findViews();
     }
+
+
 
     private void findViews() {
         ivgimage= (ImageView) findViewById(R.id.ivGImage);
@@ -156,9 +175,9 @@ public class GoodsInfoActivity extends AppCompatActivity{
         fragmentTransaction.commit();
     }
 
-        public String changeLoc2String(int type) {
+        public String changeLoc2String(int loc) {
         String gloc = "";
-        switch (type) {
+        switch (loc) {
             case 1:
                 gloc = "北";
                 break;
@@ -187,8 +206,34 @@ public class GoodsInfoActivity extends AppCompatActivity{
             case 4:
                 gtype = "行";
                 break;
+            case 5:
+                gtype = "育";
+                break;
+            case 6:
+                gtype = "樂";
+                break;
         }
         return gtype;
     }
 
+    public void btdelete(View view) {
+        if (Common.networkConnected(this)) {
+            String url = Common.URL + "GoodsServlet";
+            String action = "goodsDelete";
+            int count = 0;
+            try {
+                count = new GoodsUpdateTask().execute(url, action, good,null).get();
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+            if (count == 0) {
+                Common.showToast(this, R.string.msg_DeleteFail);
+            } else {
+                Common.showToast(this, R.string.msg_DeleteSuccess);
+                finish();
+            }
+        } else {
+            Common.showToast(this, R.string.msg_NoNetwork);
+        }
+    }
 }

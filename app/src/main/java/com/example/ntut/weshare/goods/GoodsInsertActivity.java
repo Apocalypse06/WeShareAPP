@@ -1,7 +1,9 @@
 package com.example.ntut.weshare.goods;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +22,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -41,6 +44,8 @@ public class GoodsInsertActivity extends AppCompatActivity {
     private int intspClass;
     private Spinner spLoc;
     private int intspLoc;
+    private Spinner spState;
+    private int intspState;
     private Spinner spDlvWay;
     private int intspDlvWay;
     private ImageView ivImage;
@@ -50,30 +55,38 @@ public class GoodsInsertActivity extends AppCompatActivity {
     private String fileName;
     private File file;
     private Calendar cld;
+    private ScrollView sv;
     Timestamp now= new Timestamp(System.currentTimeMillis());
-    private static final int REQUEST_TAKE_PICTURE = 0;
     private static final int REQUEST_PICK_IMAGE = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_new_fragment);
+        findViews();
 
-        spClass=(Spinner) findViewById(R.id.sp_upclass);
+
+        spState=(Spinner) findViewById(R.id.sp_state);
+        final String[] states = {"許願池(募資)","送愛心(捐贈)","以物易物"};
+        ArrayAdapter<String> stateList = new ArrayAdapter<>(GoodsInsertActivity.this,
+                android.R.layout.simple_spinner_dropdown_item, states);
+        spState.setAdapter(stateList);
+
+        spClass=(Spinner) findViewById(R.id.sp_class);
         final String[] classes = {"食","衣","住","行","育","樂"};
         ArrayAdapter<String> classList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, classes);
         spClass.setAdapter(classList);
 
 
-        spLoc=(Spinner) findViewById(R.id.upsp_loc);
+        spLoc=(Spinner) findViewById(R.id.sp_loc);
         final String[] loc = {"北","中","南"};
         ArrayAdapter<String> locList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, loc);
         spLoc.setAdapter(locList);
-        findViews();
 
-        spDlvWay=(Spinner) findViewById(R.id.sp_updlvWay);
+
+        spDlvWay=(Spinner) findViewById(R.id.sp_dlvWay);
         final  String[] dlv={"面交","寄送","面交寄送皆可"};
         ArrayAdapter<String> dlvList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, dlv);
@@ -82,7 +95,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
 
 
         final Button backButton = (Button)findViewById(R.id.bt_BackGBList);
-        final Button dateButton = (Button)findViewById(R.id.bt_update);
+        final Button dateButton = (Button)findViewById(R.id.bt_date);
 
         dateButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -103,7 +116,6 @@ public class GoodsInsertActivity extends AppCompatActivity {
                         deadlinedate=cld.getTime().getTime();
                         Log.e("d",""+cld.getTime().getTime());
                         if(deadlinedate<=nowtime){
-                            
 
                         }
                     }
@@ -114,8 +126,8 @@ public class GoodsInsertActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new GoodsListFragment();
-                switchFragment(fragment);
+                finish();
+
             }
         });
 
@@ -128,11 +140,11 @@ public class GoodsInsertActivity extends AppCompatActivity {
 
     private void findViews() {
         ivImage = (ImageView) findViewById(R.id.iv_image);
-        etName = (EditText) findViewById(R.id.et_upgoodsname);
-        etQty = (EditText) findViewById(R.id.et_upqty);
-        etComment = (EditText) findViewById(R.id.et_upcomment);
-
-
+        etName = (EditText) findViewById(R.id.et_goodsname);
+        etQty = (EditText) findViewById(R.id.et_qty);
+        etComment = (EditText) findViewById(R.id.et_comment);
+//        sv=(ScrollView)findViewById(R.id.sv_newgood);
+//        sv.fullScroll(View.FOCUS_DOWN);
     }
 //    public void onTakePictureClick(View view) {
 //        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -221,7 +233,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
         }
 
         //日期選擇驗證
-        final Button dateButton = (Button)findViewById(R.id.bt_update);
+        final Button dateButton = (Button)findViewById(R.id.bt_date);
         if(dateButton.getText().equals("日期選擇")){
             Toast.makeText(this, R.string.msg_DateIsInvalid,
                     Toast.LENGTH_SHORT).show();
@@ -241,8 +253,23 @@ public class GoodsInsertActivity extends AppCompatActivity {
             int qtyParseInt=Integer.parseInt(etQty.getText().toString().trim());
             String comment=etComment.getText().toString().trim();
             String goodName=etName.getText().toString().trim();
+            SharedPreferences pref = this.getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
+            String user = pref.getString("user","");
 
             //判斷依照地區給予int值
+
+            switch (spState.getSelectedItem().toString()){
+                case "許願池(募資)":
+                    intspState=1;
+                    break;
+                case "送愛心(捐贈)":
+                    intspState=2;
+                    break;
+                case "以物易物":
+                    intspState=3;
+                    break;
+            }
+
             switch (spLoc.getSelectedItem().toString()) {
                 case "北":
                     intspLoc = 1;
@@ -254,7 +281,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
                     intspLoc = 3;
                     break;
                 default:
-                    intspLoc=0;
+                    intspLoc = 0;
             }
 
             //判斷依照物品種類給予int值
@@ -292,7 +319,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
             }
 
             String url = Common.URL + "GoodsServlet";
-            Goods goods = new Goods(1, 1, now, "kitty",goodName ,intspClass,
+            Goods goods = new Goods(1,intspState, now, user,goodName ,intspClass,
                     qtyParseInt, intspLoc, comment, intspDlvWay, deadlinedate);
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
             String action = "goodsInsert";

@@ -1,16 +1,12 @@
 package com.example.ntut.weshare.goods;
 
-import android.app.FragmentHostCallback;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,18 +21,17 @@ import android.widget.Toast;
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
+import com.example.ntut.weshare.member.User;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 
-public class GoodsListFragment extends Fragment {
-    private static final String TAG = "GoodsListFragment";
+public class GoodsBoxPageWish extends Fragment {
+    private static final String TAG ="GoodsBoxPageWish";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvGoods;
 
-
-    @Override
     public void onResume() {
         super.onResume();
         // 從偏好設定檔中取得登入狀態來決定是否顯示「登出」
@@ -54,15 +49,13 @@ public class GoodsListFragment extends Fragment {
                     Toast.LENGTH_SHORT).show();
         }
     }
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.goodsbox_fragment, container, false);
+        View view = inflater.inflate(R.layout.goodsbox_page_wish_fragment, container, false);
 
         swipeRefreshLayout =
-                (SwipeRefreshLayout) view.findViewById(R.id.gb_swipeRefreshLayout);
+                (SwipeRefreshLayout) view.findViewById(R.id.gb_swipeRefreshLayoutW);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -72,7 +65,7 @@ public class GoodsListFragment extends Fragment {
             }
         });
 
-        rvGoods = (RecyclerView) view.findViewById(R.id.rvGoods);
+        rvGoods = (RecyclerView) view.findViewById(R.id.rvGoodsW);
         rvGoods.setLayoutManager(new LinearLayoutManager(getActivity()));
         FloatingActionButton btAdd = (FloatingActionButton) view.findViewById(R.id.btAdd);
         btAdd.setOnClickListener(new View.OnClickListener() {
@@ -86,28 +79,29 @@ public class GoodsListFragment extends Fragment {
         return view;
     }
 
+
     private void showAllGoods() {
         if (Common.networkConnected(getActivity())) {
             String url = Common.URL + "GoodsServlet";
             SharedPreferences pref = this.getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
             String user = pref.getString("user", "");
+            String ACTION="getSelfWish";
             List<Goods> goods = null;
             try {
-                goods = new GoodsGetAllTask().execute(url, user).get();
+                goods = new GoodsGetSelfTask().execute(url, user, ACTION).get();
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
             if (goods == null || goods.isEmpty()) {
                 // Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
             } else {
-                rvGoods.setAdapter(new GoodsRecyclerViewAdapter(getActivity(), goods));
+                rvGoods.setAdapter(new GoodsBoxPageWish.GoodsRecyclerViewAdapter(getActivity(), goods));
 
             }
         } else {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
         }
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -129,60 +123,59 @@ public class GoodsListFragment extends Fragment {
         public int getItemCount() {
             return goods.size();
         }
-
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = layoutInflater.inflate(R.layout.goods_recycleview_item, parent, false);
-            return new MyViewHolder(itemView);
+            return new GoodsBoxPageWish.GoodsRecyclerViewAdapter.MyViewHolder(itemView);
         }
 
-        @Override
-        public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
-            final Goods good = goods.get(position);
-            String url = Common.URL + "GoodsServlet";
-            int gid = good.getGoodsNo();
-            int imageSize = 250;
-            new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
+    @Override
+    public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
+        final Goods good = goods.get(position);
+        String url = Common.URL + "GoodsServlet";
+        int gid = good.getGoodsNo();
+        int imageSize = 250;
+        new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
 
-            myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
-            myViewHolder.tvGoodsClass.setText("類型：" + changeType2String(good.getGoodsType()));
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            final String exdate = sdf.format(good.getDeadLine());
-            myViewHolder.tvNeedTime.setText("到期日：" + exdate);
-            myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
+        myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
+        myViewHolder.tvGoodsClass.setText("類型：" + changeType2String(good.getGoodsType()));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final String exdate = sdf.format(good.getDeadLine());
+        myViewHolder.tvNeedTime.setText("到期日：" + exdate);
+        myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
 
 
-            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), GoodsInfoActivity.class);
-                    Bundle bundle = new Bundle();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), GoodsInfoActivity.class);
+                Bundle bundle = new Bundle();
 
-                    bundle.putSerializable("goods",good);
-                   intent.putExtra("intentGoods",bundle);
-                    startActivity(intent);
-                }
-            });
-
-        }
-
-        class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView;
-            TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
-
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                imageView = (ImageView) itemView.findViewById(R.id.iv_image);
-                tvGoodsTitle = (TextView) itemView.findViewById(R.id.tv_goodsTitle);
-                tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
-                tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
-                tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
-
+                bundle.putSerializable("goods",good);
+                intent.putExtra("intentGoods",bundle);
+                startActivity(intent);
             }
+        });
+
+    }
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+        TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            imageView = (ImageView) itemView.findViewById(R.id.iv_image);
+            tvGoodsTitle = (TextView) itemView.findViewById(R.id.tv_goodsTitle);
+            tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
+            tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
+            tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
+
         }
     }
+    }
+
     public String changeType2String(int type) {
         String gtype = "";
         switch (type) {
@@ -208,5 +201,3 @@ public class GoodsListFragment extends Fragment {
         return gtype;
     }
 }
-
-
