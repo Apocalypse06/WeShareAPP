@@ -129,7 +129,14 @@ public class GoodsInfoActivity extends AppCompatActivity {
         showInfo(good);
     }
 
+
     private void showInfo(Goods good) {
+
+        String url = Common.URL + "GoodsServlet";
+        int gid = good.getGoodsNo();
+        int imageSize = 400;
+        new GoodsGetImageTask(ivgimage).execute(url, gid, imageSize);
+
         tvgname.setText(good.getGoodsName());
         tvgtype.setText("類型：" + changeType2String(good.getGoodsType()));
         tvplace.setText("所在地：" + changeLoc2String(good.getGoodsLoc()));

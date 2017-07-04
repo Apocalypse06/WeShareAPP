@@ -79,6 +79,13 @@ public class GoodsUpdateActivity extends AppCompatActivity {
             }
         });
 
+        //預先載入圖片
+        String url = Common.URL + "GoodsServlet";
+        int gid = good.getGoodsNo();
+        int imageSize = 400;
+        new GoodsGetImageTask(ivImage).execute(url, gid, imageSize);
+
+
         //預覽先前的"類別"選項並可被修改
         spClass=(Spinner) findViewById(R.id.sp_upclass);
         final String[] classes = {"食","衣","住","行","育","樂"};
@@ -169,7 +176,7 @@ public class GoodsUpdateActivity extends AppCompatActivity {
     public void loadTextInfo(){
         etName.setHint(good.getGoodsName());
         etQty.setHint(""+good.getQty());
-        etComment.setHint((good.getGoodsNote()));
+        etComment.setText((good.getGoodsNote()));
     }
     private void findViews() {
         ivImage = (ImageView) findViewById(R.id.iv_upimage);
@@ -230,10 +237,7 @@ public class GoodsUpdateActivity extends AppCompatActivity {
 
 
         //相片驗證
-        if (image == null) {
-            Common.showToast(this, R.string.msg_NoImage);
-            return;
-        }
+       
 
 
 
