@@ -54,6 +54,18 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".goods.GoodsInsertActivity"
+            android:label="@string/text_GoodsInsert"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".goods.GoodsBoxPageActivity"
+            android:label="@string/text_GoodsBox"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".goods.GoodsInfoActivity"
+            android:label="@string/text_GoodsInfo"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".goods.GoodsUpdateActivity"
             android:label="@string/text_GoodsUpdate"
             android:launchMode="singleTask" />
         <activity

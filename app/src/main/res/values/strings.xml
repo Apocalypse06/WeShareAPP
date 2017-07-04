@@ -88,5 +88,10 @@
     <string name="msg_NoMsgsFound">尚未有訊息</string>
     <string name="tx_replyMsg">回復訊息</string>
     <string name="msg_SendFail">寄送失敗</string>
+    <string name="msg_deleteFail">刪除失敗</string>
+    <string name="msg_deleteSuccess">刪除成功</string>
+    <string name="text_GoodsInsert">新增物資</string>
+    <string name="text_GoodsBox">物資箱</string>
+    <string name="text_GoodsInfo">物資資訊</string>
 
 </resources>
