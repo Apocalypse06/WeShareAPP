@@ -1,6 +1,5 @@
 package com.example.ntut.weshare.goods;
 
-import android.app.FragmentHostCallback;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,16 +8,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -132,7 +131,7 @@ public class GoodsListFragment extends Fragment {
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = layoutInflater.inflate(R.layout.goods_recycleview_item, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.goods_recycleview_wish, parent, false);
             return new MyViewHolder(itemView);
         }
 
@@ -150,6 +149,55 @@ public class GoodsListFragment extends Fragment {
             final String exdate = sdf.format(good.getDeadLine());
             myViewHolder.tvNeedTime.setText("到期日：" + exdate);
             myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
+
+            myViewHolder.ivMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+                    popupMenu.getMenuInflater().inflate(R.menu.menu_goodcardview, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                           switch (item.getItemId()){
+                               case R.id.goodsMenuUpdate:
+                                   Intent intent = new Intent();
+                                   intent.setClass(getActivity(), GoodsUpdateActivity.class);
+                                   Bundle bundle = new Bundle();
+
+                                   bundle.putSerializable("goods", good);
+                                   intent.putExtra("intentGoods", bundle);
+                                   startActivity(intent);
+                                   break;
+                               case R.id.goodsMenuDelete:
+                                   if (Common.networkConnected(getActivity())) {
+                                       String url = Common.URL + "GoodsServlet";
+                                       String action = "goodsDelete";
+                                       int count = 0;
+                                       try {
+                                           count = new GoodsUpdateTask().execute(url, action, good, null).get();
+                                       } catch (Exception e) {
+                                           Log.e(TAG, e.toString());
+                                       }
+                                       if (count == 0) {
+                                           Common.showToast(getActivity(), R.string.msg_deleteFail);
+                                       } else {
+                                           Common.showToast(getActivity(), R.string.msg_deleteSuccess);
+                                       }
+                                   } else {
+                                       Common.showToast(getActivity(), R.string.msg_NoNetwork);
+                                   }
+                                   break;
+                           }
+
+                            return true;
+                        }
+
+                    });
+
+                    popupMenu.show();
+
+                }});
 
 
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +217,7 @@ public class GoodsListFragment extends Fragment {
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView;
+            ImageView imageView,ivMenu;
             TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
 
             public MyViewHolder(View itemView) {
@@ -179,6 +227,7 @@ public class GoodsListFragment extends Fragment {
                 tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
                 tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
                 tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
+                ivMenu=(ImageView)itemView.findViewById(R.id.icon_menu);
 
             }
         }

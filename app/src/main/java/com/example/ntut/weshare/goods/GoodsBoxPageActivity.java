@@ -22,10 +22,9 @@ public class GoodsBoxPageActivity extends AppCompatActivity {
     private List<Fragment> fragmentList;
     private ViewPager vpager;
     private TabLayout gTablayout;
-    private Button btCancel;
-    private Button btEnter;
 
-    private FragmentManager fragmentManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +39,7 @@ public class GoodsBoxPageActivity extends AppCompatActivity {
         fragmentList = new ArrayList<>();
         fragmentList.add(new GoodsBoxPageWish());
         fragmentList.add(new GoodsBoxPageGive());
-        fragmentList.add(new GoodsBoxPageWish());
+        fragmentList.add(new GoodsBoxPageChange());
     }
     private void initView() {
         gTablayout = (TabLayout) findViewById(R.id.tabs);

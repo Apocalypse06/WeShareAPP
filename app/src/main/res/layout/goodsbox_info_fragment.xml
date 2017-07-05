@@ -11,6 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_marginTop="64dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/edittext_c"
+        android:padding="5dp"
         app:srcCompat="@drawable/user_black" />
 
     <TextView
@@ -84,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:text="備註"
+            android:text="備註："
             android:textSize="20dp" />
 
         <TextView

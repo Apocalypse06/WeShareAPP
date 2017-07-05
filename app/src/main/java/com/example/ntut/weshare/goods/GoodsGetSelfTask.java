@@ -33,6 +33,7 @@ public class GoodsGetSelfTask  extends AsyncTask<Object, Integer, List<Goods>> {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("action", ACTION);
         jsonObject.addProperty("user", user);
+
         try {
             jsonIn = getRemoteData(url, jsonObject.toString());
         } catch (IOException e) {

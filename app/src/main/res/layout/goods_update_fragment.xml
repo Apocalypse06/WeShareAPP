@@ -2,26 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.design.widget.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tx_wishPool" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tx_loveTo" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tx_changeStuff" />
-    </android.support.design.widget.TabLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -95,12 +78,15 @@
             <EditText
                 android:id="@+id/et_upqty"
                 android:layout_width="180dp"
-                android:layout_height="25dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="5dp"
                 android:layout_above="@+id/sp_upclass"
                 android:layout_alignLeft="@+id/et_upgoodsname"
                 android:layout_alignStart="@+id/et_upgoodsname"
                 android:layout_below="@+id/textView9"
                 android:inputType="numberDecimal"
+                android:background="@drawable/edittext_goods"
+                android:padding="5dp"
                 android:hint="請輸入數量"
                 android:textSize="15dp" />
 
@@ -124,6 +110,8 @@
                 android:layout_alignLeft="@+id/et_upqty"
                 android:layout_alignRight="@+id/et_upqty"
                 android:layout_alignStart="@+id/et_upqty"
+
+
                 android:layout_below="@+id/textView10" />
 
             <TextView
@@ -168,6 +156,8 @@
                 android:lines="8"
                 android:minLines="3"
                 android:maxLines="10"
+                android:background="@drawable/edittext_c"
+                android:padding="5dp"
                 android:layout_below="@+id/bt_update"
                 android:layout_alignRight="@+id/sp_uploc"
                 android:layout_alignEnd="@+id/sp_uploc"
@@ -224,15 +214,18 @@
             <EditText
                 android:id="@+id/et_upgoodsname"
                 android:layout_width="180dp"
-                android:layout_height="25dp"
+                android:layout_height="20dp"
                 android:layout_marginEnd="23dp"
                 android:layout_marginRight="23dp"
                 android:hint="請輸入名稱"
                 android:textSize="15dp"
-                android:layout_alignParentTop="true"
+                android:background="@drawable/edittext_goods"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_above="@+id/et_upqty" />
+                android:layout_above="@+id/et_upqty"
+                android:layout_alignParentTop="true" />
 
         </RelativeLayout>
     </ScrollView>
@@ -242,10 +235,13 @@
         android:layout_width="320dp"
         android:layout_height="180dp"
         android:onClick="onPickUpPictureClick"
+        android:layout_marginTop="36dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:background="@drawable/edittext_c"
+        android:padding="5dp"
+        android:layout_margin="10dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="79dp"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

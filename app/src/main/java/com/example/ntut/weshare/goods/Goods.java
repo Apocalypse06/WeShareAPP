@@ -18,12 +18,14 @@ public class Goods implements Serializable {
     private int goodsShipWay;
     private Blob goodsImage = null;
     private long deadLine;
+    private String goodsfilename;
+
 
 
     public Goods() {
     }
 
-    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, Blob goodsImage, long deadLine) {
+    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, Blob goodsImage, long deadLine,String goodsfilename) {
         this.goodsNo = goodsNo;
         this.goodsStatus = goodsStatus;
         this.updateTime = updateTime;
@@ -36,9 +38,10 @@ public class Goods implements Serializable {
         this.goodsShipWay = goodsShipWay;
         this.goodsImage = goodsImage;
         this.deadLine = deadLine;
+        this.goodsfilename=goodsfilename;
     }
 
-    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine) {
+    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine,String goodsfilename) {
         this.goodsNo = goodsNo;
         this.goodsStatus = goodsStatus;
         this.updateTime = updateTime;
@@ -50,9 +53,10 @@ public class Goods implements Serializable {
         this.goodsNote = goodsNote;
         this.goodsShipWay = goodsShipWay;
         this.deadLine = deadLine;
+        this.goodsfilename=goodsfilename;
     }
 
-    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine) {
+    public Goods(int goodsNo, int goodsStatus, Timestamp updateTime, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine,String goodsfilename) {
         this.goodsNo = goodsNo;
         this.goodsStatus = goodsStatus;
         this.updateTime = updateTime;
@@ -63,9 +67,10 @@ public class Goods implements Serializable {
         this.goodsNote = goodsNote;
         this.goodsShipWay = goodsShipWay;
         this.deadLine = deadLine;
+        this.goodsfilename=goodsfilename;
     }
 
-    public Goods(int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine) {
+    public Goods(int goodsStatus, Timestamp updateTime, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine,String goodsfilename) {
         this.goodsStatus = goodsStatus;
         this.updateTime = updateTime;
         this.indId = indId;
@@ -76,9 +81,10 @@ public class Goods implements Serializable {
         this.goodsNote = goodsNote;
         this.goodsShipWay = goodsShipWay;
         this.deadLine = deadLine;
+        this.goodsfilename=goodsfilename;
     }
 
-    public Goods(int goodsNo, int goodsStatus, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine) {
+    public Goods(int goodsNo, int goodsStatus, String indId, String goodsName, int goodsType, int qty, int goodsLoc, String goodsNote, int goodsShipWay, long deadLine,String goodsfilename) {
         this.goodsNo = goodsNo;
         this.goodsStatus = goodsStatus;
         this.indId = indId;
@@ -89,6 +95,7 @@ public class Goods implements Serializable {
         this.goodsNote = goodsNote;
         this.goodsShipWay = goodsShipWay;
         this.deadLine = deadLine;
+        this.goodsfilename=goodsfilename;
     }
 
     public int getGoodsNo() {
@@ -185,5 +192,13 @@ public class Goods implements Serializable {
 
     public void setDeadLine(long deadLine) {
         this.deadLine = deadLine;
+    }
+
+    public String getGoodsfilename() {
+        return goodsfilename;
+    }
+
+    public void setGoodsfilename(String goodsfilename) {
+        this.goodsfilename = goodsfilename;
     }
 }

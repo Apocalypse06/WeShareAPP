@@ -3,25 +3,29 @@ package com.example.ntut.weshare.goods;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
-import com.example.ntut.weshare.member.User;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -44,9 +48,6 @@ public class GoodsBoxPageWish extends Fragment {
             getActivity().finish();
             Intent MainIntent = new Intent(getActivity(), MainActivity.class);
             startActivity(MainIntent);
-        } else {
-            Toast.makeText(this.getActivity(), user,
-                    Toast.LENGTH_SHORT).show();
         }
     }
     @Nullable
@@ -125,8 +126,9 @@ public class GoodsBoxPageWish extends Fragment {
         }
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = layoutInflater.inflate(R.layout.goods_recycleview_item, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.goods_recycleview_wish1, parent, false);
             return new GoodsBoxPageWish.GoodsRecyclerViewAdapter.MyViewHolder(itemView);
+
         }
 
     @Override
@@ -138,11 +140,58 @@ public class GoodsBoxPageWish extends Fragment {
         new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
 
         myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
-        myViewHolder.tvGoodsClass.setText("類型：" + changeType2String(good.getGoodsType()));
+//        myViewHolder.tvGoodsClass.setText("類型：" + changeType2String(good.getGoodsType()));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         final String exdate = sdf.format(good.getDeadLine());
         myViewHolder.tvNeedTime.setText("到期日：" + exdate);
         myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
+        myViewHolder.background.setBackgroundColor(Color.rgb(255,151,151));
+
+        myViewHolder.ivMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_goodcardview, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.goodsMenuUpdate:
+                                Intent intent = new Intent();
+                                intent.setClass(getActivity(), GoodsUpdateActivity.class);
+                                Bundle bundle = new Bundle();
+
+                                bundle.putSerializable("goods", good);
+                                intent.putExtra("intentGoods", bundle);
+                                startActivity(intent);
+                                break;
+                            case R.id.goodsMenuDelete:
+                                if (Common.networkConnected(getActivity())) {
+                                    String url = Common.URL + "GoodsServlet";
+                                    String action = "goodsDelete";
+                                    int count = 0;
+                                    try {
+                                        count = new GoodsUpdateTask().execute(url, action, good, null).get();
+                                    } catch (Exception e) {
+                                        Log.e(TAG, e.toString());
+                                    }
+                                    if (count == 0) {
+                                        Common.showToast(getActivity(), R.string.msg_deleteFail);
+                                    } else {
+                                        Common.showToast(getActivity(), R.string.msg_deleteSuccess);
+                                    }
+                                } else {
+                                    Common.showToast(getActivity(), R.string.msg_NoNetwork);
+                                }
+                                break;
+                        }
+                        return true;
+                    }
+
+                });
+                popupMenu.show();
+            }});
 
 
         myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -161,17 +210,19 @@ public class GoodsBoxPageWish extends Fragment {
 
     }
     class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        ImageView imageView,ivMenu;
         TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
+        LinearLayout background;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.iv_image);
             tvGoodsTitle = (TextView) itemView.findViewById(R.id.tv_goodsTitle);
-            tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
+//            tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
             tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
             tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
-
+            ivMenu=(ImageView)itemView.findViewById(R.id.icon_menu);
+            background=(LinearLayout) itemView.findViewById(R.id.lnwish);
         }
     }
     }

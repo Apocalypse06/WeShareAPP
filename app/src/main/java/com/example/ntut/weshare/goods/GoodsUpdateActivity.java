@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,7 +21,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
@@ -53,6 +57,16 @@ public class GoodsUpdateActivity extends AppCompatActivity {
     private File file;
     private Calendar cld;
     private Goods good;
+    TextView tvname;
+    TextView tvqty;
+    TextView tvtype;
+    TextView tvclass;
+    TextView tvloc;
+    TextView tvdlv;
+    TextView tvdate;
+    TextView tvnote;
+    ScrollView sv;
+    LinearLayout lnlt;
     Timestamp now= new Timestamp(System.currentTimeMillis());
     private static final int REQUEST_PICK_IMAGE = 1;
 
@@ -174,8 +188,8 @@ public class GoodsUpdateActivity extends AppCompatActivity {
     }
 
     public void loadTextInfo(){
-        etName.setHint(good.getGoodsName());
-        etQty.setHint(""+good.getQty());
+        etName.setText(good.getGoodsName());
+        etQty.setText(""+good.getQty());
         etComment.setText((good.getGoodsNote()));
     }
     private void findViews() {
@@ -183,6 +197,16 @@ public class GoodsUpdateActivity extends AppCompatActivity {
         etName = (EditText) findViewById(R.id.et_upgoodsname);;
         etQty = (EditText) findViewById(R.id.et_upqty);
         etComment = (EditText) findViewById(R.id.et_upcomment);
+        tvname = (TextView) findViewById(R.id.textView9);
+        tvqty = (TextView) findViewById(R.id.textView10);
+        tvtype = (TextView) findViewById(R.id.txgoodstate);
+        tvclass = (TextView) findViewById(R.id.textView11);
+        tvloc = (TextView) findViewById(R.id.textView12);
+        tvdlv = (TextView) findViewById(R.id.textView15);
+        tvdate = (TextView) findViewById(R.id.textView13);
+        tvnote = (TextView) findViewById(R.id.textView14);
+        sv=(ScrollView)findViewById(R.id.sv_newgood);
+        lnlt = (LinearLayout) findViewById(R.id.newback);
     }
 
     public void onPickUpPictureClick(View view) {
@@ -237,7 +261,19 @@ public class GoodsUpdateActivity extends AppCompatActivity {
 
 
         //相片驗證
-       
+        if (image == null) {
+            String url = Common.URL + "GoodsServlet";
+            int gid = good.getGoodsNo();
+            int imageSize = 400;
+            try {
+                Bitmap bitmap= new GoodsGetImageTask(ivImage).execute(url, gid, imageSize).get();
+                ivImage.setImageBitmap(bitmap);
+                ByteArrayOutputStream out2 = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out2);
+                image = out2.toByteArray();
+            }catch (Exception e){}
+
+        }
 
 
 
@@ -299,7 +335,7 @@ public class GoodsUpdateActivity extends AppCompatActivity {
 
             String url = Common.URL + "GoodsServlet";
             Goods goods = new Goods(good.getGoodsNo(), good.getGoodsStatus(), now, user,goodName ,intspClass,
-                    qtyParseInt, intspLoc, comment, intspDlvWay, deadlinedate);
+                    qtyParseInt, intspLoc, comment, intspDlvWay, deadlinedate,"goodsfilename");
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
             String action = "goodsUpdate";
             int count = 0;
@@ -316,9 +352,24 @@ public class GoodsUpdateActivity extends AppCompatActivity {
         } else {
             Common.showToast(this, R.string.msg_NoNetwork);
         }
-        finish();
+        Intent intent = new Intent();
+        intent.setClass(GoodsUpdateActivity.this, GoodsBoxPageActivity.class);
+        startActivity(intent);
+
 
     }
 
-
+    public int colorChange(int r,int g,int b) {
+        tvname.setBackgroundColor(Color.rgb(r,g,b));
+        tvqty.setBackgroundColor(Color.rgb(r,g,b));
+        tvtype.setBackgroundColor(Color.rgb(r,g,b));
+        tvclass.setBackgroundColor(Color.rgb(r,g,b));
+        tvloc.setBackgroundColor(Color.rgb(r,g,b));
+        tvdlv.setBackgroundColor(Color.rgb(r,g,b));
+        tvdate.setBackgroundColor(Color.rgb(r,g,b));
+        tvnote.setBackgroundColor(Color.rgb(r,g,b));
+        sv.setBackgroundColor(Color.WHITE);
+        lnlt.setBackgroundColor(Color.rgb(r,g,b));
+        return 0;
+    }
 }

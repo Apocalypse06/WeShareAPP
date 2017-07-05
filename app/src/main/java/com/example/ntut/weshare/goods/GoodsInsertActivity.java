@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,13 +18,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
@@ -33,6 +37,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.Calendar;
+
+import com.example.ntut.weshare.goods.GoodsInsertChangeColorTask;
 
 
 public class GoodsInsertActivity extends AppCompatActivity {
@@ -49,14 +55,23 @@ public class GoodsInsertActivity extends AppCompatActivity {
     private Spinner spDlvWay;
     private int intspDlvWay;
     private ImageView ivImage;
-    private int mYear,mMonth,mDay;
+    private int mYear, mMonth, mDay;
     private long deadlinedate;
-    private  byte[] image;
+    private byte[] image;
     private String fileName;
     private File file;
     private Calendar cld;
+    private TextView tvname;
+    private TextView tvqty;
+    private TextView tvtype;
+    private TextView tvclass;
+    private TextView tvloc;
+    private TextView tvdlv;
+    private TextView tvdate;
+    private TextView tvnote;
     private ScrollView sv;
-    Timestamp now= new Timestamp(System.currentTimeMillis());
+    private LinearLayout lnlt;
+    private Timestamp now = new Timestamp(System.currentTimeMillis());
     private static final int REQUEST_PICK_IMAGE = 1;
 
     @Override
@@ -66,40 +81,65 @@ public class GoodsInsertActivity extends AppCompatActivity {
         findViews();
 
 
-        spState=(Spinner) findViewById(R.id.sp_state);
-        final String[] states = {"許願池(募資)","送愛心(捐贈)","以物易物"};
+        spState = (Spinner) findViewById(R.id.sp_state);
+        final String[] states = {"許願池(募資)", "送愛心(捐贈)", "以物易物"};
         ArrayAdapter<String> stateList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, states);
         spState.setAdapter(stateList);
+        spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (spState.getSelectedItem().toString()) {
+                    case "許願池(募資)":
+                        colorChange(255, 151, 151);
+                        break;
+                    case "送愛心(捐贈)":
+                        colorChange(239, 123, 0);
+                        break;
+                    case "以物易物":
+                        colorChange(1, 180, 104);
+                        break;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                colorChange(255, 255, 255);
+            }
 
-        spClass=(Spinner) findViewById(R.id.sp_class);
-        final String[] classes = {"食","衣","住","行","育","樂"};
+
+                                       }
+        );
+
+
+        spClass = (Spinner) findViewById(R.id.sp_class);
+        final String[] classes = {"食", "衣", "住", "行", "育", "樂"};
         ArrayAdapter<String> classList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, classes);
         spClass.setAdapter(classList);
 
 
-        spLoc=(Spinner) findViewById(R.id.sp_loc);
-        final String[] loc = {"北","中","南"};
+        spLoc = (Spinner) findViewById(R.id.sp_loc);
+        final String[] loc = {"北", "中", "南"};
         ArrayAdapter<String> locList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, loc);
         spLoc.setAdapter(locList);
 
 
-        spDlvWay=(Spinner) findViewById(R.id.sp_dlvWay);
-        final  String[] dlv={"面交","寄送","面交寄送皆可"};
+        spDlvWay = (Spinner) findViewById(R.id.sp_dlvWay);
+        final String[] dlv = {"面交", "寄送", "面交寄送皆可"};
         ArrayAdapter<String> dlvList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, dlv);
         spDlvWay.setAdapter(dlvList);
         findViews();
 
 
-        final Button backButton = (Button)findViewById(R.id.bt_BackGBList);
-        final Button dateButton = (Button)findViewById(R.id.bt_date);
+        final Button backButton = (Button) findViewById(R.id.bt_BackGBList);
+        final Button dateButton = (Button) findViewById(R.id.bt_date);
 
-        dateButton.setOnClickListener(new View.OnClickListener(){
+        dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
@@ -110,16 +150,16 @@ public class GoodsInsertActivity extends AppCompatActivity {
                         String format = setDateFormat(year, month, day);
 //                        tvDate.setText(format);
                         dateButton.setText(format);
-                        cld=c;
-                        cld.set(year,month,day);
-                        long nowtime=c.getTime().getTime();
-                        deadlinedate=cld.getTime().getTime();
-                        Log.e("d",""+cld.getTime().getTime());
-                        if(deadlinedate<=nowtime){
+                        cld = c;
+                        cld.set(year, month, day);
+                        long nowtime = c.getTime().getTime();
+                        deadlinedate = cld.getTime().getTime();
+                        Log.e("d", "" + cld.getTime().getTime());
+                        if (deadlinedate <= nowtime) {
 
                         }
                     }
-                }, mYear,mMonth, mDay).show();
+                }, mYear, mMonth, mDay).show();
             }
         });
 
@@ -132,7 +172,8 @@ public class GoodsInsertActivity extends AppCompatActivity {
         });
 
     }
-    private String setDateFormat(int year,int monthOfYear,int dayOfMonth){
+
+    private String setDateFormat(int year, int monthOfYear, int dayOfMonth) {
         return String.valueOf(year) + "-"
                 + String.valueOf(monthOfYear + 1) + "-"
                 + String.valueOf(dayOfMonth);
@@ -143,6 +184,16 @@ public class GoodsInsertActivity extends AppCompatActivity {
         etName = (EditText) findViewById(R.id.et_goodsname);
         etQty = (EditText) findViewById(R.id.et_qty);
         etComment = (EditText) findViewById(R.id.et_comment);
+        tvname = (TextView) findViewById(R.id.textView9);
+        tvqty = (TextView) findViewById(R.id.textView10);
+        tvtype = (TextView) findViewById(R.id.txgoodstate);
+        tvclass = (TextView) findViewById(R.id.textView11);
+        tvloc = (TextView) findViewById(R.id.textView12);
+        tvdlv = (TextView) findViewById(R.id.textView15);
+        tvdate = (TextView) findViewById(R.id.textView13);
+        tvnote = (TextView) findViewById(R.id.textView14);
+        sv = (ScrollView) findViewById(R.id.sv_newgood);
+        lnlt = (LinearLayout) findViewById(R.id.newback);
 //        sv=(ScrollView)findViewById(R.id.sv_newgood);
 //        sv.fullScroll(View.FOCUS_DOWN);
     }
@@ -204,12 +255,14 @@ public class GoodsInsertActivity extends AppCompatActivity {
             }
         }
     }
+
     private void switchFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.body, fragment);
         fragmentTransaction.commit();
     }
+
     public void onNewGoodsResult(View view) {
         //物品名稱驗證
         String name = etName.getText().toString().trim();
@@ -226,15 +279,15 @@ public class GoodsInsertActivity extends AppCompatActivity {
         }
         try {
             int qtyParseInt = Integer.parseInt(etQty.getText().toString().trim());
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, R.string.msg_QtyIncorrect,
                     Toast.LENGTH_SHORT).show();
             return;
         }
 
         //日期選擇驗證
-        final Button dateButton = (Button)findViewById(R.id.bt_date);
-        if(dateButton.getText().equals("日期選擇")){
+        final Button dateButton = (Button) findViewById(R.id.bt_date);
+        if (dateButton.getText().equals("日期選擇")) {
             Toast.makeText(this, R.string.msg_DateIsInvalid,
                     Toast.LENGTH_SHORT).show();
             return;
@@ -242,31 +295,30 @@ public class GoodsInsertActivity extends AppCompatActivity {
 
 
         //相片驗證
-    if (image == null) {
-        Common.showToast(this, R.string.msg_NoImage);
-        return;
-    }
-
+        if (image == null) {
+            Common.showToast(this, R.string.msg_NoImage);
+            return;
+        }
 
 
         if (Common.networkConnected(this)) {
-            int qtyParseInt=Integer.parseInt(etQty.getText().toString().trim());
-            String comment=etComment.getText().toString().trim();
-            String goodName=etName.getText().toString().trim();
+            int qtyParseInt = Integer.parseInt(etQty.getText().toString().trim());
+            String comment = etComment.getText().toString().trim();
+            String goodName = etName.getText().toString().trim();
             SharedPreferences pref = this.getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
-            String user = pref.getString("user","");
+            String user = pref.getString("user", "");
 
             //判斷依照地區給予int值
 
-            switch (spState.getSelectedItem().toString()){
+            switch (spState.getSelectedItem().toString()) {
                 case "許願池(募資)":
-                    intspState=1;
+                    intspState = 1;
                     break;
                 case "送愛心(捐贈)":
-                    intspState=2;
+                    intspState = 2;
                     break;
                 case "以物易物":
-                    intspState=3;
+                    intspState = 3;
                     break;
             }
 
@@ -285,24 +337,24 @@ public class GoodsInsertActivity extends AppCompatActivity {
             }
 
             //判斷依照物品種類給予int值
-            switch (spClass.getSelectedItem().toString()){
+            switch (spClass.getSelectedItem().toString()) {
                 case "食":
-                    intspClass=1;
+                    intspClass = 1;
                     break;
                 case "衣":
-                    intspClass=2;
+                    intspClass = 2;
                     break;
                 case "住":
-                    intspClass=3;
+                    intspClass = 3;
                     break;
                 case "行":
-                    intspClass=4;
+                    intspClass = 4;
                     break;
                 case "育":
-                    intspClass=5;
+                    intspClass = 5;
                     break;
                 case "樂":
-                    intspClass=6;
+                    intspClass = 6;
                     break;
             }
 
@@ -319,8 +371,8 @@ public class GoodsInsertActivity extends AppCompatActivity {
             }
 
             String url = Common.URL + "GoodsServlet";
-            Goods goods = new Goods(1,intspState, now, user,goodName ,intspClass,
-                    qtyParseInt, intspLoc, comment, intspDlvWay, deadlinedate);
+            Goods goods = new Goods(1, intspState, now, user, goodName, intspClass,
+                    qtyParseInt, intspLoc, comment, intspDlvWay, deadlinedate, "goodsfilename");
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
             String action = "goodsInsert";
             int count = 0;
@@ -337,8 +389,22 @@ public class GoodsInsertActivity extends AppCompatActivity {
         } else {
             Common.showToast(this, R.string.msg_NoNetwork);
         }
-       finish();
+        finish();
 
+    }
+
+    public int colorChange(int r, int g, int b) {
+        tvname.setBackgroundColor(Color.rgb(r, g, b));
+        tvqty.setBackgroundColor(Color.rgb(r, g, b));
+        tvtype.setBackgroundColor(Color.rgb(r, g, b));
+        tvclass.setBackgroundColor(Color.rgb(r, g, b));
+        tvloc.setBackgroundColor(Color.rgb(r, g, b));
+        tvdlv.setBackgroundColor(Color.rgb(r, g, b));
+        tvdate.setBackgroundColor(Color.rgb(r, g, b));
+        tvnote.setBackgroundColor(Color.rgb(r, g, b));
+        sv.setBackgroundColor(Color.WHITE);
+        lnlt.setBackgroundColor(Color.rgb(r, g, b));
+        return 0;
     }
 }
 

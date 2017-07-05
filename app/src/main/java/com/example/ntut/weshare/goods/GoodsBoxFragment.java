@@ -13,7 +13,7 @@ public class GoodsBoxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.goods_recycleview_item, container, false);
+        View view = inflater.inflate(R.layout.goods_recycleview_wish, container, false);
 
 
 
