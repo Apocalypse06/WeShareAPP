@@ -92,6 +92,12 @@
             android:name=".message.MessageReplyActivity"
             android:label="@string/tx_replyMsg"
             android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".HomeGoodsDetailActivity"
+            android:label="@string/tx_goodsDetail"
+            android:launchMode="singleTask"></activity>
+
+        HomeGoodsDetailActivity
 
     </application>
 

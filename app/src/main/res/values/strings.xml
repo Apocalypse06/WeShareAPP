@@ -93,5 +93,6 @@
     <string name="text_GoodsInsert">新增物資</string>
     <string name="text_GoodsBox">物資箱</string>
     <string name="text_GoodsInfo">物資資訊</string>
+    <string name="tx_goodsDetail">物資資訊</string>
 
 </resources>

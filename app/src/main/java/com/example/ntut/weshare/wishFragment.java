@@ -1,10 +1,11 @@
 package com.example.ntut.weshare;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ntut.weshare.goods.Goods;
-import com.example.ntut.weshare.message.*;
+import com.example.ntut.weshare.message.MessageReplyFragment;
 
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class wishFragment extends Fragment {
@@ -35,6 +34,12 @@ public class wishFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_wish_fragment, container, false);
 
+        rvWish = (RecyclerView) view.findViewById(R.id.rvWish);
+        rvWish.setLayoutManager(
+                new StaggeredGridLayoutManager(
+                        2, StaggeredGridLayoutManager.VERTICAL));
+        rvWish.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         swipeRefreshLayout =
                 (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {//監聽有沒有發生下拉，有執行onRefresh()
@@ -46,15 +51,11 @@ public class wishFragment extends Fragment {
             }
         });
 
-        rvWish = (RecyclerView) view.findViewById(R.id.rvWish);
-        rvWish.setLayoutManager(
-                new StaggeredGridLayoutManager(
-                        2, StaggeredGridLayoutManager.VERTICAL));
-
-        rvWish.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+//        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));//這里用線性宮格顯示 類似于瀑布流
+//        mRecyclerView.setAdapter(new NormalRecyclerViewAdapter(this)); 原文網址：https://ifun01.com/88LDTF8.html
         return view;
     }
+
 
     private void showAllMsgs() {
         if (Common.networkConnected(getActivity())) {//檢查網路
@@ -62,14 +63,15 @@ public class wishFragment extends Fragment {
             String action = "getHome";
             List<Goods> wishGoods = null;
             try {//抓全部景點
-                wishGoods = new homeGetAllTask().execute(url, action , 1).get();//.get()要請SpotGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
+                wishGoods = new homeGetAllTask().execute(url, action, 1).get();//.get()要請SpotGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
             if (wishGoods == null || wishGoods.isEmpty()) {
-                Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
+                Common.showToast(getActivity(), R.string.msg_NoImage);
             } else {
                 //Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
+
                 rvWish.setAdapter(new WishRecyclerViewAdapter(getActivity(), wishGoods));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
             }
         } else {
@@ -85,10 +87,12 @@ public class wishFragment extends Fragment {
 
     private class WishRecyclerViewAdapter extends RecyclerView.Adapter<WishRecyclerViewAdapter.MyViewHolder> {//CH05 RecyclerView
         private LayoutInflater layoutInflater;
+        private Context context;
         private List<Goods> wishGoods;
 
 
         public WishRecyclerViewAdapter(Context context, List<Goods> wishGoods) {
+            this.context = context;
             layoutInflater = LayoutInflater.from(context);
             this.wishGoods = wishGoods;
         }
@@ -100,31 +104,41 @@ public class wishFragment extends Fragment {
 
         @Override
         public WishRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = layoutInflater.inflate(R.layout.wish_item, parent, false);
+            LayoutInflater layoutInflater = LayoutInflater.from(context);//建立View
+            View itemView = layoutInflater.inflate(R.layout.home_wish_item, parent, false);
             return new WishRecyclerViewAdapter.MyViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(WishRecyclerViewAdapter.MyViewHolder myViewHolder, int position) {//將圖文顯示出來
             final Goods wishGood = wishGoods.get(position);//文字資料
-            int imageSize = 250;//要縮圖的大小像素，要放在250*250的框
 
+            String url = Common.URL + "GoodsServlet";
+            int gid = wishGood.getGoodsNo();
+            int imageSize = 250;
             //這邊啟動AsyncTask，抓圖片
             //不用.get()，不然會卡畫面，這邊利用SpotGetImageTask(myViewHolder.imageView)放圖，myViewHolder.imageView將imageView元件傳給AsyncTask，再用onPostExecute()將圖貼上
-//            new com.example.ntut.weshare.message.UserGetImageTask(myViewHolder.ivUserPic).execute(url, accountId, imageSize);//.execute(網址, 圖片id, 這邊做縮圖imageSize，在server端縮圖完再傳過來)
-//
-//            SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
-//            String account = pref.getString("user", "");
+            new GoodsGetImageTask(myViewHolder.ivGoods).execute(url, gid, imageSize);
+
+            myViewHolder.tvWish.setText(wishGood.getGoodsName());
+            myViewHolder.tvNumber.setText("" + wishGood.getQty());
 
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent = new Intent();
-//                    intent.setClass(getActivity(), MessageReplyActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("msg", msg);
-//                    intent.putExtra("intentMsgs", bundle);
-//                    startActivity(intent);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), HomeGoodsDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("Goods", wishGood);
+                    intent.putExtra("intentGoods", bundle);
+                    startActivity(intent);
+
+//                    Fragment fragment = new GoodsDetailFragment();
+//                    Bundle bundle2 = new Bundle();
+//                    bundle2.putSerializable("Goods", wishGood);
+//                    fragment.setArguments(bundle2);
+//                    switchFragment(fragment);
+
 //
 //                    Fragment fragment = new MessageReplyFragment();
 //                    Bundle bundle = new Bundle();
@@ -137,17 +151,22 @@ public class wishFragment extends Fragment {
 
         class MyViewHolder extends RecyclerView.ViewHolder {
             ImageView ivGoods;
-            TextView tvWish, tvName;
+            TextView tvWish, tvNumber;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 ivGoods = (ImageView) itemView.findViewById(R.id.ivGoods);
                 tvWish = (TextView) itemView.findViewById(R.id.tvWish);
-                tvName = (TextView) itemView.findViewById(R.id.tvName);
+                tvNumber = (TextView) itemView.findViewById(R.id.tvNumber);
             }
         }
     }
 
-
-
+    private void switchFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction =
+                getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.body, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 }

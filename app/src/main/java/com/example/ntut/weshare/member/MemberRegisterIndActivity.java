@@ -1,6 +1,8 @@
 package com.example.ntut.weshare.member;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -23,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
 
 import java.io.ByteArrayOutputStream;
@@ -45,6 +48,7 @@ public class MemberRegisterIndActivity extends AppCompatActivity {
     String action = "userRegister";
 
     private static final int REQUEST_PICK_IMAGE = 1;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

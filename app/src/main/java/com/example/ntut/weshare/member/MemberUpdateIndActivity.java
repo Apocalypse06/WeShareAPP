@@ -1,5 +1,6 @@
 package com.example.ntut.weshare.member;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
 
 import java.io.ByteArrayOutputStream;
@@ -37,7 +39,7 @@ public class MemberUpdateIndActivity extends AppCompatActivity {
     private EditText etEmail;
     private EditText etAddress;
 
-    String action;
+    String action = "userUpdate";
     List<User> userOld = null;
 
     private static final int REQUEST_PICK_IMAGE = 1;
@@ -50,11 +52,22 @@ public class MemberUpdateIndActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         // 從偏好設定檔中取得登入狀態來決定是否顯示「登出」
-        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
-        boolean login = pref.getBoolean("login", false);
+
+        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
+        String user = pref.getString("user", "");
+        if (user == "") {
+            Toast.makeText(this, "請註冊登入WeShare後，再過來設定您的物資箱喔~",
+                    Toast.LENGTH_SHORT).show();
+            finish();
+            Intent MainIntent = new Intent(this, MainActivity.class);
+            startActivity(MainIntent);
+        } else {
+//            Toast.makeText(this, user,
+//                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

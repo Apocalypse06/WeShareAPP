@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
     android:padding="6dp"
-    card_view:cardBackgroundColor="#ffff9797"
+    card_view:cardBackgroundColor="#ffef7b00"
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="6dp">
 
@@ -20,14 +20,14 @@
             android:id="@+id/tvWish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="物資需求"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:text="物資需求"
+            android:textSize="20dp" />
 
         <ImageView
             android:id="@+id/ivGoods"
-            android:layout_width="150dp"
-            android:layout_height="180sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/stuff" />
 
         <LinearLayout
@@ -41,13 +41,13 @@
                 android:id="@+id/tvId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID" />
+                android:text="數量：" />
 
             <TextView
-                android:id="@+id/tvName"
+                android:id="@+id/tvNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name" />
+                android:text="0" />
         </LinearLayout>
 
     </LinearLayout>

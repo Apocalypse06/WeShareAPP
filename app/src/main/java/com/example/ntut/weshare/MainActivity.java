@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentList = new ArrayList<>();
         fragmentList.add(new wishFragment());
         fragmentList.add(new loveFragment());
-        fragmentList.add(new loveFragment());
+        fragmentList.add(new changeFragment());
         ///
 
         NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
                         setTitle(R.string.tx_goodsMsg);
                         break;
                     case R.id.item_feedback:
-                        fragment = new FeedbackFragment();
+                        fragment = new wishFragment();
                         switchFragment(fragment);
                         setTitle(R.string.tx_feedback);
                         break;
