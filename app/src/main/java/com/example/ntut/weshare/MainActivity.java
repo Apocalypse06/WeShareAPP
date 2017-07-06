@@ -29,6 +29,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ntut.weshare.feedback.FeedbackFragment;
+import com.example.ntut.weshare.goods.GoodsBoxPageActivity;
+import com.example.ntut.weshare.goods.GoodsBoxPageChange;
 import com.example.ntut.weshare.goods.GoodsListFragment;
 import com.example.ntut.weshare.goods.GoodsMsgFragment;
 import com.example.ntut.weshare.icon.InstitutionkFragment;
@@ -341,8 +343,9 @@ public class MainActivity extends AppCompatActivity {
                         setTitle(R.string.tx_history);
                         break;
                     case R.id.item_goodsBox:
-                        fragment = new GoodsListFragment();
-                        switchFragment(fragment);
+                        Intent intent=new Intent();
+                        intent.setClass(MainActivity.this,GoodsBoxPageActivity.class);
+                        startActivity(intent);
                         setTitle(R.string.tx_goodsBox);
                         break;
                     case R.id.item_goodsMsg:
