@@ -93,11 +93,13 @@
             android:label="@string/tx_replyMsg"
             android:launchMode="singleTask"></activity>
         <activity
-            android:name=".HomeGoodsDetailActivity"
+            android:name=".homeGoodsDetail.HomeGoodsDetailActivity"
             android:label="@string/tx_goodsDetail"
             android:launchMode="singleTask"></activity>
-
-        HomeGoodsDetailActivity
+        <activity
+            android:name=".dealDetail.dealDetailActivity"
+            android:label="@string/tx_dealDetail"
+            android:launchMode="singleTask"></activity>
 
     </application>
 

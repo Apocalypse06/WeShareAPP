@@ -1,4 +1,4 @@
-package com.example.ntut.weshare;
+package com.example.ntut.weshare.homeGoodsDetail;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,14 +15,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.R;
 import com.example.ntut.weshare.goods.Goods;
 
 import java.util.List;
 
 
-public class changeFragment extends Fragment {
-
-    private static final String TAG = "ChangeListFragment";
+public class loveFragment extends Fragment {
+    private static final String TAG = "LoveListFragment";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvWish;
 
@@ -55,13 +56,14 @@ public class changeFragment extends Fragment {
     }
 
 
+
     private void showAllMsgs() {
         if (Common.networkConnected(getActivity())) {//檢查網路
             String url = Common.URL + "GoodsServlet";
             String action = "getHome";
             List<Goods> wishGoods = null;
             try {//抓全部景點
-                wishGoods = new homeGetAllTask().execute(url, action, 3).get();//.get()要請SpotGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
+                wishGoods = new homeGetAllTask().execute(url, action, 2).get();//.get()要請SpotGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
@@ -70,7 +72,7 @@ public class changeFragment extends Fragment {
             } else {
                 //Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
 
-                rvWish.setAdapter(new ChangeRecyclerViewAdapter(getActivity(), wishGoods));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
+                rvWish.setAdapter(new LoveRecyclerViewAdapter(getActivity(), wishGoods));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
             }
         } else {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
@@ -83,13 +85,13 @@ public class changeFragment extends Fragment {
         showAllMsgs();
     }
 
-    private class ChangeRecyclerViewAdapter extends RecyclerView.Adapter<ChangeRecyclerViewAdapter.MyViewHolder> {//CH05 RecyclerView
+    private class LoveRecyclerViewAdapter extends RecyclerView.Adapter<LoveRecyclerViewAdapter.MyViewHolder> {//CH05 RecyclerView
         private LayoutInflater layoutInflater;
         private Context context;
         private List<Goods> wishGoods;
 
 
-        public ChangeRecyclerViewAdapter(Context context, List<Goods> wishGoods) {
+        public LoveRecyclerViewAdapter(Context context, List<Goods> wishGoods) {
             this.context = context;
             layoutInflater = LayoutInflater.from(context);
             this.wishGoods = wishGoods;
@@ -101,14 +103,14 @@ public class changeFragment extends Fragment {
         }
 
         @Override
-        public ChangeRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public LoveRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);//建立View
-            View itemView = layoutInflater.inflate(R.layout.home_change_item, parent, false);
-            return new ChangeRecyclerViewAdapter.MyViewHolder(itemView);
+            View itemView = layoutInflater.inflate(R.layout.home_love_item, parent, false);
+            return new LoveRecyclerViewAdapter.MyViewHolder(itemView);
         }
 
         @Override
-        public void onBindViewHolder(ChangeRecyclerViewAdapter.MyViewHolder myViewHolder, int position) {//將圖文顯示出來
+        public void onBindViewHolder(LoveRecyclerViewAdapter.MyViewHolder myViewHolder, int position) {//將圖文顯示出來
             final Goods wishGood = wishGoods.get(position);//文字資料
 
             String url = Common.URL + "GoodsServlet";
@@ -119,7 +121,7 @@ public class changeFragment extends Fragment {
             new GoodsGetImageTask(myViewHolder.ivGoods).execute(url, gid, imageSize);
 
             myViewHolder.tvWish.setText(wishGood.getGoodsName());
-            myViewHolder.tvNumber.setText("" + wishGood.getQty());
+            myViewHolder.tvNumber.setText(""+wishGood.getQty());
 
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -28,11 +28,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ntut.weshare.feedback.FeedbackFragment;
+import com.example.ntut.weshare.dealDetail.dealDetailActivity;
 import com.example.ntut.weshare.goods.GoodsBoxPageActivity;
-import com.example.ntut.weshare.goods.GoodsBoxPageChange;
-import com.example.ntut.weshare.goods.GoodsListFragment;
 import com.example.ntut.weshare.goods.GoodsMsgFragment;
+import com.example.ntut.weshare.homeGoodsDetail.changeFragment;
+import com.example.ntut.weshare.homeGoodsDetail.loveFragment;
+import com.example.ntut.weshare.homeGoodsDetail.wishFragment;
 import com.example.ntut.weshare.icon.InstitutionkFragment;
 import com.example.ntut.weshare.message.MessageFragment;
 import com.example.ntut.weshare.icon.SearchFragment;
@@ -337,14 +338,19 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(updateIntent);
                         }
                         break;
+                    case R.id.item_dealDetail:
+                        updateIntent = new Intent();
+                        updateIntent.setClass(MainActivity.this, dealDetailActivity.class);
+                        startActivity(updateIntent);
+                        break;
                     case R.id.item_history:
                         fragment = new historyFragment();
                         switchFragment(fragment);
                         setTitle(R.string.tx_history);
                         break;
                     case R.id.item_goodsBox:
-                        Intent intent=new Intent();
-                        intent.setClass(MainActivity.this,GoodsBoxPageActivity.class);
+                        Intent intent = new Intent();
+                        intent.setClass(MainActivity.this, GoodsBoxPageActivity.class);
                         startActivity(intent);
                         setTitle(R.string.tx_goodsBox);
                         break;

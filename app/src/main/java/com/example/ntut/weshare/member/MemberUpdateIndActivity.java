@@ -59,11 +59,9 @@ public class MemberUpdateIndActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
         String user = pref.getString("user", "");
         if (user == "") {
-            Toast.makeText(this, "請註冊登入WeShare後，再過來設定您的物資箱喔~",
+            Toast.makeText(this, "請先註冊登入WeShare~",
                     Toast.LENGTH_SHORT).show();
-            finish();
-            Intent MainIntent = new Intent(this, MainActivity.class);
-            startActivity(MainIntent);
+            return;
         } else {
 //            Toast.makeText(this, user,
 //                    Toast.LENGTH_SHORT).show();

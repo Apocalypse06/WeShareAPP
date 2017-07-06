@@ -94,5 +94,11 @@
     <string name="text_GoodsBox">物資箱</string>
     <string name="text_GoodsInfo">物資資訊</string>
     <string name="tx_goodsDetail">物資資訊</string>
+    <string name="msg_qtyNull">數量空白</string>
+    <string name="msg_qtyMax">超過需求數量</string>
+    <string name="msg_dealFail">交易失敗</string>
+    <string name="msg_dealSuccess">交易成功</string>
+    <string name="msg_sameAccount">這是您的資訊</string>
+    <string name="tx_dealDetail">交易訂單</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.ntut.weshare;
+package com.example.ntut.weshare.homeGoodsDetail;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.example.ntut.weshare.R;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedWriter;

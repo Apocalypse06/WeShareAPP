@@ -1,51 +1,51 @@
-package com.example.ntut.weshare;
+package com.example.ntut.weshare.homeGoodsDetail;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.ntut.weshare.goods.Goods;
+import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.member.InstiutionBean;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
-public class homeGetAllTask extends AsyncTask<Object, Integer, List<Goods>>{
-private final static String TAG = "GoodsGetAllTask";
-
+// for insert, ic_update, ic_delete a spot
+class NewDealTask extends AsyncTask<Object, Integer, Integer> {
+    private final static String TAG = "UserUpdateTask";
+    private String url = Common.URL + "DealServlet";
 
     @Override
-    protected List<Goods> doInBackground (Object...params){
-        String url = params[0].toString();
-        String action = params[1].toString();
-        String status = params[2].toString();
-        String jsonIn;
+    protected Integer doInBackground(Object... params) {
+        String action = params[0].toString();
+        DealBean deal = (DealBean) params[1];
+        String goodsNo =params[2].toString();
+        String result;
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("action", action);
-        jsonObject.addProperty("status", status);
+        jsonObject.addProperty("action", action);//動作，新增
+        jsonObject.addProperty("deal", new Gson().toJson(deal));//純文字
+        jsonObject.addProperty("goodsNo", goodsNo);//純文字
+        if (params[3] != null) {
+            String imageBase64 = params[3].toString();
+            jsonObject.addProperty("imageBase64", imageBase64);//圖片
+        }
         try {
-            jsonIn = getRemoteData(url, jsonObject.toString());
+            result = getRemoteData(url, jsonObject.toString());
         } catch (IOException e) {
             Log.e(TAG, e.toString());
             return null;
         }
-
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<Goods>>() {}.getType();
-        return gson.fromJson(jsonIn, listType);
-
+        return Integer.parseInt(result);
     }
 
     private String getRemoteData(String url, String jsonOut) throws IOException {
-        StringBuilder jsonIn = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setDoInput(true); // allow inputs
         connection.setDoOutput(true); // allow outputs
@@ -63,13 +63,13 @@ private final static String TAG = "GoodsGetAllTask";
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
             while ((line = br.readLine()) != null) {
-                jsonIn.append(line);
+                sb.append(line);
             }
         } else {
             Log.d(TAG, "response code: " + responseCode);
         }
         connection.disconnect();
-        Log.d(TAG, "jsonIn: " + jsonIn);
-        return jsonIn.toString();
+        Log.d(TAG, "jsonIn: " + sb);
+        return sb.toString();
     }
 }
