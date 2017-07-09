@@ -20,7 +20,7 @@ public class DealBean implements Serializable {
 
     private String goodsName;
     private int dealQty;
-    private Blob goodsImage;
+    private java.sql.Blob goodsImage;
     private String goodsImageName;
     private int goodstype;
     private int goodsLoc;
@@ -43,7 +43,10 @@ public class DealBean implements Serializable {
         this.dealNote = dealNote;
     }
 
-    public DealBean(int dealNo, Timestamp postDate, String sourceId, String endId, int dealStatus, int endShipWay, String shipNo, Timestamp shipDate, String goodsName, int dealQty, Blob goodsImage, String goodsImageName, int goodstype, int goodsLoc, String goodsNote) {
+    public DealBean() {
+    }
+
+    public DealBean(int dealNo, Timestamp postDate, String sourceId, String endId, int dealStatus, int endShipWay, String shipNo, Timestamp shipDate, String goodsName, int dealQty, java.sql.Blob goodsImage, String goodsImageName, int goodstype, int goodsLoc, String goodsNote) {
         this.dealNo = dealNo;
         this.postDate = postDate;
         this.sourceId = sourceId;
@@ -51,6 +54,25 @@ public class DealBean implements Serializable {
         this.dealStatus = dealStatus;
         this.endShipWay = endShipWay;
         this.shipNo = shipNo;
+        this.shipDate = shipDate;
+        this.goodsName = goodsName;
+        this.dealQty = dealQty;
+        this.goodsImage = goodsImage;
+        this.goodsImageName = goodsImageName;
+        this.goodstype = goodstype;
+        this.goodsLoc = goodsLoc;
+        this.goodsNote = goodsNote;
+    }
+
+    public DealBean(int dealNo, Timestamp postDate, String sourceId, String endId, int dealStatus, int endShipWay, String shipNo, String dealNote, Timestamp shipDate, String goodsName, int dealQty, Blob goodsImage, String goodsImageName, int goodstype, int goodsLoc, String goodsNote) {
+        this.dealNo = dealNo;
+        this.postDate = postDate;
+        this.sourceId = sourceId;
+        this.endId = endId;
+        this.dealStatus = dealStatus;
+        this.endShipWay = endShipWay;
+        this.shipNo = shipNo;
+        this.dealNote = dealNote;
         this.shipDate = shipDate;
         this.goodsName = goodsName;
         this.dealQty = dealQty;

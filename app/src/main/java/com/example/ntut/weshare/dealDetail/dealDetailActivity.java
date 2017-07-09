@@ -37,9 +37,8 @@ public class dealDetailActivity extends AppCompatActivity {
     }
     private void initData() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(new GoodsBoxPageWish());
-        fragmentList.add(new GoodsBoxPageGive());
-        fragmentList.add(new GoodsBoxPageChange());
+        fragmentList.add(new NotDeal());
+        fragmentList.add(new Dealed());
     }
     private void initView() {
         gTablayout = (TabLayout) findViewById(R.id.tabs);

@@ -1,0 +1,112 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/gb_cardviewboard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:padding="6dp"
+    card_view:cardBackgroundColor="#ffdddddd"
+    card_view:cardCornerRadius="0dp"
+    card_view:cardElevation="0dp">
+
+    <LinearLayout
+        android:id="@+id/lnwish"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#ffffcc"
+        android:orientation="horizontal"
+        android:padding="6dp"
+        android:weightSum="1">
+
+
+        <ImageView
+            android:id="@+id/ivDealImage"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.16"
+            android:background="@drawable/edittext_goods"
+            android:padding="5dp"
+            android:src="@drawable/house" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivMail"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="205dp"
+                android:src="@drawable/mail_icon" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvDealGoods"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:text="物品標題"
+                        android:textSize="25dp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tvDealQty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="數量"
+                    android:textSize="15dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvDealUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="帳號"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tvDealTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_goodsClass"
+                    android:layout_alignStart="@+id/tv_goodsClass"
+                    android:layout_below="@+id/tv_goodsClass"
+
+                    android:layout_marginTop="10dp"
+                    android:text="時間"
+                    android:textSize="15dp" />
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

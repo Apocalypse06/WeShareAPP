@@ -46,6 +46,7 @@ public class GoodsDetailFragment extends Fragment {
     private TextView tvNote;
     private Button btAccept;
     private Button btCancel;
+    private Button btRefuse;
 
     private static Goods good;
     private static int Way;
@@ -77,6 +78,7 @@ public class GoodsDetailFragment extends Fragment {
         tvNote = (TextView) view.findViewById(R.id.tvNote);
         btAccept = (Button) view.findViewById(R.id.btAccept);
         btCancel = (Button) view.findViewById(R.id.btCancel);
+        btRefuse = (Button) view.findViewById(R.id.btRefuse);
 
         tvGoodsName.setText(good.getGoodsName());
 
@@ -155,8 +157,10 @@ public class GoodsDetailFragment extends Fragment {
 
 
     public static class AlertDialogFragment
-            extends DialogFragment implements DialogInterface.OnClickListener {//必須繼承DialogFragment，並實作OnClickListener監聽器
+            extends DialogFragment {//必須繼承DialogFragment，並實作OnClickListener監聽器
         private final static String TAG = "DealDialogFragment";
+
+        private TextView tvGoodsName;
         private EditText etQty;
         private Spinner spWay;
         private Button btAccept;
@@ -168,12 +172,14 @@ public class GoodsDetailFragment extends Fragment {
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.accept_dialog, container);
 
+            tvGoodsName = (TextView) view.findViewById(R.id.tvGoodsName);
             etQty = (EditText) view.findViewById(R.id.etQty);
             spWay = (Spinner) view.findViewById(R.id.spWay);
             btAccept = (Button) view.findViewById(R.id.btAccept);
             btCancel = (Button) view.findViewById(R.id.btCancel);
             etDealNote = (EditText) view.findViewById(R.id.etDealNote);
 
+            tvGoodsName.setText(good.getGoodsName());
             if (good.getGoodsShipWay() == 1) {
                 final String[] classes = {"面交"};
                 ArrayAdapter<String> classList = new ArrayAdapter<>(getActivity(),
@@ -260,8 +266,7 @@ public class GoodsDetailFragment extends Fragment {
             } else {
                 Common.showToast(getActivity(), R.string.msg_NoNetwork);
             }
-
-            Common.showToast(getActivity(), "DialogFragment");
+            good.setQty(good.getQty() - intValue);
             dismiss();
         }
 
@@ -278,31 +283,6 @@ public class GoodsDetailFragment extends Fragment {
             return endShipWay;
         }
 
-//        @NonNull
-//        @Override
-//        public Dialog onCreateDialog(Bundle savedInstanceState) {//顯示的Dialog
-//            return new AlertDialog.Builder(getActivity())//簡化過後的AlertDialog
-//                    .setTitle("123")
-//                    //.setIcon(R.drawable.alert)
-//                    .setMessage("確定?")
-//                    .setPositiveButton("YES", this)//正向按鈕，this是監聽這個按鈕是否被點擊，會自動呼叫onClick
-//                    .setNegativeButton("NO", this)//否定按鈕
-//                    .create();
-//        }
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-                case DialogInterface.BUTTON_POSITIVE://如果點擊PositiveButton
-                    getActivity().finish();//getActivity()是取得Dialog所依附的Activity，此方法DialogFragment才有
-                    break;
-                case DialogInterface.BUTTON_NEGATIVE:
-                    dialog.cancel();
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
 
