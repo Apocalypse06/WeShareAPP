@@ -231,22 +231,19 @@ public class GoodsBoxPageWish extends Fragment {
         String gtype = "";
         switch (type) {
             case 1:
-                gtype = "食";
+                gtype = "食品";
                 break;
             case 2:
-                gtype = "衣";
+                gtype = "服飾配件";
                 break;
             case 3:
-                gtype = "住";
+                gtype = "生活用品";
                 break;
             case 4:
-                gtype = "行";
+                gtype = "家電機器";
                 break;
             case 5:
-                gtype = "育";
-                break;
-            case 6:
-                gtype = "樂";
+                gtype = "其他";
                 break;
         }
         return gtype;

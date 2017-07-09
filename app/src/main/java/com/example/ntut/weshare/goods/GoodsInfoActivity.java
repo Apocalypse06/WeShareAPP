@@ -35,6 +35,8 @@ public class GoodsInfoActivity extends AppCompatActivity {
     public TextView tvgcount;
     public TextView tvplace;
     public Goods good;
+    private final String[] locString={"苗栗縣","桃園市","基隆市","新北市","新竹市","新竹縣","臺北市","南投縣","雲林縣","嘉義市","嘉義縣","彰化縣"
+            ,"臺中市","屏東縣","高雄市","臺南市","宜蘭縣","花蓮縣","臺東縣","金門縣","連江縣","澎湖縣"};
 
     String action;
     List<Goods> GoodsOrigin = null;
@@ -169,17 +171,7 @@ public class GoodsInfoActivity extends AppCompatActivity {
 
     public String changeLoc2String(int loc) {
         String gloc = "";
-        switch (loc) {
-            case 1:
-                gloc = "北";
-                break;
-            case 2:
-                gloc = "中";
-                break;
-            case 3:
-                gloc = "南";
-                break;
-        }
+        gloc=locString[(loc-1)];
         return gloc;
     }
 
@@ -187,22 +179,19 @@ public class GoodsInfoActivity extends AppCompatActivity {
         String gtype = "";
         switch (type) {
             case 1:
-                gtype = "食";
+                gtype = "食品";
                 break;
             case 2:
-                gtype = "衣";
+                gtype = "服飾配件";
                 break;
             case 3:
-                gtype = "住";
+                gtype = "生活用品";
                 break;
             case 4:
-                gtype = "行";
+                gtype = "家電機器";
                 break;
             case 5:
-                gtype = "育";
-                break;
-            case 6:
-                gtype = "樂";
+                gtype = "其他";
                 break;
         }
         return gtype;

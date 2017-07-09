@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -46,6 +47,8 @@ public class GoodsUpdateActivity extends AppCompatActivity {
     private int intspClass;
     private Spinner spLoc;
     private int intspLoc;
+    private Spinner spState;
+    private int intspState;
     private Spinner spDlvWay;
     private int intspDlvWay;
     private ImageView ivImage;
@@ -67,6 +70,8 @@ public class GoodsUpdateActivity extends AppCompatActivity {
     TextView tvnote;
     ScrollView sv;
     LinearLayout lnlt;
+    private int countLoc;
+    private String[] loc2;
     Timestamp now= new Timestamp(System.currentTimeMillis());
     private static final int REQUEST_PICK_IMAGE = 1;
 
@@ -100,9 +105,47 @@ public class GoodsUpdateActivity extends AppCompatActivity {
         new GoodsGetImageTask(ivImage).execute(url, gid, imageSize);
 
 
+        spState = (Spinner) findViewById(R.id.sp_upstate);
+        final String[] states = {"許願池(募資)", "送愛心(捐贈)", "以物易物"};
+        ArrayAdapter<String> stateList = new ArrayAdapter<>(GoodsUpdateActivity.this,
+                android.R.layout.simple_spinner_dropdown_item, states);
+        spState.setAdapter(stateList);
+
+        if (good.getGoodsStatus() == 1) {
+            spState.setSelection(0);
+        } else if  (good.getGoodsStatus() == 2) {
+            spState.setSelection(1);
+        }else if (good.getGoodsStatus() == 3) {
+            spState.setSelection(2);
+        }
+        spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                              @Override
+                                              public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                                  switch (spState.getSelectedItem().toString()) {
+                                                      case "許願池(募資)":
+                                                          colorChange(255, 151, 151);
+                                                          break;
+                                                      case "送愛心(捐贈)":
+                                                          colorChange(239, 123, 0);
+                                                          break;
+                                                      case "以物易物":
+                                                          colorChange(1, 180, 104);
+                                                          break;
+                                                  }
+                                              }
+                                              @Override
+                                              public void onNothingSelected(AdapterView<?> adapterView) {
+                                                  colorChange(255, 255, 255);
+                                              }
+                                          }
+        );
+
+
+
         //預覽先前的"類別"選項並可被修改
+
         spClass=(Spinner) findViewById(R.id.sp_upclass);
-        final String[] classes = {"食","衣","住","行","育","樂"};
+        final String[] classes = {"食品" ,"服飾配件","生活用品","家電機器","其他"};
         ArrayAdapter<String> classList = new ArrayAdapter<>(GoodsUpdateActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, classes);
         spClass.setAdapter(classList);
@@ -119,19 +162,24 @@ public class GoodsUpdateActivity extends AppCompatActivity {
         }
 
 
+
         //預覽先前的"所在地"選項並可被修改
         spLoc=(Spinner) findViewById(R.id.sp_uploc);
-        final String[] loc = {"北","中","南"};
+        final String[] loc =  {"苗栗縣","桃園市","基隆市","新北市","新竹市","新竹縣","臺北市","南投縣","雲林縣","嘉義市","嘉義縣","彰化縣"
+                ,"臺中市","屏東縣","高雄市","臺南市","宜蘭縣","花蓮縣","臺東縣","金門縣","連江縣","澎湖縣"};
         ArrayAdapter<String> locList = new ArrayAdapter<>(GoodsUpdateActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, loc);
         spLoc.setAdapter(locList);
-        if (good.getGoodsLoc() == 1) {
-            spLoc.setSelection(0);
-        } else if  (good.getGoodsLoc() == 2) {
-            spLoc.setSelection(1);
-        }else if (good.getGoodsLoc() == 3) {
-            spLoc.setSelection(2);
-        }
+        loc2=loc;
+        spLoc.setSelection((good.getGoodsLoc()-1));
+
+//        if (good.getGoodsLoc() == 1) {
+//            spLoc.setSelection(0);
+//        } else if  (good.getGoodsLoc() == 2) {
+//            spLoc.setSelection(1);
+//        }else if (good.getGoodsLoc() == 3) {
+//            spLoc.setSelection(2);
+//        }
 
 
         //預覽先前的"運送方式"選項並可被修改
@@ -194,19 +242,19 @@ public class GoodsUpdateActivity extends AppCompatActivity {
     }
     private void findViews() {
         ivImage = (ImageView) findViewById(R.id.iv_upimage);
-        etName = (EditText) findViewById(R.id.et_upgoodsname);;
+        etName = (EditText) findViewById(R.id.et_upgoodsname);
         etQty = (EditText) findViewById(R.id.et_upqty);
         etComment = (EditText) findViewById(R.id.et_upcomment);
-        tvname = (TextView) findViewById(R.id.textView9);
-        tvqty = (TextView) findViewById(R.id.textView10);
-        tvtype = (TextView) findViewById(R.id.txgoodstate);
-        tvclass = (TextView) findViewById(R.id.textView11);
-        tvloc = (TextView) findViewById(R.id.textView12);
-        tvdlv = (TextView) findViewById(R.id.textView15);
-        tvdate = (TextView) findViewById(R.id.textView13);
-        tvnote = (TextView) findViewById(R.id.textView14);
-        sv=(ScrollView)findViewById(R.id.sv_newgood);
-        lnlt = (LinearLayout) findViewById(R.id.newback);
+        tvname = (TextView) findViewById(R.id.textView9U);
+        tvqty = (TextView) findViewById(R.id.textView10U);
+        tvtype = (TextView) findViewById(R.id.txgoodstateU);
+        tvclass = (TextView) findViewById(R.id.textView11U);
+        tvloc = (TextView) findViewById(R.id.textView12U);
+        tvdlv = (TextView) findViewById(R.id.textView15U);
+        tvdate = (TextView) findViewById(R.id.textView13U);
+        tvnote = (TextView) findViewById(R.id.textView14U);
+        sv=(ScrollView)findViewById(R.id.sv_upgood);
+        lnlt = (LinearLayout) findViewById(R.id.upback);
     }
 
     public void onPickUpPictureClick(View view) {
@@ -283,41 +331,34 @@ public class GoodsUpdateActivity extends AppCompatActivity {
             String goodName=etName.getText().toString().trim();
             SharedPreferences pref = this.getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
             String user = pref.getString("user","");
-            //判斷依照地區給予int值
 
-            switch (spLoc.getSelectedItem().toString()) {
-                case "北":
-                    intspLoc = 1;
+
+            //判斷依照地區給予int值
+            for( int n=0; n<loc2.length;n++) {
+                if (spLoc.getSelectedItem().toString() == loc2[n].toString()) {
+                    countLoc = n + 1;
                     break;
-                case "中":
-                    intspLoc = 2;
-                    break;
-                case "南":
-                    intspLoc = 3;
-                    break;
-                default:
-                    intspLoc = 0;
+                }
             }
 
+
             //判斷依照物品種類給予int值
+
             switch (spClass.getSelectedItem().toString()){
-                case "食":
+                case "食品":
                     intspClass=1;
                     break;
-                case "衣":
+                case "服飾配件":
                     intspClass=2;
                     break;
-                case "住":
+                case "生活用品":
                     intspClass=3;
                     break;
-                case "行":
+                case "家電機器":
                     intspClass=4;
                     break;
-                case "育":
+                case "其他":
                     intspClass=5;
-                    break;
-                case "樂":
-                    intspClass=6;
                     break;
             }
 
@@ -335,7 +376,7 @@ public class GoodsUpdateActivity extends AppCompatActivity {
 
             String url = Common.URL + "GoodsServlet";
             Goods goods = new Goods(good.getGoodsNo(), good.getGoodsStatus(), now, user,goodName ,intspClass,
-                    qtyParseInt, intspLoc, comment, intspDlvWay, deadlinedate,"goodsfilename");
+                    qtyParseInt, countLoc, comment, intspDlvWay, deadlinedate,"goodsfilename");
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
             String action = "goodsUpdate";
             int count = 0;

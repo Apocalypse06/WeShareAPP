@@ -70,7 +70,9 @@ public class GoodsInsertActivity extends AppCompatActivity {
     private TextView tvdate;
     private TextView tvnote;
     private ScrollView sv;
+    private String[] loc2;
     private LinearLayout lnlt;
+    private int countLoc;
     private Timestamp now = new Timestamp(System.currentTimeMillis());
     private static final int REQUEST_PICK_IMAGE = 1;
 
@@ -87,43 +89,42 @@ public class GoodsInsertActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item, states);
         spState.setAdapter(stateList);
         spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (spState.getSelectedItem().toString()) {
-                    case "許願池(募資)":
-                        colorChange(255, 151, 151);
-                        break;
-                    case "送愛心(捐贈)":
-                        colorChange(239, 123, 0);
-                        break;
-                    case "以物易物":
-                        colorChange(1, 180, 104);
-                        break;
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                colorChange(255, 255, 255);
-            }
+                                              @Override
+                                              public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                                  switch (spState.getSelectedItem().toString()) {
+                                                      case "許願池(募資)":
+                                                          colorChange(255, 151, 151);
+                                                          break;
+                                                      case "送愛心(捐贈)":
+                                                          colorChange(255, 119, 68);
+                                                          break;
+                                                      case "以物易物":
+                                                          colorChange(1, 180, 104);
+                                                          break;
+                                                  }
+                                              }
 
-
-                                       }
+                                              @Override
+                                              public void onNothingSelected(AdapterView<?> adapterView) {
+                                                  colorChange(255, 255, 255);
+                                              }
+                                          }
         );
 
-
         spClass = (Spinner) findViewById(R.id.sp_class);
-        final String[] classes = {"食", "衣", "住", "行", "育", "樂"};
+        final String[] classes = {"食品", "服飾配件", "生活用品", "家電機器", "其他"};
         ArrayAdapter<String> classList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, classes);
         spClass.setAdapter(classList);
 
 
         spLoc = (Spinner) findViewById(R.id.sp_loc);
-        final String[] loc = {"北", "中", "南"};
+        final String[] loc = {"苗栗縣","桃園市","基隆市","新北市","新竹市","新竹縣","臺北市","南投縣","雲林縣","嘉義市","嘉義縣","彰化縣"
+                ,"臺中市","屏東縣","高雄市","臺南市","宜蘭縣","花蓮縣","臺東縣","金門縣","連江縣","澎湖縣"};
         ArrayAdapter<String> locList = new ArrayAdapter<>(GoodsInsertActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, loc);
         spLoc.setAdapter(locList);
-
+        loc2=loc;
 
         spDlvWay = (Spinner) findViewById(R.id.sp_dlvWay);
         final String[] dlv = {"面交", "寄送", "面交寄送皆可"};
@@ -256,12 +257,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
         }
     }
 
-    private void switchFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.body, fragment);
-        fragmentTransaction.commit();
-    }
+
 
     public void onNewGoodsResult(View view) {
         //物品名稱驗證
@@ -322,35 +318,44 @@ public class GoodsInsertActivity extends AppCompatActivity {
                     break;
             }
 
-            switch (spLoc.getSelectedItem().toString()) {
-                case "北":
-                    intspLoc = 1;
+
+            for( int n=0; n<loc2.length;n++){
+                if (spLoc.getSelectedItem().toString().equals(loc2[n].toString())){
+                    countLoc=n+1;
                     break;
-                case "中":
-                    intspLoc = 2;
-                    break;
-                case "南":
-                    intspLoc = 3;
-                    break;
-                default:
-                    intspLoc = 0;
+                }
             }
+//            switch (spLoc.getSelectedItem().toString()) {
+//                case "北":
+//                    intspLoc = 1;
+//                    break;
+//                case "中":
+//                    intspLoc = 2;
+//                    break;
+//                case "南":
+//                    intspLoc = 3;
+//                    break;
+//                default:
+//                    intspLoc = 0;
+//            }
+
 
             //判斷依照物品種類給予int值
+
             switch (spClass.getSelectedItem().toString()) {
-                case "食":
+                case "食品":
                     intspClass = 1;
                     break;
-                case "衣":
+                case "服飾配件":
                     intspClass = 2;
                     break;
-                case "住":
+                case "生活用品":
                     intspClass = 3;
                     break;
-                case "行":
+                case "家電機器":
                     intspClass = 4;
                     break;
-                case "育":
+                case "其他":
                     intspClass = 5;
                     break;
                 case "樂":
@@ -372,7 +377,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
 
             String url = Common.URL + "GoodsServlet";
             Goods goods = new Goods(1, intspState, now, user, goodName, intspClass,
-                    qtyParseInt, intspLoc, comment, intspDlvWay, deadlinedate, "goodsfilename");
+                    qtyParseInt, countLoc, comment, intspDlvWay, deadlinedate, "goodsfilename");
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
             String action = "goodsInsert";
             int count = 0;

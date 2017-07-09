@@ -2,98 +2,169 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#009FCC"
     android:clickable="true"
-    android:background="#ffffff"
-    tools:context="com.example.ntut.weshare.feedback.FeedbackFragment">
+    android:id="@+id/search_fragment"
+    android:orientation="vertical"
+    tools:context="com.example.ntut.weshare.feedback.FeedbackFragment"
+    >
 
     <!--<android.support.design.widget.TabLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
 
-        <!--<android.support.design.widget.TabItem-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/tx_wishPool" />-->
+    <!--<android.support.design.widget.TabItem-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/tx_wishPool" />-->
 
-        <!--<android.support.design.widget.TabItem-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/tx_loveTo" />-->
+    <!--<android.support.design.widget.TabItem-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/tx_loveTo" />-->
 
-        <!--<android.support.design.widget.TabItem-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/tx_changeStuff" />-->
+    <!--<android.support.design.widget.TabItem-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/tx_changeStuff" />-->
     <!--</android.support.design.widget.TabLayout>-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
+
 
         <EditText
-            android:layout_width="260dp"
+            android:id="@+id/et_search"
+            android:layout_width="217dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="60dp"
             android:hint="@string/tx_search"
-            android:textSize="35sp" />
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:background="@drawable/edittext_goods"/>
 
         <ImageView
+            android:id="@+id/iv_searchBt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/search" />
+            android:src="@drawable/search"
+            android:paddingLeft="10dp"
+            android:onClick="onSearchResult"
+           />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="類型" />
+            android:orientation="horizontal"
+            >
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_marginLeft="30dp">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sp_srcLoc"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    ></Spinner>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="30dp">
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sp_srcClass"
+                android:layout_margin="10dp">
+            </Spinner>
+            </LinearLayout>
+
+</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+
+                >
+                <CheckBox
+                    android:id="@+id/cb_srcWish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="許願池"
+                    android:textColor="#ff9797"
+                    android:textSize="20dp"
+                    />
+
+                <CheckBox
+                    android:id="@+id/cb_srcGive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="送愛心"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="20dp"
+                    android:textColor="#ef7b00"/>
+
+                <CheckBox
+                    android:id="@+id/cb_srcChage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="以物易物"
+                    android:textSize="20dp"
+                    android:textColor="#01B468"/>
+
+        </LinearLayout>
     </LinearLayout>
-
+</LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="#ffff"
+        >
+    <!--SwipeRefreshLayout下拉更新-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/search_swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="地區" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvSrcGoods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="服務" />
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
-    </LinearLayout>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
 </LinearLayout>

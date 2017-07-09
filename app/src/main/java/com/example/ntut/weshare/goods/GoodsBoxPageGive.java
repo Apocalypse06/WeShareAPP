@@ -130,7 +130,7 @@ public class GoodsBoxPageGive extends Fragment {
 
         @Override
         public GoodsBoxPageGive.GoodsRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = layoutInflater.inflate(R.layout.goods_recycleview_wish, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.goods_recycleview_wish1, parent, false);
             return new GoodsBoxPageGive.GoodsRecyclerViewAdapter.MyViewHolder(itemView);
         }
 
@@ -143,7 +143,7 @@ public class GoodsBoxPageGive extends Fragment {
             new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
 
             myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
-            myViewHolder.tvGoodsClass.setText("類型：" + changeType2String(good.getGoodsType()));
+//            myViewHolder.tvGoodsClass.setText("類型：" + changeType2String(good.getGoodsType()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             final String exdate = sdf.format(good.getDeadLine());
             myViewHolder.tvNeedTime.setText("到期日：" + exdate);
@@ -224,7 +224,7 @@ public class GoodsBoxPageGive extends Fragment {
                 super(itemView);
                 imageView = (ImageView) itemView.findViewById(R.id.iv_image);
                 tvGoodsTitle = (TextView) itemView.findViewById(R.id.tv_goodsTitle);
-                tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
+ //               tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
                 tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
                 tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
                 ivMenu=(ImageView)itemView.findViewById(R.id.icon_menu);
@@ -237,19 +237,19 @@ public class GoodsBoxPageGive extends Fragment {
         String gtype = "";
         switch (type) {
             case 1:
-                gtype = "食";
+                gtype = "食品";
                 break;
             case 2:
-                gtype = "衣";
+                gtype = "服飾配件";
                 break;
             case 3:
-                gtype = "住";
+                gtype = "生活用品";
                 break;
             case 4:
-                gtype = "行";
+                gtype = "家電機器";
                 break;
             case 5:
-                gtype = "育";
+                gtype = "其他";
                 break;
             case 6:
                 gtype = "樂";

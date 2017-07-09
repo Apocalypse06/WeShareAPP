@@ -16,12 +16,12 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-class GoodsGetImageTask extends AsyncTask<Object, Integer, Bitmap> {
+public class GoodsGetImageTask extends AsyncTask<Object, Integer, Bitmap> {
     private final static String TAG = "GoodsGetImageTask";
     private final static String ACTION = "getImage";
     private final WeakReference<ImageView> imageViewWeakReference;
 //
-    GoodsGetImageTask(ImageView imageView) {
+public GoodsGetImageTask(ImageView imageView) {
         this.imageViewWeakReference = new WeakReference<>(imageView);
     }
 
