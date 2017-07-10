@@ -38,12 +38,14 @@ public class dealDetailActivity extends AppCompatActivity {
     private void initData() {
         fragmentList = new ArrayList<>();
         fragmentList.add(new NotDeal());
+        fragmentList.add(new Dealing());
         fragmentList.add(new Dealed());
     }
     private void initView() {
         gTablayout = (TabLayout) findViewById(R.id.tabs);
         gTablayout.addTab(gTablayout.newTab().setText("未接受"));
-        gTablayout.addTab(gTablayout.newTab().setText("已交易"));
+        gTablayout.addTab(gTablayout.newTab().setText("進行中"));
+        gTablayout.addTab(gTablayout.newTab().setText("已完成"));
 
         FragmentAdapter fAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);//Adapter有多個項目，(,顯示內容)
         vpager = (ViewPager) findViewById(R.id.pager);

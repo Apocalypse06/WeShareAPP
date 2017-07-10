@@ -24,7 +24,7 @@ import com.example.ntut.weshare.homeGoodsDetail.DealBean;
 import java.util.List;
 
 
-public class Dealed extends Fragment {
+public class Dealing extends Fragment {
     private static final String TAG = "NotDealFragment";
     private static SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvNotDeal;
@@ -69,7 +69,7 @@ public class Dealed extends Fragment {
         if (Common.networkConnected(getActivity())) {
             SharedPreferences pref = this.getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
             String user = pref.getString("user", "");
-            String ACTION = "getDealed";
+            String ACTION = "getDealing";
             List<DealBean> deals = null;
             try {
                 deals = new GetDealTask().execute(ACTION, user).get();
@@ -77,7 +77,7 @@ public class Dealed extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (deals == null || deals.isEmpty()) {
-                Common.showToast(getActivity(), "沒有未同意的交易訂單");
+                Common.showToast(getActivity(), "沒有正在進行的交易訂單");
             } else {
                 rvNotDeal.setAdapter(new NotDealRecyclerViewAdapter(getActivity(), deals));
             }
@@ -134,23 +134,7 @@ public class Dealed extends Fragment {
             } else if (user.equalsIgnoreCase(deal.getEndId())) {
                 myViewHolder.tvDealUser.setText("帳號：" + deal.getSourceId());
             }
-            myViewHolder.tvDealTime.setText("交易時間：" + deal.getPostDate());
-
-            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dd = deal;
-//                    NotDeal.AlertDialogFragment alertFragment = new NotDeal.AlertDialogFragment();//建立物件
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    alertFragment.show(fragmentManager, "alert");//顯示警示框
-
-//                    AlertDialogFragment test = new AlertDialogFragment();
-//                    test.setRef(Dealed.this);
-//                    NotDeal.AlertDialogFragment alertFragment = new NotDeal.AlertDialogFragment();//建立物件
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    test.show(fragmentManager, "alert");//顯示警示框
-                }
-            });
+            myViewHolder.tvDealTime.setText("訂單時間：" + deal.getShipDate());
 
             myViewHolder.ivMail.setOnClickListener(new View.OnClickListener() {
                 @Override

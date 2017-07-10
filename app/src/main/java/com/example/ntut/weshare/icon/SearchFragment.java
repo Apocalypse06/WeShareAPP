@@ -28,12 +28,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.ntut.weshare.Common;
-import com.example.ntut.weshare.GoodsDetailFragment;
-import com.example.ntut.weshare.HomeGoodsDetailActivity;
+
 import com.example.ntut.weshare.R;
 import com.example.ntut.weshare.goods.Goods;
 import com.example.ntut.weshare.goods.GoodsGetImageTask;
 import com.example.ntut.weshare.goods.GoodsInfoActivity;
+import com.example.ntut.weshare.homeGoodsDetail.HomeGoodsDetailActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

@@ -343,11 +343,11 @@ public class MainActivity extends AppCompatActivity {
                         updateIntent.setClass(MainActivity.this, dealDetailActivity.class);
                         startActivity(updateIntent);
                         break;
-                    case R.id.item_history:
-                        fragment = new historyFragment();
-                        switchFragment(fragment);
-                        setTitle(R.string.tx_history);
-                        break;
+//                    case R.id.item_history:
+//                        fragment = new historyFragment();
+//                        switchFragment(fragment);
+//                        setTitle(R.string.tx_history);
+//                        break;
                     case R.id.item_goodsBox:
                         Intent intent = new Intent();
                         intent.setClass(MainActivity.this, GoodsBoxPageActivity.class);

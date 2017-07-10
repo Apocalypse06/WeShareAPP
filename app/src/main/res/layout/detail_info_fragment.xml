@@ -37,7 +37,7 @@
     <ImageView
         android:id="@+id/ivGoodsImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="350dp"
         android:background="@drawable/edittext_goods"
         android:padding="10dp"
         android:src="@drawable/member_default" />
@@ -61,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="7dp"
-                    android:text="商品名稱"
+                    android:text="商品資訊"
                     android:textSize="18sp" />
 
                 <LinearLayout
@@ -131,7 +131,7 @@
                     android:id="@+id/tvLoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="30dp"
                     android:gravity="center"
                     android:text="地點"
                     android:textSize="20dp" />
@@ -141,7 +141,7 @@
                     android:id="@+id/tvWay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="70dp"
+                    android:layout_marginLeft="30dp"
                     android:gravity="right"
                     android:text="方式"
                     android:textSize="20dp" />
@@ -218,13 +218,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="拒絕交易" />
+                    android:text="拒絕" />
 
                 <Button
                     android:id="@+id/btCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="30dp"
                     android:text="稍後決定" />
 
 
@@ -232,8 +232,8 @@
                     android:id="@+id/btAccept"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:text="接受交易" />
+                    android:layout_marginLeft="30dp"
+                    android:text="接受" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
