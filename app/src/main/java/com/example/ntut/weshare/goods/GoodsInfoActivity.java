@@ -3,6 +3,7 @@ package com.example.ntut.weshare.goods;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,9 +66,17 @@ public class GoodsInfoActivity extends AppCompatActivity {
         setContentView(R.layout.goodsbox_info_fragment);
         final Button updateButton = (Button) findViewById(R.id.btUpdate);
         final Button infobackButton = (Button) findViewById(R.id.btBack);
+        LinearLayout back=(LinearLayout)findViewById(R.id.infoBackground);
         //final Button deleteButton = (Button) findViewById(R.id.btDel);
         Bundle bundleFromList = this.getIntent().getBundleExtra("intentGoods");
         good = (Goods) bundleFromList.getSerializable("goods");
+        if(good.getGoodsStatus()==1){
+            back.setBackgroundColor(Color.rgb(255, 151, 151));
+        }else if(good.getGoodsStatus()==2){
+            back.setBackgroundColor(Color.rgb(255, 119, 68));
+        }else if(good.getGoodsStatus()==3){
+            back.setBackgroundColor(Color.rgb(1, 180, 104));
+        }
 
 
         //退回按鍵

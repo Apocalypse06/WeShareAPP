@@ -7,30 +7,12 @@
     android:background="#ffffff"
     tools:context="com.example.ntut.weshare.feedback.FeedbackFragment">
 
-    <android.support.design.widget.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tx_wishPool" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tx_loveTo" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tx_changeStuff" />
-    </android.support.design.widget.TabLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:orientation="horizontal">
 
         <EditText
@@ -38,13 +20,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/searchorg"
             android:hint="@string/tx_search"
             android:textSize="35sp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/search" />
+            android:id="@+id/iv_searchorg"
+            android:src="@drawable/searchorg" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,26 +39,30 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="類型" />
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
         <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
+            android:id="@+id/sp_orgLoc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></Spinner>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:text="地區" />
+</LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1">
         <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
+            android:id="@+id/sp_orgType"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></Spinner>
 
-
+        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -86,7 +75,7 @@
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvNews"
+                android:id="@+id/rv_SrcOrg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
