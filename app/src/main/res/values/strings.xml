@@ -101,5 +101,9 @@
     <string name="msg_sameAccount">這是您的資訊</string>
     <string name="tx_dealDetail">交易訂單</string>
     <string name="msg_dealRefuse">交易已拒絕</string>
+    <string name="msg_feedbackNull">評價不可空白</string>
+    <string name="msg_SendSuccess">評價成功</string>
+    <string name="msg_fbSuccess">評價成功</string>
+    <string name="msg_fbFail">評價失敗</string>
 
 </resources>

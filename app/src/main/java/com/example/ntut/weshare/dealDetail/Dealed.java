@@ -20,7 +20,9 @@ import android.widget.Toast;
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
 import com.example.ntut.weshare.homeGoodsDetail.DealBean;
+import com.example.ntut.weshare.homeGoodsDetail.FeedbackBean;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -29,7 +31,9 @@ public class Dealed extends Fragment {
     private static SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvNotDeal;
     private static String user;
-    static DealBean dd = null;
+    private int status = 0;
+    static DealBean dealStatic = null;
+    static FeedbackBean fbStatic = null;
 
     public void onResume() {
         super.onResume();
@@ -77,7 +81,7 @@ public class Dealed extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (deals == null || deals.isEmpty()) {
-                Common.showToast(getActivity(), "沒有未同意的交易訂單");
+                Common.showToast(getActivity(), "沒有完成的交易訂單");
             } else {
                 rvNotDeal.setAdapter(new NotDealRecyclerViewAdapter(getActivity(), deals));
             }
@@ -109,7 +113,7 @@ public class Dealed extends Fragment {
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = layoutInflater.inflate(R.layout.deal_not_recycleview_item, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.dealed_recycleview_item, parent, false);
             return new NotDealRecyclerViewAdapter.MyViewHolder(itemView);
 
         }
@@ -127,6 +131,48 @@ public class Dealed extends Fragment {
             SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
             user = pref.getString("user", "");
 
+            List<FeedbackBean> fb = null;
+            String action = "checkFbExist";
+            int count = 0;
+            if (Common.networkConnected(getActivity())) {
+                try {
+                    count = new FbCheckTask().execute(action, "" + deal.getDealNo()).get();
+                } catch (Exception e) {
+                    Log.e(TAG, e.toString());
+                }
+                if (count == 1) {
+//                    try {
+//                        action = "getFeedback";
+//                        fb = new GetFeedbacklTask().execute(action, "" + deal.getDealNo()).get();
+//                    } catch (Exception e) {
+//                        Log.e(TAG, e.toString());
+//                    }
+                    if (user.equalsIgnoreCase(deal.getEndId())) {
+                        myViewHolder.ivFbed.setVisibility(View.VISIBLE);
+                        myViewHolder.ivFbed.setImageResource(R.drawable.feedbacked_icon);
+                    } else {
+                        myViewHolder.ivRmed.setVisibility(View.VISIBLE);
+                        myViewHolder.ivRmed.setImageResource(R.drawable.recommend_icon);
+                    }
+                } else {
+                    if (user.equalsIgnoreCase(deal.getEndId())) {
+                        myViewHolder.ivFbNot.setVisibility(View.VISIBLE);
+                        myViewHolder.ivFbNot.setImageResource(R.drawable.feedback_not_icon);
+                    } else {
+                        myViewHolder.ivRmNot.setVisibility(View.VISIBLE);
+                        myViewHolder.ivRmNot.setImageResource(R.drawable.recommend_not_icon);
+                    }
+                }
+            } else {
+                Common.showToast(getActivity(), R.string.msg_NoNetwork);
+            }
+
+//            if (user.equalsIgnoreCase(deal.getEndId())) {
+//                myViewHolder.ivCar.setImageResource(R.drawable.feedback_not_icon);
+//            } else {
+//                myViewHolder.ivCar.setVisibility(View.GONE);
+//            }
+
 
             myViewHolder.tvDealQty.setText("數量：" + deal.getDealQty());
             if (user.equalsIgnoreCase(deal.getSourceId())) {
@@ -134,49 +180,93 @@ public class Dealed extends Fragment {
             } else if (user.equalsIgnoreCase(deal.getEndId())) {
                 myViewHolder.tvDealUser.setText("帳號：" + deal.getSourceId());
             }
-            myViewHolder.tvDealTime.setText("交易時間：" + deal.getPostDate());
+
+            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            String postTime = sdFormat.format(deal.getShipDate());
+            myViewHolder.tvDealTime.setText("完成交易：" + postTime);
 
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dd = deal;
+                    dealStatic = deal;
 //                    NotDeal.AlertDialogFragment alertFragment = new NotDeal.AlertDialogFragment();//建立物件
 //                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 //                    alertFragment.show(fragmentManager, "alert");//顯示警示框
 
-//                    AlertDialogFragment test = new AlertDialogFragment();
-//                    test.setRef(Dealed.this);
-//                    NotDeal.AlertDialogFragment alertFragment = new NotDeal.AlertDialogFragment();//建立物件
+//                    DealingDialogFragment detail = new DealingDialogFragment();
+//                    detail.setRef(Dealing.this);
 //                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    test.show(fragmentManager, "alert");//顯示警示框
+//                    detail.show(fragmentManager, "alert");//顯示警示框
                 }
             });
 
-            myViewHolder.ivMail.setOnClickListener(new View.OnClickListener() {
+
+            myViewHolder.ivFbNot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    dd.setSourceId(deal.getSourceId());
-//                    NotDeal.AlertDialogFragment alertFragment = new NotDeal.AlertDialogFragment();//建立物件
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    alertFragment.show(fragmentManager, "alert");//顯示警示框}
+                    dealStatic = deal;
+                    FeedbackDialogFragment msg = new FeedbackDialogFragment();
+                    msg.setRef(Dealed.this);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    msg.show(fragmentManager, "alert");//顯示警示框
+                }
+            });
 
+            myViewHolder.ivFbed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dealStatic = deal;
+                    FeedbackedDialogFragment msg = new FeedbackedDialogFragment();
+                    msg.setRef(Dealed.this);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    msg.show(fragmentManager, "alert");//顯示警示框
+                }
+            });
+
+            myViewHolder.ivRmNot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dealStatic = deal;
+                    MsgRecommendDialogFragment msg = new MsgRecommendDialogFragment();
+                    msg.setRef(Dealed.this);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    msg.show(fragmentManager, "alert");//顯示警示框
+                }
+            });
+
+            myViewHolder.ivRmed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dealStatic = deal;
+                    FeedbackedDialogFragment msg = new FeedbackedDialogFragment();
+                    msg.setRef(Dealed.this);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    msg.show(fragmentManager, "alert");//顯示警示框
                 }
             });
 
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView ivDealImage, ivMail;
+            ImageView ivDealImage, ivFbNot, ivFbed, ivRmNot, ivRmed;
             TextView tvDealGoods, tvDealQty, tvDealUser, tvDealTime;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 ivDealImage = (ImageView) itemView.findViewById(R.id.ivDealImage);
-                ivMail = (ImageView) itemView.findViewById(R.id.ivMail);
+                ivFbNot = (ImageView) itemView.findViewById(R.id.ivFbNot);
+                ivFbed = (ImageView) itemView.findViewById(R.id.ivFbed);
+                ivRmNot = (ImageView) itemView.findViewById(R.id.ivRmNot);
+                ivRmed = (ImageView) itemView.findViewById(R.id.ivRmed);
                 tvDealGoods = (TextView) itemView.findViewById(R.id.tvDealGoods);
                 tvDealQty = (TextView) itemView.findViewById(R.id.tvDealQty);
                 tvDealUser = (TextView) itemView.findViewById(R.id.tvDealUser);
                 tvDealTime = (TextView) itemView.findViewById(R.id.tvDealTime);
+
+                ivFbNot.setVisibility(View.GONE);
+                ivFbed.setVisibility(View.GONE);
+                ivRmNot.setVisibility(View.GONE);
+                ivRmed.setVisibility(View.GONE);
             }
         }
     }

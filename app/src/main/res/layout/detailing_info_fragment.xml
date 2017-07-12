@@ -75,7 +75,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="10dp"
                         android:gravity="right|center"
-                        android:text="提出交易時間"
+                        android:text="接受交易時間"
                         android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -218,22 +218,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="拒絕" />
+                    android:text="取消" />
 
                 <Button
                     android:id="@+id/btCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:text="稍後決定" />
+                    android:text="返回" />
 
-
-                <Button
-                    android:id="@+id/btAccept"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:text="接受" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

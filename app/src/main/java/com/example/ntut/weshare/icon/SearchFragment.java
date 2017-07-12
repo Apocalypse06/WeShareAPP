@@ -50,7 +50,7 @@ public class SearchFragment extends Fragment {
     CheckBox cbGive;
     CheckBox cbChage;
     String all="";
-    String finalQuery;
+    String finalQuery="";
     private RecyclerView rvSrcGoods;
 
     @Override

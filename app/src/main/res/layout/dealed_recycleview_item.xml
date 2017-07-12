@@ -37,21 +37,41 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/ivMail"
+                android:id="@+id/ivFbNot"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="205dp"
-                android:src="@drawable/mail_icon" />
+                android:layout_marginTop="10dp"
+                android:src="@drawable/feedback_not_icon" />
 
             <ImageView
-                android:id="@+id/ivCar"
+                android:id="@+id/ivFbed"
                 android:layout_width="40dp"
-                android:layout_height="45dp"
+                android:layout_height="40dp"
                 android:layout_gravity="right"
-                android:layout_marginTop="60dp"
-                android:layout_marginLeft="205dp" />
+                android:layout_marginLeft="205dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/feedbacked_icon" />
+
+            <ImageView
+                android:id="@+id/ivRmNot"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginLeft="205dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/recommend_not_icon" />
+
+            <ImageView
+                android:id="@+id/ivRmed"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginLeft="205dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/recommend_icon" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"

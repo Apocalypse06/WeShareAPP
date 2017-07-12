@@ -125,7 +125,6 @@ public class MemberRegisterIndActivity extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             image = stream.toByteArray();
-
         }
 
         String tal = etTal.getText().toString().trim();

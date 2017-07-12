@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="7dp"
-            android:text="發送訊息"
+            android:text="評價"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -25,13 +25,49 @@
         android:layout_height="wrap_content"
         android:background="#fff">
 
+        <ImageView
+            android:id="@+id/ivFeedbackImage"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/deal_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/edittext_goods">
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:text="5"-->
+            <!--android:textSize="35sp"/>-->
+        <ImageView
+            android:id="@+id/ivNumber"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/number_1_icon"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_goods">
+
         <TextView
-            android:id="@+id/tvAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="名稱"
-            android:textSize="25sp" />
+            android:layout_margin="7dp"
+            android:text="評價內容"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -39,13 +75,13 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/etMsgContext"
+            android:id="@+id/etFeedbackText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/edittext_goods"
             android:gravity="top"
-            android:hint="請輸入訊息內容"
+            android:hint="請輸入評價內容"
             android:inputType="textMultiLine"
             android:maxLines="10"
             android:minLines="3"
@@ -65,11 +101,11 @@
 
 
         <Button
-            android:id="@+id/btSedn"
+            android:id="@+id/btFeedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
-            android:text="寄出" />
+            android:text="評價" />
     </LinearLayout>
 
 </LinearLayout>

@@ -21,6 +21,8 @@ import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
 import com.example.ntut.weshare.homeGoodsDetail.DealBean;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,7 +31,7 @@ public class Dealing extends Fragment {
     private static SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvNotDeal;
     private static String user;
-    static DealBean dd = null;
+    static DealBean dealStatic = null;
 
     public void onResume() {
         super.onResume();
@@ -127,6 +129,12 @@ public class Dealing extends Fragment {
             SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
             user = pref.getString("user", "");
 
+            if (deal.getSourceId().equalsIgnoreCase(user)) {
+                myViewHolder.ivCar.setImageResource(R.drawable.car_icon);
+            }else{
+                myViewHolder.ivCar.setVisibility(View.GONE);
+            }
+
 
             myViewHolder.tvDealQty.setText("數量：" + deal.getDealQty());
             if (user.equalsIgnoreCase(deal.getSourceId())) {
@@ -134,15 +142,50 @@ public class Dealing extends Fragment {
             } else if (user.equalsIgnoreCase(deal.getEndId())) {
                 myViewHolder.tvDealUser.setText("帳號：" + deal.getSourceId());
             }
-            myViewHolder.tvDealTime.setText("訂單時間：" + deal.getShipDate());
+
+
+            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            String postTime = sdFormat.format(deal.getShipDate());
+            myViewHolder.tvDealTime.setText("訂單時間：" + postTime);
+//            myViewHolder.tvDealTime.setText("訂單時間：" + deal.getShipDate());
+
+
+            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dealStatic = deal;
+//                    NotDeal.AlertDialogFragment alertFragment = new NotDeal.AlertDialogFragment();//建立物件
+//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                    alertFragment.show(fragmentManager, "alert");//顯示警示框
+
+                    DealingDialogFragment detail = new DealingDialogFragment();
+                    detail.setRef(Dealing.this);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    detail.show(fragmentManager, "alert");//顯示警示框
+                }
+            });
+
 
             myViewHolder.ivMail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    dd.setSourceId(deal.getSourceId());
-//                    NotDeal.AlertDialogFragment alertFragment = new NotDeal.AlertDialogFragment();//建立物件
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    alertFragment.show(fragmentManager, "alert");//顯示警示框}
+                    dealStatic = deal;
+                    MsgDealingDialogFragment msg = new MsgDealingDialogFragment();
+                    msg.setRef(Dealing.this);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    msg.show(fragmentManager, "alert");//顯示警示框
+
+                }
+            });
+
+            myViewHolder.ivCar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dealStatic = deal;
+                    SendTextDialogFragment msg = new SendTextDialogFragment();
+                    msg.setRef(Dealing.this);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    msg.show(fragmentManager, "alert");//顯示警示框
 
                 }
             });
@@ -150,13 +193,14 @@ public class Dealing extends Fragment {
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView ivDealImage, ivMail;
+            ImageView ivDealImage, ivMail, ivCar;
             TextView tvDealGoods, tvDealQty, tvDealUser, tvDealTime;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 ivDealImage = (ImageView) itemView.findViewById(R.id.ivDealImage);
                 ivMail = (ImageView) itemView.findViewById(R.id.ivMail);
+                ivCar = (ImageView) itemView.findViewById(R.id.ivCar);
                 tvDealGoods = (TextView) itemView.findViewById(R.id.tvDealGoods);
                 tvDealQty = (TextView) itemView.findViewById(R.id.tvDealQty);
                 tvDealUser = (TextView) itemView.findViewById(R.id.tvDealUser);

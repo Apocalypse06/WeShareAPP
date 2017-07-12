@@ -16,36 +16,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="7dp"
-            android:text="發送訊息"
+            android:text="備註"
             android:textSize="18sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff">
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="#fff">-->
 
-        <TextView
-            android:id="@+id/tvAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="名稱"
-            android:textSize="25sp" />
-    </LinearLayout>
+    <!--<TextView-->
+    <!--android:id="@+id/tvAccount"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:text="名稱"-->
+    <!--android:textSize="25sp" />-->
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/etMsgContext"
+            android:id="@+id/etSendContext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/edittext_goods"
             android:gravity="top"
-            android:hint="請輸入訊息內容"
+            android:hint="物流業者或物流單號"
             android:inputType="textMultiLine"
             android:maxLines="10"
             android:minLines="3"

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -28,6 +29,7 @@ public class wishFragment extends Fragment {
     private static final String TAG = "WishListFragment";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvWish;
+    private int userType = 0;
 
 
     @Nullable
@@ -37,13 +39,7 @@ public class wishFragment extends Fragment {
 
         rvWish = (RecyclerView) view.findViewById(R.id.rvWish);
 
-//        rvWish.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-//        rvWish.setAdapter(new ContactAdapter(inflater));
-
-        rvWish.setLayoutManager(
-                new StaggeredGridLayoutManager(
-                        2, StaggeredGridLayoutManager.VERTICAL));
-        rvWish.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvWish.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         swipeRefreshLayout =
                 (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
@@ -56,8 +52,6 @@ public class wishFragment extends Fragment {
             }
         });
 
-//        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));//這里用線性宮格顯示 類似于瀑布流
-//        mRecyclerView.setAdapter(new NormalRecyclerViewAdapter(this)); 原文網址：https://ifun01.com/88LDTF8.html
         return view;
     }
 
@@ -121,10 +115,20 @@ public class wishFragment extends Fragment {
 
             String url = Common.URL + "GoodsServlet";
             int gid = wishGood.getGoodsNo();
-            int imageSize = 250;
+            int imageSize = 450;
             //這邊啟動AsyncTask，抓圖片
             //不用.get()，不然會卡畫面，這邊利用SpotGetImageTask(myViewHolder.imageView)放圖，myViewHolder.imageView將imageView元件傳給AsyncTask，再用onPostExecute()將圖貼上
             new GoodsGetImageTask(myViewHolder.ivGoods).execute(url, gid, imageSize);
+            try {
+                userType = new GetIndTypelTask().execute(wishGood.getIndId()).get();
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+            if(userType == 1){
+                myViewHolder.ivIndType.setImageResource(R.drawable.member_default);
+            }else if(userType == 2){
+                myViewHolder.ivIndType.setImageResource(R.drawable.org_default);
+            }
 
             myViewHolder.tvWish.setText(wishGood.getGoodsName());
             myViewHolder.tvNumber.setText("" + wishGood.getQty());
@@ -138,41 +142,21 @@ public class wishFragment extends Fragment {
                     bundle.putSerializable("Goods", wishGood);
                     intent.putExtra("intentGoods", bundle);
                     startActivity(intent);
-
-//                    Fragment fragment = new GoodsDetailFragment();
-//                    Bundle bundle2 = new Bundle();
-//                    bundle2.putSerializable("Goods", wishGood);
-//                    fragment.setArguments(bundle2);
-//                    switchFragment(fragment);
-
-//
-//                    Fragment fragment = new MessageReplyFragment();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("msg", msg);
-//                    fragment.setArguments(bundle);
-//                    switchFragment(fragment);
                 }
             });
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView ivGoods;
+            ImageView ivGoods,ivIndType;
             TextView tvWish, tvNumber;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 ivGoods = (ImageView) itemView.findViewById(R.id.ivGoods);
+                ivIndType = (ImageView) itemView.findViewById(R.id.ivIndType);
                 tvWish = (TextView) itemView.findViewById(R.id.tvWish);
                 tvNumber = (TextView) itemView.findViewById(R.id.tvNumber);
             }
         }
-    }
-
-    private void switchFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction =
-                getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.body, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
     }
 }

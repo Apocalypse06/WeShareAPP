@@ -78,7 +78,8 @@ public class NotDeal extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (deals == null || deals.isEmpty()) {
-                Common.showToast(getActivity(), "沒有未同意的交易訂單");
+                //Common.showToast(getActivity(), "沒有未同意的交易訂單");
+                rvNotDeal.setBackgroundResource(R.drawable.deal_icon);
             } else {
                 rvNotDeal.setAdapter(new NotDealRecyclerViewAdapter(getActivity(), deals));
             }
@@ -160,7 +161,6 @@ public class NotDeal extends Fragment {
                     msg.setRef(NotDeal.this);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     msg.show(fragmentManager, "alert");//顯示警示框
-
                 }
             });
 
