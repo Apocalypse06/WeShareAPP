@@ -11,22 +11,25 @@ import com.google.gson.JsonObject;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-//import idv.ron.spots.R;
+/**
+ * Created by NTUT on 2017/7/10.
+ */
 
-class UserGetOrgImageTask extends AsyncTask<Object, Integer, Bitmap> {
-    private final static String TAG = "UserGetImageTask";
+public class instGetImageTask extends AsyncTask<Object, Integer, Bitmap> {
+    private final static String TAG = "instGetImageTask";
     private final static String ACTION = "getOrgImage";
 
 
     //WeakReference<ImageView>是避免在極端的狀態下(user快速滑動造成大量載入)造成OOM，WeakReference是會在資料沒有再參照下，馬上會直接回收資源(記憶體)
-//    private final WeakReference<ImageView> imageViewWeakReference;
-//
-//    UserGetImageTask(ImageView imageView) {
-//        this.imageViewWeakReference = new WeakReference<>(imageView);
-//    }
+    private final WeakReference<ImageView> imageViewWeakReference;
+
+    instGetImageTask(ImageView imageView) {
+        this.imageViewWeakReference = new WeakReference<>(imageView);
+    }
 
     @Override
     protected Bitmap doInBackground(Object... params) {
@@ -48,21 +51,21 @@ class UserGetOrgImageTask extends AsyncTask<Object, Integer, Bitmap> {
         return bitmap;
     }
 
-//    @Override
-//    protected void onPostExecute(Bitmap bitmap) {//顯示圖片的畫面，前面有給myViewHolder.imageView
-//        if (isCancelled()) {
-//            bitmap = null;
-//        }
-//        ImageView imageView = imageViewWeakReference.get();
-//        if (imageView != null) {
-//            if (bitmap != null) {
-//                imageView.setImageBitmap(bitmap);//顯示圖片
-//            } else {
-//               // imageView.setImageResource(R.d.drawable.default_image);
-//            }
-//        }
-//        super.onPostExecute(bitmap);
-//    }
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {//顯示圖片的畫面，前面有給myViewHolder.imageView
+        if (isCancelled()) {
+            bitmap = null;
+        }
+        ImageView imageView = imageViewWeakReference.get();
+        if (imageView != null) {
+            if (bitmap != null) {
+                imageView.setImageBitmap(bitmap);//顯示圖片
+            } else {
+               // imageView.setImageResource(R.d.drawable.default_image);
+            }
+        }
+        super.onPostExecute(bitmap);
+    }
 
     private Bitmap getRemoteImage(String url, String jsonOut) throws IOException {
         Bitmap bitmap = null;

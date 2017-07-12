@@ -18,24 +18,23 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Created by NTUT on 2017/7/9.
+ * Created by NTUT on 2017/7/10.
  */
 
-public class InstitutionQueryTask  extends AsyncTask<Object, Integer, List<InstiutionBean>> {
-    private final static String TAG = "InstitutionQueryTask";
-
+class InstQueryUserTask extends AsyncTask<Object, Integer, List<User>> {//沒有UI畫面，所以沒辦法onPostExecute可以顯示畫面
+    private final static String TAG = "InstQueryUserTask";
 
 
     @Override
-    protected List<InstiutionBean> doInBackground (Object...params){
+    protected List<User> doInBackground(Object... params) {
         String url = params[0].toString();
         String queryString = params[1].toString();
-        String ACTION=params[2].toString();
+        String ACTION = params[2].toString();
+
         String jsonIn;
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("action", ACTION);
         jsonObject.addProperty("queryString", queryString);
-
         try {
             jsonIn = getRemoteData(url, jsonObject.toString());
         } catch (IOException e) {
@@ -44,10 +43,11 @@ public class InstitutionQueryTask  extends AsyncTask<Object, Integer, List<Insti
         }
 
         Gson gson = new Gson();
-        Type listType = new TypeToken<List<InstiutionBean>>() {}.getType();
+        Type listType = new TypeToken<List<User>>() {
+        }.getType();
         return gson.fromJson(jsonIn, listType);
-
     }
+
 
     private String getRemoteData(String url, String jsonOut) throws IOException {
         StringBuilder jsonIn = new StringBuilder();

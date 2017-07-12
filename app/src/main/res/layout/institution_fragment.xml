@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
         <EditText
@@ -56,11 +57,12 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1">
-        <Spinner
-            android:id="@+id/sp_orgType"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            ></Spinner>
+
+            <Spinner
+                android:id="@+id/sp_orgType"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                ></Spinner>
 
         </LinearLayout>
     </LinearLayout>
@@ -69,17 +71,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!--SwipeRefreshLayout下拉更新-->
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<android.support.v4.widget.SwipeRefreshLayout-->
+            <!--android:id="@+id/swipeRefreshLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_SrcOrg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
 
     </RelativeLayout>

@@ -35,6 +35,7 @@ import com.example.ntut.weshare.homeGoodsDetail.changeFragment;
 import com.example.ntut.weshare.homeGoodsDetail.loveFragment;
 import com.example.ntut.weshare.homeGoodsDetail.wishFragment;
 import com.example.ntut.weshare.icon.InstitutionkFragment;
+import com.example.ntut.weshare.member.InstitutionSearchFragment;
 import com.example.ntut.weshare.message.MessageFragment;
 import com.example.ntut.weshare.icon.SearchFragment;
 import com.example.ntut.weshare.member.MemberLoginActivity;
@@ -180,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.item_welfareInstitution:
-                fragment = new InstitutionkFragment();
+                fragment = new InstitutionSearchFragment();
                 switchFragment(fragment);
                 setTitle(R.string.tx_welfareInstitution);
                 break;
