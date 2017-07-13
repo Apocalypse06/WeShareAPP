@@ -59,10 +59,8 @@ public class MessageFragment extends Fragment {
             List<MessageBean> msgs = null;
             SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
             String account = pref.getString("user", "");
-            try {//抓全部景點
+            try {
                 msgs = new MsgGetAllTask().execute(url, account).get();//.get()要請SpotGetAllTask()的執行結果回傳給我，會等他抓完資料(doInBackground的回傳結果)才會往下執行
-                //先抓文字的資料，因為資料小，圖片則是要畫面滑動的過程中才會抓取
-                //如果連圖一起抓，會變很慢，而且避免塞爆user的記憶體
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
