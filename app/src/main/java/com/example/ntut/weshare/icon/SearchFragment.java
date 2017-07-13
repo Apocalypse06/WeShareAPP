@@ -81,6 +81,7 @@ public class SearchFragment extends Fragment {
         });
         rvSrcGoods = (RecyclerView) view.findViewById(R.id.rvSrcGoods);
         rvSrcGoods.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvSrcGoods.setVisibility(View.GONE);
 
 //建立spinner選項
         final String[] classes = {"所有類別", "食品", "服飾配件", "生活用品", "家電機器", "其他"};
@@ -170,9 +171,11 @@ public class SearchFragment extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (goods == null || goods.isEmpty()) {
-                // Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
+                 Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
+                rvSrcGoods.setVisibility(View.GONE);
             } else {
                 rvSrcGoods.setAdapter(new GoodsRecyclerViewAdapter(getActivity(), goods));
+                rvSrcGoods.setVisibility(View.VISIBLE);
             }
         } else {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
@@ -210,6 +213,8 @@ public class SearchFragment extends Fragment {
             final String exdate = sdf.format(good.getDeadLine());
             myViewHolder.tvNeedTime.setText("到期日：" + exdate);
             myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
+            myViewHolder.ivMenu.setVisibility(View.INVISIBLE);
+
 
             if(good.getGoodsStatus()==1){
                 myViewHolder.background.setBackgroundColor(Color.rgb(255,151,151));
