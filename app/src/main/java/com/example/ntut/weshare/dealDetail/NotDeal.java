@@ -29,6 +29,7 @@ public class NotDeal extends Fragment {
     private static final String TAG = "NotDealFragment";
     private static SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvNotDeal;
+    private ImageView ivNoDeal;
     private static String user;
     static DealBean dd = null;
 
@@ -51,6 +52,8 @@ public class NotDeal extends Fragment {
 
         swipeRefreshLayout =
                 (SwipeRefreshLayout) view.findViewById(R.id.gb_swipeRefreshLayoutW);
+        ivNoDeal = (ImageView) view.findViewById(R.id.ivNoDeal);
+        ivNoDeal.setVisibility(View.GONE);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -79,6 +82,8 @@ public class NotDeal extends Fragment {
             }
             if (deals == null || deals.isEmpty()) {
                 //Common.showToast(getActivity(), "沒有未同意的交易訂單");
+                ivNoDeal.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
                 rvNotDeal.setBackgroundResource(R.drawable.deal_icon);
             } else {
                 rvNotDeal.setAdapter(new NotDealRecyclerViewAdapter(getActivity(), deals));

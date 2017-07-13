@@ -95,16 +95,15 @@ public class DealingDialogFragment extends DialogFragment {//必須繼承DialogF
         } else {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
         }
-        if(ref.dealStatic.getEndShipWay() == 0){
+        if (ref.dealStatic.getEndShipWay() == 0) {
             tvWay.setText("面交");
-        }else if(ref.dealStatic.getEndShipWay() == 1){
+        } else if (ref.dealStatic.getEndShipWay() == 1) {
             tvWay.setText("物流");
         }
 
 
         tvGoodsNote.setText(ref.dealStatic.getGoodsNote());
         tvAccountNote.setText(ref.dealStatic.getDealNote());
-
 
 
         btCancel.setOnClickListener(new View.OnClickListener() {
@@ -143,24 +142,16 @@ public class DealingDialogFragment extends DialogFragment {//必須繼承DialogF
                 updateIntent.setClass(getActivity(), dealDetailActivity.class);
                 startActivity(updateIntent);
 
-                dismiss();
+                onDis();
             }
         } else {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
         }
     }
 
-    @Override
-    public void onDismiss(DialogInterface frag) {
-//            (dealDetailActivity)getActivity().showAllDeals();
-//            getFragmentManager().onStart();
-
-        //FragmentManager fm = getActivity().getSupportFragmentManager();
+    public void onDis() {
         ref.showAllDeals();
-        //d.show(fm, "fragment_name");
-
-        super.onDismiss(frag);
-
+        dismiss();
     }
 
 

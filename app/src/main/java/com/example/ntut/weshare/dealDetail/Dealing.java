@@ -30,6 +30,7 @@ public class Dealing extends Fragment {
     private static final String TAG = "NotDealFragment";
     private static SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvNotDeal;
+    private ImageView ivNoDeal;
     private static String user;
     static DealBean dealStatic = null;
 
@@ -52,6 +53,8 @@ public class Dealing extends Fragment {
 
         swipeRefreshLayout =
                 (SwipeRefreshLayout) view.findViewById(R.id.gb_swipeRefreshLayoutW);
+        ivNoDeal = (ImageView) view.findViewById(R.id.ivNoDeal);
+        ivNoDeal.setVisibility(View.GONE);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -79,6 +82,8 @@ public class Dealing extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (deals == null || deals.isEmpty()) {
+                ivNoDeal.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
                 Common.showToast(getActivity(), "沒有正在進行的交易訂單");
             } else {
                 rvNotDeal.setAdapter(new NotDealRecyclerViewAdapter(getActivity(), deals));

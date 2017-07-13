@@ -30,6 +30,7 @@ public class Dealed extends Fragment {
     private static final String TAG = "NotDealFragment";
     private static SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvNotDeal;
+    private ImageView ivNoDeal;
     private static String user;
     private int status = 0;
     static DealBean dealStatic = null;
@@ -54,6 +55,8 @@ public class Dealed extends Fragment {
 
         swipeRefreshLayout =
                 (SwipeRefreshLayout) view.findViewById(R.id.gb_swipeRefreshLayoutW);
+        ivNoDeal = (ImageView) view.findViewById(R.id.ivNoDeal);
+        ivNoDeal.setVisibility(View.GONE);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -81,6 +84,8 @@ public class Dealed extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (deals == null || deals.isEmpty()) {
+                ivNoDeal.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
                 Common.showToast(getActivity(), "沒有完成的交易訂單");
             } else {
                 rvNotDeal.setAdapter(new NotDealRecyclerViewAdapter(getActivity(), deals));
@@ -141,12 +146,6 @@ public class Dealed extends Fragment {
                     Log.e(TAG, e.toString());
                 }
                 if (count == 1) {
-//                    try {
-//                        action = "getFeedback";
-//                        fb = new GetFeedbacklTask().execute(action, "" + deal.getDealNo()).get();
-//                    } catch (Exception e) {
-//                        Log.e(TAG, e.toString());
-//                    }
                     if (user.equalsIgnoreCase(deal.getEndId())) {
                         myViewHolder.ivFbed.setVisibility(View.VISIBLE);
                         myViewHolder.ivFbed.setImageResource(R.drawable.feedbacked_icon);
@@ -166,12 +165,6 @@ public class Dealed extends Fragment {
             } else {
                 Common.showToast(getActivity(), R.string.msg_NoNetwork);
             }
-
-//            if (user.equalsIgnoreCase(deal.getEndId())) {
-//                myViewHolder.ivCar.setImageResource(R.drawable.feedback_not_icon);
-//            } else {
-//                myViewHolder.ivCar.setVisibility(View.GONE);
-//            }
 
 
             myViewHolder.tvDealQty.setText("數量：" + deal.getDealQty());
@@ -193,10 +186,10 @@ public class Dealed extends Fragment {
 //                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 //                    alertFragment.show(fragmentManager, "alert");//顯示警示框
 
-//                    DealingDialogFragment detail = new DealingDialogFragment();
-//                    detail.setRef(Dealing.this);
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    detail.show(fragmentManager, "alert");//顯示警示框
+                    DealedDialogFragment detail = new DealedDialogFragment();
+                    detail.setRef(Dealed.this);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    detail.show(fragmentManager, "alert");//顯示警示框
                 }
             });
 
