@@ -14,7 +14,7 @@ public class MessageBean implements Serializable {
     private String msgEndId;
     private String msgText;
     private Blob msgImage = null;
-    private String msgFileName = "msgFileName";
+    private String msgFileName;
     private int roomNo;
 
 

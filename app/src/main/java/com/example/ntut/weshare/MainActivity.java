@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             String account = pref.getString("user", "");
 //            Toast.makeText(this, account, Toast.LENGTH_LONG).show();
 //            List<User> user = null;
-            int imageSize = 100;
+            int imageSize = 300;
 //            Bitmap bitmap = null;
             try {
                 // passing null and calling get() means not to run FindImageByIdTask.onPostExecute()

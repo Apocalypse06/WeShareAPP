@@ -1,9 +1,11 @@
-package com.example.ntut.weshare.message;
+package com.example.ntut.weshare.dealDetail;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.ntut.weshare.member.InstiutionBean;
+import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.homeGoodsDetail.FeedbackBean;
+import com.example.ntut.weshare.message.MessageBean;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -16,24 +18,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 // for insert, ic_update, ic_delete a spot
-class SendMsgTask extends AsyncTask<Object, Integer, Integer> {
-    private final static String TAG = "SendMagTask";
+class NewMsgTask extends AsyncTask<Object, Integer, Integer> {
+    private final static String TAG = "NewFeedbackTask";
+    private String url = Common.URL + "MsgServlet";
 
     @Override
     protected Integer doInBackground(Object... params) {
-        String url = params[0].toString();
-        String action = params[1].toString();
-        MessageBean msg = (MessageBean) params[2];
+        String action = params[0].toString();
+        MessageBean msg = (MessageBean) params[1];
+
         String result;
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("action", action);//動作，新增
         jsonObject.addProperty("msg", new Gson().toJson(msg));//純文字
-        if (params[3] != null) {
-            String imageBase64 = params[3].toString();
-            jsonObject.addProperty("imageBase64", imageBase64);//圖片
-        } else {
-            jsonObject.addProperty("imageBase64", "null");//圖片
-        }
         try {
             result = getRemoteData(url, jsonObject.toString());
         } catch (IOException e) {

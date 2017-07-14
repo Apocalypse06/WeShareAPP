@@ -1,50 +1,51 @@
-package com.example.ntut.weshare.message;
+package com.example.ntut.weshare.homeGoodsDetail;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.ntut.weshare.member.InstiutionBean;
+import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.message.MessageBean;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
-// for insert, ic_update, ic_delete a spot
-class SendMsgTask extends AsyncTask<Object, Integer, Integer> {
-    private final static String TAG = "SendMagTask";
+class FbGetAllTask extends AsyncTask<Object, Integer, List<FeedbackBean>> {//沒有UI畫面，所以沒辦法onPostExecute可以顯示畫面
+    private final static String TAG = "FbGetAllTask";
+    String url = Common.URL + "DealServlet";
+    private final static String ACTION = "getAllFb";
 
     @Override
-    protected Integer doInBackground(Object... params) {
-        String url = params[0].toString();
-        String action = params[1].toString();
-        MessageBean msg = (MessageBean) params[2];
-        String result;
+    protected List<FeedbackBean> doInBackground(Object... params) {
+        String account = params[0].toString();
+        String jsonIn;
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("action", action);//動作，新增
-        jsonObject.addProperty("msg", new Gson().toJson(msg));//純文字
-        if (params[3] != null) {
-            String imageBase64 = params[3].toString();
-            jsonObject.addProperty("imageBase64", imageBase64);//圖片
-        } else {
-            jsonObject.addProperty("imageBase64", "null");//圖片
-        }
+        jsonObject.addProperty("action", ACTION);
+        jsonObject.addProperty("account", account);
         try {
-            result = getRemoteData(url, jsonObject.toString());
+            jsonIn = getRemoteData(url, jsonObject.toString());
         } catch (IOException e) {
             Log.e(TAG, e.toString());
             return null;
         }
-        return Integer.parseInt(result);
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<FeedbackBean>>() {
+        }.getType();
+        return gson.fromJson(jsonIn, listType);
     }
 
     private String getRemoteData(String url, String jsonOut) throws IOException {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder jsonIn = new StringBuilder();
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setDoInput(true); // allow inputs
         connection.setDoOutput(true); // allow outputs
@@ -62,13 +63,13 @@ class SendMsgTask extends AsyncTask<Object, Integer, Integer> {
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
             while ((line = br.readLine()) != null) {
-                sb.append(line);
+                jsonIn.append(line);
             }
         } else {
             Log.d(TAG, "response code: " + responseCode);
         }
         connection.disconnect();
-        Log.d(TAG, "jsonIn: " + sb);
-        return sb.toString();
+        Log.d(TAG, "jsonIn: " + jsonIn);
+        return jsonIn.toString();
     }
 }

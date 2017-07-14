@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
@@ -65,14 +66,12 @@ public class HomeGoodsDetailActivity extends AppCompatActivity {
         fragmentList = new ArrayList<>();
         fragmentList.add(new GoodsDetailFragment());
         fragmentList.add(new GoodsFeedbackFragment());
-        fragmentList.add(new GoodsMsgFragment());
     }
 
     private void initView() {
         gTablayout = (TabLayout) findViewById(R.id.tabs);
         gTablayout.addTab(gTablayout.newTab().setText("資訊"));
         gTablayout.addTab(gTablayout.newTab().setText("評價"));
-        gTablayout.addTab(gTablayout.newTab().setText("私訊"));
 
         FragmentAdapter fAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);//Adapter有多個項目，(,顯示內容)
         vpager = (ViewPager) findViewById(R.id.pager);

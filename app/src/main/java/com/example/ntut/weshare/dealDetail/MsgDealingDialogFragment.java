@@ -1,5 +1,6 @@
 package com.example.ntut.weshare.dealDetail;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class MsgDealingDialogFragment extends DialogFragment {//必須繼承Dial
     private Button btCancel;
 
     private Dealing ref;
+    private String sendTo;
 
     public void setRef(Dealing ref) {
         this.ref = ref;
@@ -44,7 +46,17 @@ public class MsgDealingDialogFragment extends DialogFragment {//必須繼承Dial
         btSedn = (Button) view.findViewById(R.id.btSedn);
         btCancel = (Button) view.findViewById(R.id.btCancel);
 
-        tvAccount.setText("帳號：" + ref.dealStatic.getSourceId());
+        SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
+        String user = pref.getString("user", "");
+        if (user.equalsIgnoreCase(ref.dealStatic.getSourceId())) {
+            sendTo = ref.dealStatic.getEndId();
+            tvAccount.setText("帳號：" + sendTo);
+        } else if (user.equalsIgnoreCase(ref.dealStatic.getEndId())) {
+            sendTo = ref.dealStatic.getSourceId();
+            tvAccount.setText("帳號：" + sendTo);
+        }
+
+
 
         btSedn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +81,7 @@ public class MsgDealingDialogFragment extends DialogFragment {//必須繼承Dial
             String text = etMsgContext.getText().toString().trim();
             int count = 0;
             String url = Common.URL + "MsgServlet";
-            String action = "sendMsg";
+            String action = "dealSendMsg";
             MessageBean msg = null;
             Timestamp createDate = new Timestamp(new java.util.Date().getTime());
 
@@ -78,7 +90,7 @@ public class MsgDealingDialogFragment extends DialogFragment {//必須繼承Dial
                 String account = pref.getString("user", "");
 
 
-                msg = new MessageBean(1, 1, createDate, account, ref.dealStatic.getSourceId(), text);
+                msg = new MessageBean(1, 1, createDate, account, sendTo, text);
                 try {
                     count = new SendMsgTask().execute(url, action, msg).get();
                 } catch (Exception e) {

@@ -145,6 +145,10 @@ public class Dealed extends Fragment {
                 } catch (Exception e) {
                     Log.e(TAG, e.toString());
                 }
+                myViewHolder.ivFbNot.setVisibility(View.GONE);
+                myViewHolder.ivFbed.setVisibility(View.GONE);
+                myViewHolder.ivRmNot.setVisibility(View.GONE);
+                myViewHolder.ivRmed.setVisibility(View.GONE);
                 if (count == 1) {
                     if (user.equalsIgnoreCase(deal.getEndId())) {
                         myViewHolder.ivFbed.setVisibility(View.VISIBLE);

@@ -8,13 +8,13 @@
             <solid
                 android:color="#fff" />
             <corners
-                android:bottomRightRadius="100dip"
-                android:bottomLeftRadius="100dip"
-                android:topLeftRadius="100dip"
-                android:topRightRadius="100dip" />
+                android:bottomRightRadius="20dip"
+                android:bottomLeftRadius="20dip"
+                android:topLeftRadius="20dip"
+                android:topRightRadius="20dip" />
             <stroke
-                android:width="2dp"
-                android:color="#fff" />
+                android:width="1dp"
+                android:color="#ccc" />
         </shape>
     </item>
 </layer-list>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Base64;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,6 +28,8 @@ import java.sql.Timestamp;
 public class GoodsDialogFragment extends DialogFragment {//必須繼承DialogFragment，並實作OnClickListener監聽器
     private final static String TAG = "DealDialogFragment";
 
+    private LinearLayout llBackground;
+    private TextView tvTitle;
     private TextView tvGoodsName;
     private EditText etQty;
     private Spinner spWay;
@@ -44,12 +48,26 @@ public class GoodsDialogFragment extends DialogFragment {//必須繼承DialogFra
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.accept_dialog, container);
 
+        llBackground = (LinearLayout) view.findViewById(R.id.llBackground);
         tvGoodsName = (TextView) view.findViewById(R.id.tvGoodsName);
+        tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         etQty = (EditText) view.findViewById(R.id.etQty);
         spWay = (Spinner) view.findViewById(R.id.spWay);
         btAccept = (Button) view.findViewById(R.id.btAccept);
         btCancel = (Button) view.findViewById(R.id.btCancel);
         etDealNote = (EditText) view.findViewById(R.id.etDealNote);
+
+
+        if (ref.goodsPublic.getGoodsStatus() == 1) {
+            llBackground.setBackgroundColor(Color.parseColor("#fffbe1e8"));
+        } else if (ref.goodsPublic.getGoodsStatus() == 2) {
+            llBackground.setBackgroundColor(Color.parseColor("#fff8bc7c"));
+            tvTitle.setText("募集");
+            btAccept.setText("要求");
+        } else if (ref.goodsPublic.getGoodsStatus() == 3) {
+            llBackground.setBackgroundColor(Color.parseColor("#ff44f8ac"));
+        }
+
 
         tvGoodsName.setText(ref.goodsPublic.getGoodsName());
         if (ref.goodsPublic.getGoodsShipWay() == 1) {
@@ -114,12 +132,17 @@ public class GoodsDialogFragment extends DialogFragment {//必須繼承DialogFra
         int gid = ref.goodsPublic.getGoodsNo();
         int imageSize = 800;
         byte[] image = null;
+        DealBean deal = null;
 
         SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
         String account = pref.getString("user", "");
 
         if (Common.networkConnected(getActivity())) {//傳送到server端
-            DealBean deal = new DealBean(postDate, account, ref.goodsPublic.getIndId(), 0, endShipWay, null, null, ref.goodsPublic.getGoodsName(), intValue, ref.goodsPublic.getGoodsfilename(), ref.goodsPublic.getGoodsType(), ref.goodsPublic.getGoodsLoc(), ref.goodsPublic.getGoodsNote(), dealNote);
+            if (ref.goodsPublic.getGoodsStatus() == 1) {
+                deal = new DealBean(postDate, account, ref.goodsPublic.getIndId(), 0, endShipWay, null, null, ref.goodsPublic.getGoodsName(), ref.goodsPublic.getGoodsStatus(), intValue, ref.goodsPublic.getGoodsfilename(), ref.goodsPublic.getGoodsType(), ref.goodsPublic.getGoodsLoc(), ref.goodsPublic.getGoodsNote(), dealNote);
+            } else if (ref.goodsPublic.getGoodsStatus() == 2) {
+                deal = new DealBean(postDate, ref.goodsPublic.getIndId(), account, 0, endShipWay, null, null, ref.goodsPublic.getGoodsName(), ref.goodsPublic.getGoodsStatus(), intValue, ref.goodsPublic.getGoodsfilename(), ref.goodsPublic.getGoodsType(), ref.goodsPublic.getGoodsLoc(), ref.goodsPublic.getGoodsNote(), dealNote);
+            }
             try {
                 bitmap = new GoodsGetImageTask(null).execute(url, gid, imageSize).get();
 

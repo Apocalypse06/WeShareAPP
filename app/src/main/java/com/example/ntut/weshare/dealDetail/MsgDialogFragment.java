@@ -33,6 +33,7 @@ public class MsgDialogFragment extends DialogFragment {//必須繼承DialogFragm
     private Button btCancel;
 
     private NotDeal ref;
+    private String sendTo;
 
     public void setRef(NotDeal ref) {
         this.ref = ref;
@@ -48,7 +49,16 @@ public class MsgDialogFragment extends DialogFragment {//必須繼承DialogFragm
         btSedn = (Button) view.findViewById(R.id.btSedn);
         btCancel = (Button) view.findViewById(R.id.btCancel);
 
-        tvAccount.setText("帳號：" + ref.dd.getSourceId());
+        SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
+        String user = pref.getString("user", "");
+        if (user.equalsIgnoreCase(ref.dd.getSourceId())) {
+            sendTo = ref.dd.getEndId();
+            tvAccount.setText("帳號：" + sendTo);
+        } else if (user.equalsIgnoreCase(ref.dd.getEndId())) {
+            sendTo = ref.dd.getSourceId();
+            tvAccount.setText("帳號：" + sendTo);
+        }
+
 
         btSedn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +83,7 @@ public class MsgDialogFragment extends DialogFragment {//必須繼承DialogFragm
             String text = etMsgContext.getText().toString().trim();
             int count = 0;
             String url = Common.URL + "MsgServlet";
-            String action = "sendMsg";
+            String action = "dealSendMsg";
             MessageBean msg = null;
             Timestamp createDate = new Timestamp(new java.util.Date().getTime());
 
@@ -81,8 +91,7 @@ public class MsgDialogFragment extends DialogFragment {//必須繼承DialogFragm
                 SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
                 String account = pref.getString("user", "");
 
-
-                msg = new MessageBean(1, 1, createDate, account, ref.dd.getSourceId(), text);
+                msg = new MessageBean(1, 2, createDate, account, sendTo, text);
                 try {
                     count = new SendMsgTask().execute(url, action, msg).get();
                 } catch (Exception e) {

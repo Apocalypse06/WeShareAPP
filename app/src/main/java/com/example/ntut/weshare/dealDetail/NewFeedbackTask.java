@@ -35,8 +35,7 @@ class NewFeedbackTask extends AsyncTask<Object, Integer, Integer> {
         if (params[2] != null) {
             String imageBase64 = params[2].toString();
             jsonObject.addProperty("imageBase64", imageBase64);//圖片
-        }
-          else{
+        } else {
             jsonObject.addProperty("imageBase64", "null");//圖片
         }
         try {

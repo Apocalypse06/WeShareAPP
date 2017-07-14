@@ -124,10 +124,10 @@ public class wishFragment extends Fragment {
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
-            if(userType == 1){
-                myViewHolder.ivIndType.setImageResource(R.drawable.member_default);
-            }else if(userType == 2){
-                myViewHolder.ivIndType.setImageResource(R.drawable.org_default);
+            if (userType == 1) {
+                myViewHolder.ivIndType.setImageResource(R.drawable.member_icon);
+            } else if (userType == 2) {
+                myViewHolder.ivIndType.setImageResource(R.drawable.org_icon2);
             }
 
             myViewHolder.tvWish.setText(wishGood.getGoodsName());
@@ -147,7 +147,7 @@ public class wishFragment extends Fragment {
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView ivGoods,ivIndType;
+            ImageView ivGoods, ivIndType;
             TextView tvWish, tvNumber;
 
             public MyViewHolder(View itemView) {

@@ -3,6 +3,7 @@ package com.example.ntut.weshare.message;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,11 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -124,20 +127,34 @@ public class MessageFragment extends Fragment {
 //            String account = pref.getString("user", "");
             if (account.equalsIgnoreCase(msg.getMsgSourceId())) {
                 myViewHolder.tvMsgName.setText(msg.getMsgEndId());
+                if (msg.getMsgFileName() != null) {
+                    myViewHolder.tvText.setText("你：傳送一張圖片");
+                } else {
+                    myViewHolder.tvText.setText("你：" + msg.getMsgText());
+                }
             } else if (account.equalsIgnoreCase(msg.getMsgEndId())) {
                 myViewHolder.tvMsgName.setText(msg.getMsgSourceId());
+                if (msg.getMsgFileName() != null) {
+                    myViewHolder.tvText.setText("傳送一張圖片");
+                } else {
+                    myViewHolder.tvText.setText(msg.getMsgText());
+                }
             }
-            myViewHolder.tvText.setText(msg.getMsgText());
+
+            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            String postTime = sdFormat.format(msg.getPostDate());
+            myViewHolder.tvPostTime.setText("回覆時間：" + postTime);
+
+            if (msg.getMsgStatus() == 1) {
+                myViewHolder.tvStatus.setText("已讀");
+            } else {
+                myViewHolder.llMsgBackground.setBackgroundColor(Color.parseColor("#f7ee59"));
+                myViewHolder.tvStatus.setText("");
+            }
+
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent = new Intent();
-//                    intent.setClass(getActivity(), MessageReplyActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("msg", msg);
-//                    intent.putExtra("intentMsgs", bundle);
-//                    startActivity(intent);
-
                     Fragment fragment = new MessageReplyFragment();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("msg", msg);
@@ -148,14 +165,18 @@ public class MessageFragment extends Fragment {
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
+            LinearLayout llMsgBackground;
             ImageView ivUserPic;
-            TextView tvMsgName, tvText;
+            TextView tvMsgName, tvText, tvPostTime, tvStatus;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
+                llMsgBackground = (LinearLayout) itemView.findViewById(R.id.llMsgBackground);
                 ivUserPic = (ImageView) itemView.findViewById(R.id.ivUserPic);
                 tvMsgName = (TextView) itemView.findViewById(R.id.tvMsgName);
                 tvText = (TextView) itemView.findViewById(R.id.tvText);
+                tvPostTime = (TextView) itemView.findViewById(R.id.tvPostTime);
+                tvStatus = (TextView) itemView.findViewById(R.id.tvStatus);
 
             }
         }

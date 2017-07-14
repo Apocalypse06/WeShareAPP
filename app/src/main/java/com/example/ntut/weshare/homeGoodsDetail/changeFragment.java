@@ -1,10 +1,12 @@
 package com.example.ntut.weshare.homeGoodsDetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -27,7 +29,7 @@ public class changeFragment extends Fragment {
     private static final String TAG = "ChangeListFragment";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvWish;
-
+    private int userType = 0;
 
     @Nullable
     @Override
@@ -35,10 +37,7 @@ public class changeFragment extends Fragment {
         View view = inflater.inflate(R.layout.home_wish_fragment, container, false);
 
         rvWish = (RecyclerView) view.findViewById(R.id.rvWish);
-        rvWish.setLayoutManager(
-                new StaggeredGridLayoutManager(
-                        2, StaggeredGridLayoutManager.VERTICAL));
-        rvWish.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvWish.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         swipeRefreshLayout =
                 (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
@@ -115,10 +114,21 @@ public class changeFragment extends Fragment {
 
             String url = Common.URL + "GoodsServlet";
             int gid = wishGood.getGoodsNo();
-            int imageSize = 250;
+            int imageSize = 450;
             //這邊啟動AsyncTask，抓圖片
             //不用.get()，不然會卡畫面，這邊利用SpotGetImageTask(myViewHolder.imageView)放圖，myViewHolder.imageView將imageView元件傳給AsyncTask，再用onPostExecute()將圖貼上
             new GoodsGetImageTask(myViewHolder.ivGoods).execute(url, gid, imageSize);
+
+            try {
+                userType = new GetIndTypelTask().execute(wishGood.getIndId()).get();
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+            if (userType == 1) {
+                myViewHolder.ivIndType.setImageResource(R.drawable.member_icon);
+            } else if (userType == 2) {
+                myViewHolder.ivIndType.setImageResource(R.drawable.org_icon2);
+            }
 
             myViewHolder.tvWish.setText(wishGood.getGoodsName());
             myViewHolder.tvNumber.setText("" + wishGood.getQty());
@@ -126,29 +136,24 @@ public class changeFragment extends Fragment {
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent = new Intent();
-//                    intent.setClass(getActivity(), MessageReplyActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("msg", msg);
-//                    intent.putExtra("intentMsgs", bundle);
-//                    startActivity(intent);
-//
-//                    Fragment fragment = new MessageReplyFragment();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("msg", msg);
-//                    fragment.setArguments(bundle);
-//                    switchFragment(fragment);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), HomeGoodsDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("Goods", wishGood);
+                    intent.putExtra("intentGoods", bundle);
+                    startActivity(intent);
                 }
             });
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView ivGoods;
+            ImageView ivGoods, ivIndType;
             TextView tvWish, tvNumber;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 ivGoods = (ImageView) itemView.findViewById(R.id.ivGoods);
+                ivIndType = (ImageView) itemView.findViewById(R.id.ivIndType);
                 tvWish = (TextView) itemView.findViewById(R.id.tvWish);
                 tvNumber = (TextView) itemView.findViewById(R.id.tvNumber);
             }

@@ -70,7 +70,7 @@ public class DealedDialogFragment extends DialogFragment {//必須繼承DialogFr
         } else if (user.equalsIgnoreCase(ref.dealStatic.getEndId())) {
             tvAccount.setText("帳號：" + ref.dealStatic.getSourceId());
         }
- 
+
         tvGoodsName.setText(ref.dealStatic.getGoodsName());
         tvPostTime.setText("交易時間：" + ref.dealStatic.getPostDate());
         tvQty.setText("數量：" + ref.dealStatic.getDealQty());

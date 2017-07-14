@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fbe1e8"
@@ -24,6 +25,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="7dp"
@@ -152,8 +154,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_goods"
-                    android:hint="交易備註"
                     android:gravity="top"
+                    android:hint="交易備註"
                     android:inputType="textMultiLine"
                     android:maxLines="10"
                     android:minLines="3"

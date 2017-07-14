@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +50,7 @@ public class GoodsDetailFragment extends Fragment {
     private TextView tvNote;
     private Button btAccept;
     private Button btCancel;
-    private Button btRefuse;
+    private LinearLayout llBackground;
 
     private static Goods good;
     private static int Way;
@@ -82,8 +84,16 @@ public class GoodsDetailFragment extends Fragment {
         tvNote = (TextView) view.findViewById(R.id.tvNote);
         btAccept = (Button) view.findViewById(R.id.btAccept);
         btCancel = (Button) view.findViewById(R.id.btCancel);
-        btRefuse = (Button) view.findViewById(R.id.btRefuse);
+        llBackground = (LinearLayout) view.findViewById(R.id.llBackground);
 
+        if (good.getGoodsStatus() == 1) {
+            llBackground.setBackgroundColor(Color.parseColor("#fffbe1e8"));
+        } else if (good.getGoodsStatus() == 2) {
+            llBackground.setBackgroundColor(Color.parseColor("#fff8bc7c"));
+            btAccept.setText("我想要");
+        } else if (good.getGoodsStatus() == 3) {
+            llBackground.setBackgroundColor(Color.parseColor("#ff44f8ac"));
+        }
         tvGoodsName.setText(good.getGoodsName());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

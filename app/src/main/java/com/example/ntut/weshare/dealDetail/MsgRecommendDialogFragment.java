@@ -69,7 +69,7 @@ public class MsgRecommendDialogFragment extends DialogFragment {//必須繼承Di
             String text = etMsgContext.getText().toString().trim();
             int count = 0;
             String url = Common.URL + "MsgServlet";
-            String action = "sendMsg";
+            String action = "dealSendMsg";
             MessageBean msg = null;
             Timestamp createDate = new Timestamp(new java.util.Date().getTime());
 

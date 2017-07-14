@@ -22,6 +22,7 @@ import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
 import com.example.ntut.weshare.homeGoodsDetail.DealBean;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -141,7 +142,10 @@ public class NotDeal extends Fragment {
             } else if (user.equalsIgnoreCase(deal.getEndId())) {
                 myViewHolder.tvDealUser.setText("帳號：" + deal.getSourceId());
             }
-            myViewHolder.tvDealTime.setText("交易時間：" + deal.getPostDate());
+
+            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            String postTime = sdFormat.format(deal.getPostDate());
+            myViewHolder.tvDealTime.setText("交易時間：" + postTime);
 
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -150,7 +154,6 @@ public class NotDeal extends Fragment {
 //                    NotDeal.AlertDialogFragment alertFragment = new NotDeal.AlertDialogFragment();//建立物件
 //                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 //                    alertFragment.show(fragmentManager, "alert");//顯示警示框
-
                     AlertDialogFragment detail = new AlertDialogFragment();
                     detail.setRef(NotDeal.this);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

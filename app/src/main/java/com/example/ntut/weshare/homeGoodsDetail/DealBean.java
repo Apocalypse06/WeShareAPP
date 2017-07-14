@@ -19,14 +19,17 @@ public class DealBean implements Serializable {
     private java.sql.Timestamp shipDate;
 
     private String goodsName;
+    private int goodsStatus;
     private int dealQty;
     private java.sql.Blob goodsImage;
-    private String goodsImageName;
+    private String goodsImageName = "goodsImageName";
     private int goodstype;
+
+
     private int goodsLoc;
     private String goodsNote;
 
-    public DealBean(Timestamp postDate, String sourceId, String endId, int dealStatus, int endShipWay, String shipNo, Timestamp shipDate, String goodsName, int dealQty, String goodsImageName, int goodstype, int goodsLoc, String goodsNote, String dealNote) {
+    public DealBean(Timestamp postDate, String sourceId, String endId, int dealStatus, int endShipWay, String shipNo, Timestamp shipDate, String goodsName, int goodsStatus, int dealQty, String goodsImageName, int goodstype, int goodsLoc, String goodsNote, String dealNote) {
         this.postDate = postDate;
         this.sourceId = sourceId;
         this.endId = endId;
@@ -35,6 +38,7 @@ public class DealBean implements Serializable {
         this.shipNo = shipNo;
         this.shipDate = shipDate;
         this.goodsName = goodsName;
+        this.goodsStatus = goodsStatus;
         this.dealQty = dealQty;
         this.goodsImageName = goodsImageName;
         this.goodstype = goodstype;
@@ -46,7 +50,7 @@ public class DealBean implements Serializable {
     public DealBean() {
     }
 
-    public DealBean(int dealNo, Timestamp postDate, String sourceId, String endId, int dealStatus, int endShipWay, String shipNo, Timestamp shipDate, String goodsName, int dealQty, java.sql.Blob goodsImage, String goodsImageName, int goodstype, int goodsLoc, String goodsNote) {
+    public DealBean(int dealNo, Timestamp postDate, String sourceId, String endId, int dealStatus, int endShipWay, String shipNo, Timestamp shipDate, String goodsName, int goodsStatus, int dealQty, java.sql.Blob goodsImage, String goodsImageName, int goodstype, int goodsLoc, String goodsNote) {
         this.dealNo = dealNo;
         this.postDate = postDate;
         this.sourceId = sourceId;
@@ -56,6 +60,7 @@ public class DealBean implements Serializable {
         this.shipNo = shipNo;
         this.shipDate = shipDate;
         this.goodsName = goodsName;
+        this.goodsStatus = goodsStatus;
         this.dealQty = dealQty;
         this.goodsImage = goodsImage;
         this.goodsImageName = goodsImageName;
@@ -153,6 +158,14 @@ public class DealBean implements Serializable {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public int getGoodsStatus() {
+        return goodsStatus;
+    }
+
+    public void setGoodsStatus(int goodsStatus) {
+        this.goodsStatus = goodsStatus;
     }
 
     public int getDealQty() {
