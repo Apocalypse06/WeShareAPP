@@ -106,5 +106,6 @@
     <string name="msg_fbSuccess">評價成功</string>
     <string name="msg_fbFail">評價失敗</string>
     <string name="msg_NoInstFound">找不到相對應的社福</string>
+    <string name="msg_LocationNameNotFound">查無所在地</string>
 
 </resources>

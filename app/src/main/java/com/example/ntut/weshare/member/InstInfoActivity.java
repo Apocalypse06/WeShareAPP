@@ -1,6 +1,7 @@
 package com.example.ntut.weshare.member;
 
 import android.app.Dialog;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,17 +13,22 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
-import com.example.ntut.weshare.dealDetail.NotDeal;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
     private User user;
@@ -37,11 +43,15 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
     private TextView tv_email;
     private TextView tv_addr;
     private TextView tv_note;
-    private Button bt_msg;
+
     private Button bt_need;
     private Button bt_gmap;
     private String typestr;
 
+    private ImageView iv_mapimage;
+    private TextView tv_mapname;
+    private TextView tv_mapphone;
+    private TextView tv_mapaddr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +101,7 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
 //                msg.show(fragmentManager, "alert");//顯示警示框
 //            }
 //        });
-
+//google map dialog
         bt_gmap.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -100,6 +110,18 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.inst_mapdialog);
                 dialog.show();
+
+                iv_mapimage =(ImageView) dialog.findViewById(R.id.iv_instmapimg);
+                tv_mapname=(TextView) dialog.findViewById(R.id.tv_instmapname);
+                tv_mapphone=(TextView) dialog.findViewById(R.id.tv_instmapphone);
+                tv_mapaddr=(TextView) dialog.findViewById(R.id.tv_instmapaddr);
+                String url = Common.URL + "UserServlet";
+                String uid = user.getUserId();
+                int imageSize = 100;
+                new instGetImageTask(iv_mapimage).execute(url, uid, imageSize);
+                tv_mapname.setText(user.getName());
+                tv_mapphone.setText("Tel:"+user.getTal());
+                tv_mapaddr.setText(user.getAddress());
                 MapView mMapView;
                 MapsInitializer.initialize(view.getContext());
 
@@ -109,11 +131,41 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
                 mMapView.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(GoogleMap googleMap) {
-                        LatLng posisiabsen = new LatLng(25.039334, 121.549554); ////your lat lng
-                        googleMap.addMarker(new MarkerOptions().position(posisiabsen).title("Yout title"));
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
-                        googleMap.getUiSettings().setZoomControlsEnabled(true);
-                        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+                        String locationName=user.getAddress();
+                        Geocoder gcd=new Geocoder(getApplicationContext(), Locale.getDefault());
+                        List<android.location.Address> addressList = null;
+                        int maxResults = 1;
+                        try {
+                            addressList = gcd
+                                    .getFromLocationName(locationName, maxResults);
+                        } catch (IOException e) {
+                            Log.e(this.toString(), e.toString());
+                        }
+                        if (addressList == null || addressList.isEmpty()) {
+                            showToast(R.string.msg_LocationNameNotFound);
+                        } else {
+                        android.location.Address address = addressList.get(0);
+
+                        LatLng position = new LatLng(address.getLatitude(),
+                                address.getLongitude());
+
+                        String snippet = address.getAddressLine(0);
+
+                        googleMap.addMarker(new MarkerOptions().position(position)
+                                .title(user.getName()).snippet(snippet));
+
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(position).zoom(15).build();
+
+                        googleMap.animateCamera(CameraUpdateFactory
+                                .newCameraPosition(cameraPosition));
+
+                        googleMap.getUiSettings().setZoomControlsEnabled(true);}
+//                       LatLng posisiabsen = new LatLng(25.039334, 121.549554); ////your lat lng
+//                        googleMap.addMarker(new MarkerOptions().position(posisiabsen).title("Yout title"));
+//                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
+//                        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+//                        googleMap.setPadding(0,0,0,50);
                     }
                 });
             }
@@ -149,17 +201,11 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
         tv_email = (TextView) findViewById(R.id.tv_instemail);
         tv_addr = (TextView) findViewById(R.id.tv_instaddr);
         tv_note = (TextView) findViewById(R.id.tv_instnote);
-        bt_msg = (Button) findViewById(R.id.bt_instmsg);
         bt_need = (Button) findViewById(R.id.bt_instgoods);
         bt_gmap = (Button) findViewById(R.id.bt_instgmap);
+
     }
 
-    private void switchFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.body1, fragment);
-        fragmentTransaction.commit();
-    }
     @Override
     public void onBackPressed() {
         android.app.FragmentManager fm = this.getFragmentManager();
@@ -170,9 +216,11 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+    }
+    private void showToast(int messageResId) {
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 }

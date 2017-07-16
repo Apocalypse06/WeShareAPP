@@ -1,27 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="300dp"
     android:layout_weight="1"
     >
     <com.google.android.gms.maps.MapView
         android:id="@+id/instmap"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"></com.google.android.gms.maps.MapView>
+        android:padding="5dp"
+        android:layout_weight="1"
+        map:zOrderOnTop="true"></com.google.android.gms.maps.MapView>
 </LinearLayout>
         <LinearLayout
         android:id="@+id/instMapInfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="150dp"
         android:orientation="horizontal"
         android:layout_weight="3"
         android:background="#FFFFFF"
         android:padding="5dp">
+            <ImageView
+                android:id="@+id/iv_instmapimg"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                >
+                <TextView
+                    android:id="@+id/tv_instmapname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/tv_instmapphone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/tv_instmapaddr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
         </LinearLayout>
 
 </LinearLayout>
