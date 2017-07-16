@@ -216,22 +216,22 @@ public class GoodsBoxPageGive extends Fragment {
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView,ivMenu;
-            TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
-            LinearLayout background;
+        ImageView imageView,ivMenu;
+        TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
+        LinearLayout background;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 imageView = (ImageView) itemView.findViewById(R.id.iv_image);
                 tvGoodsTitle = (TextView) itemView.findViewById(R.id.tv_goodsTitle);
- //               tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
+                //               tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
                 tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
                 tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
                 ivMenu=(ImageView)itemView.findViewById(R.id.icon_menu);
-                background=(LinearLayout)itemView.findViewById(R.id.lnwish);
-            }
+            background=(LinearLayout)itemView.findViewById(R.id.lnwish);
         }
     }
+}
 
     public String changeType2String(int type) {
         String gtype = "";

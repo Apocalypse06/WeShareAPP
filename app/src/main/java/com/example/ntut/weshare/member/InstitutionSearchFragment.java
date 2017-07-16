@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.style.UpdateLayout;
@@ -33,6 +35,7 @@ public class InstitutionSearchFragment extends Fragment {
     private String finalQuery = "";
     private String finalInstQury = "";
     private RecyclerView rv_srcIstt;
+    private List<InstiutionBean> instbundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +48,9 @@ public class InstitutionSearchFragment extends Fragment {
         spLoc = (Spinner) view.findViewById(R.id.sp_orgLoc);
         search.setText("");
         rv_srcIstt = (RecyclerView) view.findViewById(R.id.rv_SrcOrg);
-        rv_srcIstt.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        rv_srcIstt.setLayoutManager(new GridLayoutManager(getActivity(),2));
+
+
         final String[] type = {"社福種類", "兒少福利", "偏鄉教育", "老人福利", "身障福利", "其他"};
         ArrayAdapter<String> classList = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, type);
@@ -59,6 +64,9 @@ public class InstitutionSearchFragment extends Fragment {
         ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                all="";
+                all1="";
+                finalInstQury="";
                 if (!search.getText().toString().equals("")) {
                     all = all + "m.name LIKE '%" + search.getText().toString() + "%' AND ";
                 }
@@ -71,29 +79,21 @@ public class InstitutionSearchFragment extends Fragment {
                         }
                     }
                 }
-                if (!all.equals("")) {
-                    String s = all.substring(0, all.length() - 5);
-                    all = s;
-                }
+//                if (!all.equals("")) {
+//                    String s = all.substring(0, all.length() - 5);
+//                    all = s;
+//                }
+
 
                 if (spType.getSelectedItem().toString().equals(type[0])) {
                 } else {
                     for (int n = 1; n < type.length; n++) {
                         if (spType.getSelectedItem().toString().equals(type[n])) {
                             all1 = all1 + "i.orgType=" + n;
+                            finalInstQury = all1;
                             break;
                         }
                     }
-                }
-                if (!all.equals("")) {
-                    finalQuery = "WHERE m.idType=2 AND " + all;
-                } else {
-                    finalQuery = "WHERE m.idType=2";
-                }
-                all = "";
-                finalInstQury = "WHERE " + all1;
-                if (!all1.equals("")) {
-                    finalInstQury = finalInstQury + " AND ";
                 }
                 Toast.makeText(view.getContext(), finalQuery,
                         Toast.LENGTH_SHORT).show();
@@ -112,50 +112,35 @@ public class InstitutionSearchFragment extends Fragment {
             String ACTION2 = "getInstQuery";//==================
             String queryString = finalQuery;
             String query4Type = finalInstQury;//===================
-            String qquery="";
             List<User> users = null;
             List<InstiutionBean> instiutionBeens; //===================
+            rv_srcIstt.setVisibility(View.GONE);
             try {
-                users = new InstQueryUserTask().execute(url, queryString, ACTION).get();
-
-                int usize = users.size();
-                if (usize != 0) {
-                    query4Type=query4Type+"(";
-                    for (int n = 0; n < usize; n++) {
-                        query4Type = query4Type + "i.indId = '" + users.get(n).getUserId() + "' OR ";
-                    }
-                    String s = query4Type.substring(0, query4Type.length() - 4);
-                    query4Type = s;
-                    query4Type=query4Type+")";
-                    Toast.makeText(getContext(), query4Type,
-                            Toast.LENGTH_SHORT).show();
-                }
-
+                if(!query4Type.equals("")){
+                query4Type="WHERE "+query4Type;}
                 instiutionBeens = new InstitutionQueryTask().execute(url, query4Type, ACTION2).get();//================
-
-                qquery="WHERE (";
+                instbundle=instiutionBeens;
                int isize= instiutionBeens.size();
                 if(isize!=0){
+                    queryString="WHERE "+queryString+" ( ";
                 for(int n =0;n<isize;n++){
-                    qquery=qquery+"m.userId='"+instiutionBeens.get(n).getIndId()+"' OR ";
+                    queryString=queryString+"m.userId='"+instiutionBeens.get(n).getIndId()+"' OR ";
                 }
-                    String s = qquery.substring(0, qquery.length() - 4);
-                    qquery=s;
-                    qquery=qquery+")";
-                    users = new InstQueryUserTask().execute(url, qquery, ACTION).get();
+                    String s = queryString.substring(0, queryString.length() - 4);
+                    queryString=s;
+                    queryString=queryString+")";
+                    users = new InstQueryUserTask().execute(url, queryString, ACTION).get();
                 }else{
-//                    users=null;
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
             if (users == null || users.isEmpty()) {
+                rv_srcIstt.setVisibility(View.GONE);
                 Common.showToast(getActivity(), R.string.msg_NoInstFound);
-
             } else {
-                Common.showToast(getActivity(),"111111" );
+                rv_srcIstt.setVisibility(View.VISIBLE);
                 rv_srcIstt.setAdapter(new InstRecyclerViewAdapter(getActivity(), users));
-                Common.showToast(getActivity(),"5555" );
             }
         } else {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
@@ -205,34 +190,30 @@ public class InstitutionSearchFragment extends Fragment {
             String url = Common.URL + "UserServlet";
             String uid = user.getUserId();
             int imageSize = 250;
-            Common.showToast(getActivity(),"526656516516516516" );
             myViewHolder.tvIsttCardTitle.setText(user.getName());
             myViewHolder.tvIsttCardPhone.setText(user.getTal());
-
              new instGetImageTask(myViewHolder.imageView).execute(url, uid, imageSize);
 
 
-//            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent();
-//                    intent.setClass(getActivity(), HomeGoodsDetailActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("Goods", good);
-//                    intent.putExtra("intentGoods", bundle);
-//                    startActivity(intent);
-//
-//                    Intent intent = new Intent();
-//                    intent.setClass(getActivity(),HomeGoodsDetailActivity.class);
-//                    Bundle bundle = new Bundle();
-//
-//                    bundle.putSerializable("goods",good);
-//                    intent.putExtra("intentGoods",bundle);
-//                    startActivity(intent);
-//
-//
-//                }
-//            });
+            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    InstiutionBean instiution=null;
+                    for(int n=0;n<instbundle.size();n++){
+                        if(user.getUserId().equals(instbundle.get(n).getIndId())){
+                            instiution=instbundle.get(n);
+                            break;
+                        }
+                    } Log.e("",instiution.getIndId()) ;
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), InstInfoActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", user);
+                    bundle.putSerializable("inst",instiution);
+                    intent.putExtra("intentUser", bundle);
+                    startActivity(intent);
+                }
+            });
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
@@ -247,13 +228,7 @@ public class InstitutionSearchFragment extends Fragment {
 
             }
         }
-//        class MyEmptyViewHolder extends RecyclerView.ViewHolder{
-//
-//            public MyEmptyViewHolder(View itemView) {
-//                super(itemView);
-//            }
-//        }
-//
+
    }
 
 
