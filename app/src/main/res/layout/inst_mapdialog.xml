@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-<<<<<<< HEAD
+
     xmlns:map="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -55,38 +55,5 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
             </LinearLayout>
-
         </LinearLayout>
-=======
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="123" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/instmap"
-            android:layout_width="350dp"
-            android:layout_height="400dp"
-            android:layout_weight="1"></com.google.android.gms.maps.MapView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/instMapInfo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:background="#FFFFFF"
-        android:orientation="horizontal"
-        android:padding="5dp"></LinearLayout>
->>>>>>> 9deca94f04b8210c5434ce62aa5724bee4fcbeae
-
 </LinearLayout>

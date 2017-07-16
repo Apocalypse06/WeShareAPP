@@ -92,23 +92,9 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
         }
         tv_type.setText(typestr);
 
-//        bt_msg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                MsgDialogFragment msg = new MsgDialogFragment();
-//                msg.setRef(nd);
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                msg.show(fragmentManager, "alert");//顯示警示框
-//            }
-//        });
-<<<<<<< HEAD
+
 //google map dialog
         bt_gmap.setOnClickListener(new View.OnClickListener(){
-=======
-
-        bt_gmap.setOnClickListener(new View.OnClickListener() {
->>>>>>> 9deca94f04b8210c5434ce62aa5724bee4fcbeae
-
             @Override
             public void onClick(View view) {
                 Dialog dialog = new Dialog(view.getContext());
@@ -166,11 +152,6 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
                                 .newCameraPosition(cameraPosition));
 
                         googleMap.getUiSettings().setZoomControlsEnabled(true);}
-//                       LatLng posisiabsen = new LatLng(25.039334, 121.549554); ////your lat lng
-//                        googleMap.addMarker(new MarkerOptions().position(posisiabsen).title("Yout title"));
-//                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
-//                        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-//                        googleMap.setPadding(0,0,0,50);
                     }
                 });
             }

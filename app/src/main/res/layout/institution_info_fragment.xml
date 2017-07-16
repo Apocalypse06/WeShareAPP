@@ -76,15 +76,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/bt_instmsg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="站內信"
-                android:textSize="20dp" />
-
-            <Button
                 android:id="@+id/bt_instgoods"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
