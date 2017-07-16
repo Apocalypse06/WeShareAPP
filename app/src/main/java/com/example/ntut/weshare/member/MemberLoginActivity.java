@@ -76,6 +76,9 @@ public class MemberLoginActivity extends AppCompatActivity {
                         .putInt("type", users.get(0).getIdType())
                         .apply();
                 setResult(RESULT_OK);
+
+                finish();
+
                 Intent updateIntent = new Intent();
                 updateIntent.setClass(MemberLoginActivity.this, MainActivity.class);
                 startActivity(updateIntent);

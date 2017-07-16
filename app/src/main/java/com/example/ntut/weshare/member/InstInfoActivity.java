@@ -101,8 +101,13 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
 //                msg.show(fragmentManager, "alert");//顯示警示框
 //            }
 //        });
+<<<<<<< HEAD
 //google map dialog
         bt_gmap.setOnClickListener(new View.OnClickListener(){
+=======
+
+        bt_gmap.setOnClickListener(new View.OnClickListener() {
+>>>>>>> 9deca94f04b8210c5434ce62aa5724bee4fcbeae
 
             @Override
             public void onClick(View view) {
@@ -174,20 +179,20 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
         bt_need.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bd=new Bundle();
-                bd.putString("user",user.getUserId());
+                Bundle bd = new Bundle();
+                bd.putString("user", user.getUserId());
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment getgoods=new instGetGoodsFragment();
+                Fragment getgoods = new instGetGoodsFragment();
                 getgoods.setArguments(bd);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.replace(R.id.body1, getgoods);
                 fragmentTransaction.commit();
 
             }
-    });
+        });
 
-}
+    }
 
 
     private void findView() {

@@ -22,6 +22,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAqPb1b4yq3Mnzr1-QuyJzjL5jAieMWTtM" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -43,32 +44,32 @@
             android:name=".member.MemberRegisterActivity"
             android:label="@string/tx_register"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.MemberLoginActivity"
             android:label="@string/tx_login"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.MemberUpdateOrgChooseActivity"
             android:label="@string/tx_updateOrg"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.MemberUpdateIndActivity"
             android:label="@string/tx_updateInd"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.MemberUpdateOrgActivity"
             android:label="@string/tx_update"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".goods.GoodsInsertActivity"
             android:label="@string/text_GoodsInsert"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".goods.GoodsBoxPageActivity"
             android:label="@string/text_GoodsBox"
@@ -78,58 +79,62 @@
             android:name=".goods.GoodsInfoActivity"
             android:label="@string/text_GoodsInfo"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".goods.GoodsUpdateActivity"
             android:label="@string/text_GoodsUpdate"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.MemberRegisterTypeActivity"
             android:label="@string/tx_register"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.MemberRegisterIndActivity"
             android:label="@string/tx_registerInd"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.MemberRegisterOrgActivity"
             android:label="@string/tx_registerOrg"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.MamberRegisterOrgPageOneActivity"
             android:label="@string/tx_registerOrg"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.MamberRegisterOrgPageTwoActivity"
             android:label="@string/tx_registerOrg"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".member.InstInfoActivity"
             android:label="@string/tx_registerOrg"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".message.MessageReplyActivity"
             android:label="@string/tx_replyMsg"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".homeGoodsDetail.HomeGoodsDetailActivity"
             android:label="@string/tx_goodsDetail"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".dealDetail.dealDetailActivity"
             android:label="@string/tx_dealDetail"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"/>
-
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".feedback.MapActivity"
+            android:label="地圖"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
