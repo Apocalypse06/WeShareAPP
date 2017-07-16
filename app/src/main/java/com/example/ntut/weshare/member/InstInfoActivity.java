@@ -92,7 +92,7 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
 //            }
 //        });
 
-        bt_gmap.setOnClickListener(new View.OnClickListener(){
+        bt_gmap.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -122,20 +122,20 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
         bt_need.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bd=new Bundle();
-                bd.putString("user",user.getUserId());
+                Bundle bd = new Bundle();
+                bd.putString("user", user.getUserId());
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment getgoods=new instGetGoodsFragment();
+                Fragment getgoods = new instGetGoodsFragment();
                 getgoods.setArguments(bd);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.replace(R.id.body1, getgoods);
                 fragmentTransaction.commit();
 
             }
-    });
+        });
 
-}
+    }
 
 
     private void findView() {
@@ -160,6 +160,7 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
         fragmentTransaction.replace(R.id.body1, fragment);
         fragmentTransaction.commit();
     }
+
     @Override
     public void onBackPressed() {
         android.app.FragmentManager fm = this.getFragmentManager();
