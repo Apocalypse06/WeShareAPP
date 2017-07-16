@@ -78,7 +78,7 @@ public class MsgRecommendDialogFragment extends DialogFragment {//必須繼承Di
                 String account = pref.getString("user", "");
 
 
-                msg = new MessageBean(1, 1, createDate, account, ref.dealStatic.getEndId(), text);
+                msg = new MessageBean(1, 2, createDate, account, ref.dealStatic.getEndId(), text);
                 try {
                     count = new SendMsgTask().execute(url, action, msg).get();
                 } catch (Exception e) {

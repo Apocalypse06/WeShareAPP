@@ -58,7 +58,42 @@ public class FeedbackedDialogFragment extends DialogFragment {//必須繼承Dial
         btFeedback = (Button) view.findViewById(R.id.btFeedback);
         btCancel = (Button) view.findViewById(R.id.btCancel);
 
+        btFeedback.setVisibility(View.GONE);
+
         showFeedback();
+
+        switch (fb.get(0).getFbScore()) {
+            case 1:
+                ivNumber.setImageResource(R.drawable.one_icon);
+                break;
+            case 2:
+                ivNumber.setImageResource(R.drawable.two);
+                break;
+            case 3:
+                ivNumber.setImageResource(R.drawable.three);
+                break;
+            case 4:
+                ivNumber.setImageResource(R.drawable.four);
+                break;
+            case 5:
+                ivNumber.setImageResource(R.drawable.five);
+                break;
+            case 6:
+                ivNumber.setImageResource(R.drawable.six);
+                break;
+            case 7:
+                ivNumber.setImageResource(R.drawable.seven);
+                break;
+            case 8:
+                ivNumber.setImageResource(R.drawable.eight);
+                break;
+            case 9:
+                ivNumber.setImageResource(R.drawable.nine);
+                break;
+            case 10:
+                ivNumber.setImageResource(R.drawable.ten);
+                break;
+        }
 
         ratingBar.setRating((float) (fb.get(0).getFbScore() / 2.0));
         ratingBar.setIsIndicator(true);
