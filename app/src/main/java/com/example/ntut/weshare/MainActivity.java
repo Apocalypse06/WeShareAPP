@@ -309,6 +309,9 @@ public class MainActivity extends AppCompatActivity {
         MenuItem registerItem = view.getMenu().findItem(R.id.item_register);
         MenuItem logoutItem = view.getMenu().findItem(R.id.item_logout);
 
+        MenuItem memberItem = view.getMenu().findItem(R.id.item_memberCentre);
+        MenuItem goodsItem = view.getMenu().findItem(R.id.item_goodsManage);
+
         View header = view.inflateHeaderView(R.layout.navigate_header);
         ImageView ivUser = (ImageView) header.findViewById(R.id.ivUser);
         TextView tvUserName = (TextView) header.findViewById(R.id.tvUserName);
@@ -331,6 +334,8 @@ public class MainActivity extends AppCompatActivity {
             loginItem.setVisible(true);
             registerItem.setVisible(true);
             logoutItem.setVisible(false);
+            memberItem.setVisible(false);
+            goodsItem.setVisible(false);
         }
         view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 

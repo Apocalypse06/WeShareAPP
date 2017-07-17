@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
 import com.example.ntut.weshare.homeGoodsDetail.DealBean;
+import com.example.ntut.weshare.message.MessageBean;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -52,11 +53,13 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
     private Marker marker_my;
     private Marker marker_final;
     private TextView tvMarkerDrag;
-    private LatLng yushan;
+    private EditText edAddress;
+    private LatLng firstMarkPoint;
     private LatLng myMark;
     private boolean firstMark = true;
     private final static int REQUEST_CODE_RESOLUTION = 1;
-    private String finalMark = null;
+    private String finalMarkName = null;
+    private String finalMarkSreach = null;
 
     private DealBean deal;
 
@@ -86,8 +89,14 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
                         .findFragmentById(R.id.fmMap);
         mapFragment.getMapAsync(this);
         tvMarkerDrag = (TextView) findViewById(R.id.tvMarkerDrag);
+        edAddress = (EditText) findViewById(R.id.edAddress);
     }
 
+    @Override
+    public void onMapReady(GoogleMap map) {
+        this.map = map;
+        setUpMap();
+    }
 
     private LocationListener locationListener = new LocationListener() {
         @Override
@@ -156,17 +165,12 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
             };
 
     private void initPoints() {
-        yushan = new LatLng(23.791952, 120.861379);
+        firstMarkPoint = new LatLng(23.791952, 120.861379);
     }
 
     private void initPointss() {
         myMark = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-    }
-
-    @Override
-    public void onMapReady(GoogleMap map) {
-        this.map = map;
-        setUpMap();
+        finalMarkName = "" + lastLocation.getLatitude() + "," + lastLocation.getLongitude();
     }
 
     private void setUpMap() {
@@ -182,7 +186,7 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
 
         //---------------拉畫面，將標記可以顯示在地圖上--------------------
         CameraPosition cameraPosition = new CameraPosition.Builder()//並不是拍照，意旨畫面的移動
-                .target(yushan)//畫面正中央，焦點
+                .target(firstMarkPoint)//畫面正中央，焦點
                 .zoom(7)//大小，縮放程度，數字越大，看得越清楚
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory
@@ -211,8 +215,6 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
         initPointss();
         marker_my = map.addMarker(new MarkerOptions()
                 .position(myMark)
-                .title("玉山")
-                .snippet("第一高峰")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin))//標記的圖示，若沒有是預設
                 .draggable(true));//長按標記可以拖曳
     }
@@ -233,23 +235,24 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
         //------------OnMarkerDragListener---------------------------
         @Override
         public void onMarkerDragStart(Marker marker) {//點擊
-            String text = "onMarkerDragStart";
-            tvMarkerDrag.setText(text);
+//            String text = "onMarkerDragStart";
+//            tvMarkerDrag.setText(text);
+            finalMarkSreach = marker.getPosition().latitude + "," + marker.getPosition().longitude;
+            locationGatAddress(finalMarkSreach);
         }
 
         @Override
         public void onMarkerDragEnd(Marker marker) {//放開
             String text = "onMarkerDragEnd";
-            finalMark = "" + marker.getPosition();
-            tvMarkerDrag.setText("最後地標" + finalMark);
+            finalMarkName = "" + marker.getPosition().longitude + "," + marker.getPosition().latitude;
+            finalMarkSreach = marker.getPosition().latitude + "," + marker.getPosition().longitude;
+//            tvMarkerDrag.setText("面交經緯度:\n經=" + marker.getPosition().longitude + "\n緯度=" + marker.getPosition().latitude);
+            locationGatAddress(finalMarkSreach);
         }
 
         @Override
         public void onMarkerDrag(Marker marker) {
-            String text = "onMarkerDrag.  Current Position: "
-                    + marker.getPosition();//取的位置
-            finalMark = "" + marker.getPosition();
-//            showToast("onMarkerDrag.  Current Position: " + marker.getPosition());
+            String text = "地標移動中...";
             tvMarkerDrag.setText(text);
         }
         //----------------------------------------------------------
@@ -261,8 +264,7 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     public void onListenterSearch(View view) {
-        EditText etLocationName = (EditText) findViewById(R.id.edAddress);
-        String locationName = etLocationName.getText().toString().trim();
+        String locationName = edAddress.getText().toString().trim();
         if (locationName.length() > 0) {
             locationNameToMarker(locationName);
         } else {
@@ -271,15 +273,35 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     public void onListenterMark(View view) {
-        if (firstMark == true) {
-            initPointss();
-            addMarkersToMap();//打標記，可以設定內容
-            firstMark = false;
-        } else {
+        String addressText = edAddress.getText().toString().trim();
+        if (addressText.length() <= 0) {
             moveMarkersToMap();
+        } else {
+            locationNameToMarkerPoint(addressText);
         }
+        locationGatAddress(finalMarkName);
+
     }
 
+    private void locationGatAddress(String locationName) {
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addressList = null;
+        int maxResults = 1;
+        try {
+            addressList = geocoder
+                    .getFromLocationName(locationName, maxResults);//.getFromLocationName(地名或地址,希望回傳的筆數)，回傳List物件
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+
+        if (addressList == null || addressList.isEmpty()) {
+            showToast("沒有地址");
+        } else {
+            Address address = addressList.get(0);//取得物件，第1筆，index(0)
+            String snippet = address.getAddressLine(0);//取得地址index(0)
+            tvMarkerDrag.setText("面交地址=" + snippet);
+        }
+    }
 
     private void locationNameToMarker(String locationName) {
         map.clear();
@@ -300,9 +322,9 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
 
             LatLng position = new LatLng(address.getLatitude(),//取的經緯度
                     address.getLongitude());
-
+            finalMarkName = address.getLatitude() + "," + address.getLongitude();
             String snippet = address.getAddressLine(0);//取得地址index(0)
-
+            // tvMarkerDrag.setText("面交地址=" + snippet);
             map.addMarker(new MarkerOptions().position(position)
                     .title(locationName).snippet(snippet));
 
@@ -315,13 +337,51 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
         }
     }
 
+    private void locationNameToMarkerPoint(String locationName) {
+        map.clear();
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addressList = null;
+        int maxResults = 1;
+        try {
+            addressList = geocoder
+                    .getFromLocationName(locationName, maxResults);//.getFromLocationName(地名或地址,希望回傳的筆數)，回傳List物件
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+
+        if (addressList == null || addressList.isEmpty()) {
+            //showToast(R.string.msg_LocationNameNotFound);
+        } else {
+            Address address = addressList.get(0);//取得物件，第1筆，index(0)
+
+            LatLng position = new LatLng(address.getLatitude(),//取的經緯度
+                    address.getLongitude());
+            finalMarkName = address.getLatitude() + "," + address.getLongitude();
+            String snippet = address.getAddressLine(0);//取得地址index(0)
+            tvMarkerDrag.setText("面交地址123=" + snippet);
+            map.addMarker(new MarkerOptions().position(position)
+                    .title(locationName).snippet(snippet));
+            map.addMarker(new MarkerOptions().position(position)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin))//標記的圖示，若沒有是預設
+                    .draggable(true));//長按標記可以拖曳);
+
+            //------------拉畫面，將查詢內容傳到畫面正中央--------------------
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(position).zoom(15).build();
+            map.animateCamera(CameraUpdateFactory
+                    .newCameraPosition(cameraPosition));
+            //-------------------------------------------------------------
+        }
+    }
+
+
     public void onListenterNavigate(View view) {
         int count = 0;
         String url = Common.URL + "DealServlet";
         String action = "sendDealContext";
         if (Common.networkConnected(this)) {//傳送到server端
             try {
-                count = new SendDealingContextTask().execute(url, action, deal.getDealNo(), finalMark).get();
+                count = new SendDealingContextTask().execute(url, action, deal.getDealNo(), finalMarkName).get();
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }

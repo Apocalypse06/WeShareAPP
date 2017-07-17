@@ -107,5 +107,6 @@
     <string name="msg_fbFail">評價失敗</string>
     <string name="msg_NoInstFound">找不到相對應的社福</string>
     <string name="msg_LocationNameNotFound">查無所在地</string>
+    <string name="tx_searchAddress">查詢地址</string>
 
 </resources>

@@ -18,7 +18,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="490dp">
+        android:layout_height="480dp">
 
         <fragment
             android:id="@+id/fmMap"
@@ -31,36 +31,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:background="#ccc"
-        android:orientation="horizontal">
+        android:background="#fff"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/edAddress"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="地址" />
 
-        <Button
-            android:id="@+id/btSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onListenterSearch"
-            android:text="@string/tx_search" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btMark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onListenterMark"
-            android:text="打地標" />
+            <Button
+                android:id="@+id/btSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onListenterSearch"
+                android:text="@string/tx_searchAddress" />
 
-        <Button
-            android:id="@+id/btNavigate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onListenterNavigate"
-            android:text="決定地點" />
+            <Button
+                android:id="@+id/btMark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onListenterMark"
+                android:text="打地標" />
 
+            <Button
+                android:id="@+id/btNavigate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onListenterNavigate"
+                android:text="決定地點" />
+        </LinearLayout>
 
     </LinearLayout>
 
