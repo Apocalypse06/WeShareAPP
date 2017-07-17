@@ -179,14 +179,18 @@
                     android:id="@+id/btCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="取消" />
+                    android:text="取消"
+                    android:textColor="#FF44AA"
+                    android:background="@drawable/buttonstylered"/>
 
                 <Button
                     android:id="@+id/btAccept"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
-                    android:text="捐贈" />
+                    android:text="捐贈"
+                    android:textColor="#0000FF"
+                    android:background="@drawable/buttonstyle"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

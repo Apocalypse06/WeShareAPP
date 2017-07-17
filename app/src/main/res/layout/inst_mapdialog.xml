@@ -17,12 +17,12 @@
         android:layout_height="match_parent"
         android:padding="5dp"
         android:layout_weight="1"
-        map:zOrderOnTop="true"></com.google.android.gms.maps.MapView>
+        ></com.google.android.gms.maps.MapView>
 </LinearLayout>
         <LinearLayout
         android:id="@+id/instMapInfo"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="170dp"
         android:orientation="horizontal"
         android:layout_weight="3"
         android:background="#FFFFFF"
@@ -43,17 +43,23 @@
                     android:id="@+id/tv_instmapname"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textSize="12dp"
+                    android:layout_margin="5dp"/>
                 <TextView
                     android:id="@+id/tv_instmapphone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textSize="12dp"
+                    android:layout_margin="5dp"/>
                 <TextView
                     android:id="@+id/tv_instmapaddr"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textSize="12dp"
+                    android:layout_margin="5dp"/>
             </LinearLayout>
         </LinearLayout>
 </LinearLayout>

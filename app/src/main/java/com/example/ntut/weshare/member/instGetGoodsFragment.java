@@ -54,10 +54,9 @@ public class instGetGoodsFragment extends Fragment {
             public void onClick(View view) {
                FragmentManager manager =getFragmentManager();
               FragmentTransaction transaction=manager.beginTransaction();
-                Fragment fragment=manager.findFragmentByTag(TAG);
-                transaction.remove(fragment);
+                Fragment fragment=manager.findFragmentById(R.id.body1);
+                transaction.detach(fragment);
                 transaction.commit();
-
             }
         });
 
@@ -117,6 +116,7 @@ public class instGetGoodsFragment extends Fragment {
             int gid = good.getGoodsNo();
             int imageSize = 250;
             new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
+            myViewHolder.ivnopic.setVisibility(View.GONE);
 
             myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
            myViewHolder.tvNeedNum.setText(""+good.getQty());
@@ -135,7 +135,7 @@ public class instGetGoodsFragment extends Fragment {
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView;
+            ImageView imageView,ivnopic;
             TextView tvGoodsTitle, tvNeedNum;
            // LinearLayout background;
 
@@ -144,6 +144,9 @@ public class instGetGoodsFragment extends Fragment {
                 imageView = (ImageView) itemView.findViewById(R.id.ivGoods);
                 tvGoodsTitle = (TextView) itemView.findViewById(R.id.tvWish);
                 tvNeedNum = (TextView) itemView.findViewById(R.id.tvNumber);
+                ivnopic=(ImageView)itemView.findViewById(R.id.ivIndType);
+
+
 //                background=(LinearLayout) itemView.findViewById(R.id.cardview);
 
             }

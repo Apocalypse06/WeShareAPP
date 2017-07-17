@@ -164,27 +164,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        style="?android:buttonBarStyle"
+        >
 
         <Button
             android:id="@+id/btBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="bt_infoBack"
-            android:text="返回" />
+            android:text="返回"
+            android:textSize="18dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/buttonstylegray"
+            android:textColor="#444444"
+            android:layout_weight="1"
+            android:elevation="0dp"/>
 
         <Button
             android:id="@+id/btUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="btupdate"
-            android:text="修改" />
+            android:text="修改"
+            android:textSize="18dp"
+            android:textColor="#0000ff"
+            android:background="@drawable/buttonstyle"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+
+             />
 
         <Button
             android:id="@+id/btDel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="btdelete"
-            android:text="刪除" />
+            android:text="刪除"
+            android:textSize="18dp"
+            android:textColor="#FF44AA"
+            android:background="@drawable/buttonstylered"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            />
     </LinearLayout>
 </LinearLayout>

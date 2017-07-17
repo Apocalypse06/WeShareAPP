@@ -1,8 +1,11 @@
 package com.example.ntut.weshare.member;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,6 +50,7 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
     private TextView tv_addr;
     private TextView tv_note;
 
+    private Button bt_back;
     private Button bt_need;
     private Button bt_gmap;
     private String typestr;
@@ -96,10 +103,11 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
 //google map dialog
         bt_gmap.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                Dialog dialog = new Dialog(view.getContext());
+            public void onClick(final View view) {
+                final Dialog dialog = new Dialog(view.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.inst_mapdialog);
+                dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                 dialog.show();
 
                 iv_mapimage =(ImageView) dialog.findViewById(R.id.iv_instmapimg);
@@ -108,13 +116,14 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
                 tv_mapaddr=(TextView) dialog.findViewById(R.id.tv_instmapaddr);
                 String url = Common.URL + "UserServlet";
                 String uid = user.getUserId();
-                int imageSize = 100;
+                int imageSize = 200;
                 new instGetImageTask(iv_mapimage).execute(url, uid, imageSize);
                 tv_mapname.setText(user.getName());
                 tv_mapphone.setText("Tel:"+user.getTal());
                 tv_mapaddr.setText(user.getAddress());
                 MapView mMapView;
                 MapsInitializer.initialize(view.getContext());
+
 
                 mMapView = (MapView) dialog.findViewById(R.id.instmap);
                 mMapView.onCreate(dialog.onSaveInstanceState());
@@ -151,7 +160,13 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
                         googleMap.animateCamera(CameraUpdateFactory
                                 .newCameraPosition(cameraPosition));
 
-                        googleMap.getUiSettings().setZoomControlsEnabled(true);}
+                        googleMap.getUiSettings().setZoomControlsEnabled(true);
+                            if (ActivityCompat.checkSelfPermission(getApplicationContext(),
+                                    Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                                    PackageManager.PERMISSION_GRANTED) {
+                               googleMap.setMyLocationEnabled(true);}
+                        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+                        }
                     }
                 });
             }
@@ -173,6 +188,14 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
+        bt_back.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
 
@@ -189,7 +212,7 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
         tv_note = (TextView) findViewById(R.id.tv_instnote);
         bt_need = (Button) findViewById(R.id.bt_instgoods);
         bt_gmap = (Button) findViewById(R.id.bt_instgmap);
-
+        bt_back=(Button)findViewById(R.id.bt_BackInstQuery);
     }
 
     @Override

@@ -79,6 +79,7 @@ public class InstitutionSearchFragment extends Fragment {
                         }
                     }
                 }
+                finalQuery=all;
 //                if (!all.equals("")) {
 //                    String s = all.substring(0, all.length() - 5);
 //                    all = s;
@@ -95,10 +96,8 @@ public class InstitutionSearchFragment extends Fragment {
                         }
                     }
                 }
-                Toast.makeText(view.getContext(), finalQuery,
-                        Toast.LENGTH_SHORT).show();
                 all1 = "";
-
+                all="";
                 showAll();
             }
         });

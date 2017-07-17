@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,9 +35,12 @@ import com.example.ntut.weshare.goods.Goods;
 import com.example.ntut.weshare.goods.GoodsGetImageTask;
 import com.example.ntut.weshare.goods.GoodsInfoActivity;
 import com.example.ntut.weshare.homeGoodsDetail.HomeGoodsDetailActivity;
+import com.example.ntut.weshare.member.InstitutionQueryTask;
+import com.example.ntut.weshare.member.InstiutionBean;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class SearchFragment extends Fragment {
@@ -147,9 +151,6 @@ public class SearchFragment extends Fragment {
                     s=s+")";
                     all = s;
                 }}
-
-                Toast.makeText(view.getContext(), all,
-                        Toast.LENGTH_SHORT).show();
                 if(!all.equals("")){
                 finalQuery="WHERE "+all;}
                 all="";
@@ -207,6 +208,22 @@ public class SearchFragment extends Fragment {
             int gid = good.getGoodsNo();
             int imageSize = 250;
             new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
+
+            try {
+                String url1 = Common.URL + "InstQueryServlet";
+                String ACTION2 = "getInstQuery";
+                List<InstiutionBean> instiutionBeens;
+                String userType="WHERE i.indId='"+good.getIndId()+"'";
+                instiutionBeens = new InstitutionQueryTask().execute(url1, userType, ACTION2).get();
+                if(instiutionBeens.size()==0){
+                    myViewHolder.ivIsInst.setImageResource(R.drawable.member_icon);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
             myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
 //        myViewHolder.tvGoodsClass.setText("類型：" + changeType2String(good.getGoodsType()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -217,11 +234,11 @@ public class SearchFragment extends Fragment {
 
 
             if(good.getGoodsStatus()==1){
-                myViewHolder.background.setBackgroundColor(Color.rgb(255,151,151));
+                myViewHolder.background.setBackgroundColor(Color.rgb(251, 225, 232));
             }else if (good.getGoodsStatus()==2){
-                myViewHolder.background.setBackgroundColor(Color.rgb(239,123,0));
+                myViewHolder.background.setBackgroundColor(Color.rgb(248, 188, 124));
             }else if(good.getGoodsStatus()==3){
-                myViewHolder.background.setBackgroundColor(Color.rgb(1,180,104));
+                myViewHolder.background.setBackgroundColor(Color.rgb(68, 248, 172));
             }
 
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -248,7 +265,7 @@ public class SearchFragment extends Fragment {
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView,ivMenu;
+            ImageView imageView,ivMenu,ivIsInst;
             TextView tvGoodsTitle, tvNeedTime, tvNeedNum;
             LinearLayout background;
 
@@ -259,6 +276,7 @@ public class SearchFragment extends Fragment {
             tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
             tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
             ivMenu=(ImageView)itemView.findViewById(R.id.icon_menu);
+            ivIsInst=(ImageView)itemView.findViewById(R.id.iv_isInst);
             background=(LinearLayout)itemView.findViewById(R.id.lnwish);
         }
     }

@@ -71,11 +71,11 @@ public class GoodsInfoActivity extends AppCompatActivity {
         Bundle bundleFromList = this.getIntent().getBundleExtra("intentGoods");
         good = (Goods) bundleFromList.getSerializable("goods");
         if(good.getGoodsStatus()==1){
-            back.setBackgroundColor(Color.rgb(255, 151, 151));
+            back.setBackgroundColor(Color.rgb(251, 225, 232));
         }else if(good.getGoodsStatus()==2){
-            back.setBackgroundColor(Color.rgb(255, 119, 68));
+            back.setBackgroundColor(Color.rgb(248, 188, 124));
         }else if(good.getGoodsStatus()==3){
-            back.setBackgroundColor(Color.rgb(1, 180, 104));
+            back.setBackgroundColor(Color.rgb(68, 248, 172));
         }
 
 

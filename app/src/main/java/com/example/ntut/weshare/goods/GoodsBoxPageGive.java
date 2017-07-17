@@ -142,13 +142,14 @@ public class GoodsBoxPageGive extends Fragment {
             int imageSize = 250;
             new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
 
+            myViewHolder.ivIsInst.setVisibility(View.GONE);
             myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
 //            myViewHolder.tvGoodsClass.setText("類型：" + changeType2String(good.getGoodsType()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             final String exdate = sdf.format(good.getDeadLine());
             myViewHolder.tvNeedTime.setText("到期日：" + exdate);
             myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
-            myViewHolder.background.setBackgroundColor(Color.rgb(239,123,0));
+            myViewHolder.background.setBackgroundColor(Color.rgb(248, 188, 124));
 
             myViewHolder.ivMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -216,12 +217,13 @@ public class GoodsBoxPageGive extends Fragment {
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView,ivMenu;
+        ImageView imageView,ivMenu,ivIsInst;
         TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
         LinearLayout background;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
+                ivIsInst= (ImageView) itemView.findViewById(R.id.iv_isInst);
                 imageView = (ImageView) itemView.findViewById(R.id.iv_image);
                 tvGoodsTitle = (TextView) itemView.findViewById(R.id.tv_goodsTitle);
                 //               tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);

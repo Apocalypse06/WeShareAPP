@@ -41,7 +41,9 @@
                 android:src="@drawable/ic_add"
                 app:elevation="6dp"
                 android:onClick="newGoods"
-                app:rippleColor="#FFFFFF" />
+                app:rippleColor="#FFFFFF"
+                android:tint="@color/wallet_highlighted_text_holo_dark"
+                app:backgroundTint="@android:color/holo_blue_dark"/>
         </android.support.design.widget.CoordinatorLayout>
     </RelativeLayout>
 </LinearLayout>

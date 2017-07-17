@@ -23,14 +23,13 @@
                     android:id="@+id/rvInstNeed"
                     android:layout_width="match_parent"
                     android:layout_height="461dp" />
-
             </android.support.v4.widget.SwipeRefreshLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:gravity="center">
             <Button
                 android:id="@+id/bt_BackInstInfo"
                 android:layout_width="wrap_content"
@@ -38,9 +37,8 @@
                 android:textSize="20dp"
                 android:layout_margin="10dp"
                 android:padding="10dp"
-
-
-                android:text="回到上一頁"/>
+                android:background="@drawable/buttonstylegray"
+                android:text="返回此社福資訊頁"/>
         </LinearLayout>
 
 </LinearLayout>
