@@ -16,6 +16,8 @@ import com.example.ntut.weshare.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -36,6 +38,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private LatLng yushan;
     private LatLng kenting;
     private LatLng yangmingshan;
+    MapView mapView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,16 +48,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         initPoints();//初始化地圖上的點，經緯度
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fmMap);
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                LatLng posisiabsen = new LatLng(25.039334, 121.549554); ////your lat lng
-                googleMap.addMarker(new MarkerOptions().position(posisiabsen).title("Yout title"));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
-                googleMap.getUiSettings().setZoomControlsEnabled(true);
-                googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-            }
-        });
+
+//        mapView = (MapView) view.findViewById(R.id.map);
+//        mapView.onCreate(savedInstanceState);
+//        mapView.onResume();
+//        mapView.getMapAsync(this);
+
 //        tvMarkerDrag = (TextView) view.findViewById(R.id.tvMarkerDrag);
         return view;
     }

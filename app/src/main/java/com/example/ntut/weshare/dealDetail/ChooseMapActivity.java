@@ -1,4 +1,4 @@
-package com.example.ntut.weshare.feedback;
+package com.example.ntut.weshare.dealDetail;
 
 import android.Manifest;
 import android.content.Intent;
@@ -15,11 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
+import com.example.ntut.weshare.homeGoodsDetail.DealBean;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -42,8 +43,8 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private final static String TAG = "MapActivity";
+public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private final static String TAG = "ChooseMapActivity";
 
     private GoogleMap map;
     private Location lastLocation;
@@ -56,6 +57,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private boolean firstMark = true;
     private final static int REQUEST_CODE_RESOLUTION = 1;
     private String finalMark = null;
+
+    private DealBean deal;
 
     @Override
     protected void onResume() {
@@ -74,6 +77,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_fragment);
+        Bundle bundleFromList = this.getIntent().getBundleExtra("intentdDeal");
+        deal = (DealBean) bundleFromList.getSerializable("deal");
+
         initPoints();//初始化地圖上的點，經緯度
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager()
@@ -95,7 +101,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 @Override
                 public void onConnected(Bundle bundle) {
                     Log.i(TAG, "GoogleApiClient connected");
-                    if (ActivityCompat.checkSelfPermission(MapActivity.this,
+                    if (ActivityCompat.checkSelfPermission(ChooseMapActivity.this,
                             Manifest.permission.ACCESS_COARSE_LOCATION) ==
                             PackageManager.PERMISSION_GRANTED) {
                         lastLocation = LocationServices.FusedLocationApi
@@ -133,7 +139,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     showToast("msg_GoogleApiClientConnectionFailed");
                     if (!result.hasResolution()) {
                         GoogleApiAvailability.getInstance().getErrorDialog(
-                                MapActivity.this,
+                                ChooseMapActivity.this,
                                 result.getErrorCode(),
                                 0
                         ).show();
@@ -141,7 +147,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
                     try {
                         result.startResolutionForResult(
-                                MapActivity.this,
+                                ChooseMapActivity.this,
                                 REQUEST_CODE_RESOLUTION);
                     } catch (IntentSender.SendIntentException e) {
                         Log.e(TAG, "Exception while starting resolution activity");
@@ -151,7 +157,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void initPoints() {
         yushan = new LatLng(23.791952, 120.861379);
-        myMark = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
     }
 
     private void initPointss() {
@@ -235,58 +240,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         public void onMarkerDragEnd(Marker marker) {//放開
             String text = "onMarkerDragEnd";
-            tvMarkerDrag.setText(text);
             finalMark = "" + marker.getPosition();
+            tvMarkerDrag.setText("最後地標" + finalMark);
         }
 
         @Override
         public void onMarkerDrag(Marker marker) {
             String text = "onMarkerDrag.  Current Position: "
                     + marker.getPosition();//取的位置
+            finalMark = "" + marker.getPosition();
 //            showToast("onMarkerDrag.  Current Position: " + marker.getPosition());
             tvMarkerDrag.setText(text);
         }
         //----------------------------------------------------------
     }
-
-
-//    private class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-//        private final View infoWindow;
-//
-//        MyInfoWindowAdapter() {
-//            infoWindow = View.inflate(MapActivity.this, R.layout.custom_info_window, null);//取的layout檔，並載入
-//        }
-//
-//        @Override
-//        public View getInfoWindow(Marker marker) {//marker順序是按照addMarkersToMap()的順序
-//            int logoId;
-//            if (marker.equals(marker_my)) {
-//                logoId = R.drawable.car_icon;//圖示
-//            } else {
-//                logoId = 0;
-//            }
-//
-//            ImageView ivLogo = ((ImageView) infoWindow
-//                    .findViewById(R.id.ivLogo));
-//            ivLogo.setImageResource(logoId);
-//
-//            String title = marker.getTitle();
-//            TextView tvTitle = ((TextView) infoWindow
-//                    .findViewById(R.id.tvTitle));
-//            tvTitle.setText(title);
-//
-//            String snippet = marker.getSnippet();
-//            TextView tvSnippet = ((TextView) infoWindow
-//                    .findViewById(R.id.tvSnippet));
-//            tvSnippet.setText(snippet);
-//            return infoWindow;
-//        }
-//
-//        @Override
-//        public View getInfoContents(Marker marker) {
-//            return null;
-//        }
-//    }
 
 
     private void showToast(String message) {
@@ -349,72 +316,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void onListenterNavigate(View view) {
-//        EditText etLocationName = (EditText) findViewById(R.id.edAddress);
-//        String locationName = etLocationName.getText().toString().trim();
-//
-//        Address address = getAddress(locationName);
-//        if (address == null) {
-//            showToast("沒有最後一個點");
-//            return;
-//        }
-//
-//        if (!lastLocationFound() || !inputValid(locationName)) {
-//            return;
-//        }
-//
-//        double fromLat = lastLocation.getLatitude();
-//        double fromLng = lastLocation.getLongitude();
-//        double toLat = address.getLatitude();
-//        double toLng = address.getLongitude();
-//
-//        direct(fromLat, fromLng, toLat, toLng);
+        int count = 0;
+        String url = Common.URL + "DealServlet";
+        String action = "sendDealContext";
+        if (Common.networkConnected(this)) {//傳送到server端
+            try {
+                count = new SendDealingContextTask().execute(url, action, deal.getDealNo(), finalMark).get();
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
 
-    }
-
-    private boolean lastLocationFound() {
-        if (lastLocation == null) {
-            showToast("找不到最後一個");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean inputValid(String input) {
-        if (input == null || input.length() <= 0) {
-            showToast("msg_InvalidInput");
-            return false;
-        }
-        return true;
-    }
-
-    private Address getAddress(String locationName) {
-        Geocoder geocoder = new Geocoder(this);
-        List<Address> addressList = null;
-
-        try {
-            addressList = geocoder.getFromLocationName(locationName, 1);
-        } catch (IOException e) {
-            Log.e(TAG, e.toString());
-        }
-        if (addressList == null || addressList.isEmpty()) {
-            return null;
+            if (count == 0) {
+                Common.showToast(this, R.string.msg_SendFail);
+            } else {
+                Common.showToast(this, "地點決定成功");
+                finish();
+            }
         } else {
-            return addressList.get(0);
+            Common.showToast(this, R.string.msg_NoNetwork);
         }
     }
-
-    private void direct(double fromLat, double fromLng, double toLat,
-                        double toLng) {
-        String uriStr = String.format(Locale.US,
-                "http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f", fromLat,
-                fromLng, toLat, toLng);
-        Intent intent = new Intent();
-        intent.setClassName("com.google.android.apps.maps",
-                "com.google.android.maps.MapsActivity");
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(uriStr));
-        startActivity(intent);
-    }
-
-
 }

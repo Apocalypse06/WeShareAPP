@@ -135,6 +135,12 @@
             android:label="地圖"
             android:launchMode="singleTask"
             android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".dealDetail.ChooseMapActivity"
+            android:label="面交地點選擇"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

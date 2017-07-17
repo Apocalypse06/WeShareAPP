@@ -48,7 +48,9 @@ import com.example.ntut.weshare.member.MemberUpdateOrgChooseActivity;
 import com.example.ntut.weshare.member.historyFragment;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //import com.example.ntut.weshare.member.MemberLoginActivity;
 
@@ -125,14 +127,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void askPermissions() {
         String[] permissions = {
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_COARSE_LOCATION
         };
 
-        int result = ContextCompat.checkSelfPermission(this, permissions[0]);
-        if (result != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissions,
+//        int result = ContextCompat.checkSelfPermission(this, permissions[0]);
+//        if (result != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(
+//                    this,
+//                    permissions,
+//                    REQ_PERMISSIONS);
+//        }
+        Set<String> permissionsRequest = new HashSet<>();
+        for (String permission : permissions) {
+            int result1 = ContextCompat.checkSelfPermission(this, permission);
+            if (result1 != PackageManager.PERMISSION_GRANTED) {
+                permissionsRequest.add(permission);
+            }
+        }
+
+        if (!permissionsRequest.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+                    permissionsRequest.toArray(new String[permissionsRequest.size()]),
                     REQ_PERMISSIONS);
         }
     }
@@ -364,13 +381,13 @@ public class MainActivity extends AppCompatActivity {
                         setTitle(R.string.tx_goodsMsg);
                         break;
                     case R.id.item_feedback:
-                        fragment = new MapFragment();
-                        switchFragment(fragment);
-                        setTitle(R.string.tx_feedback);
+//                        fragment = new MapFragment();
+//                        switchFragment(fragment);
+//                        setTitle(R.string.tx_feedback);
 
-//                        updateIntent = new Intent();
-//                        updateIntent.setClass(MainActivity.this, MapActivity.class);
-//                        startActivity(updateIntent);
+                        updateIntent = new Intent();
+                        updateIntent.setClass(MainActivity.this, MapActivity.class);
+                        startActivity(updateIntent);
                         break;
                     case R.id.item_login:
                         updateIntent = new Intent();

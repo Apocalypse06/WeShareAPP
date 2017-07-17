@@ -1,6 +1,7 @@
 package com.example.ntut.weshare.dealDetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
 import com.example.ntut.weshare.homeGoodsDetail.DealBean;
+import com.example.ntut.weshare.member.MemberLoginActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -135,8 +138,14 @@ public class Dealing extends Fragment {
             user = pref.getString("user", "");
 
             if (deal.getSourceId().equalsIgnoreCase(user)) {
-                myViewHolder.ivCar.setImageResource(R.drawable.car_icon);
-            }else{
+                if (deal.getEndShipWay() == 0) {
+                    myViewHolder.ivCar.setVisibility(View.GONE);
+                    myViewHolder.ivMap.setImageResource(R.drawable.map_icon);
+                } else {
+                    myViewHolder.ivMap.setVisibility(View.GONE);
+                    myViewHolder.ivCar.setImageResource(R.drawable.car_icon);
+                }
+            } else {
                 myViewHolder.ivCar.setVisibility(View.GONE);
             }
 
@@ -195,10 +204,22 @@ public class Dealing extends Fragment {
                 }
             });
 
+            myViewHolder.ivMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ChooseMapActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("deal",deal);
+                    intent.putExtra("intentdDeal",bundle);
+                    startActivity(intent);
+                }
+            });
+
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView ivDealImage, ivMail, ivCar;
+            ImageView ivDealImage, ivMail, ivCar, ivMap;
             TextView tvDealGoods, tvDealQty, tvDealUser, tvDealTime;
 
             public MyViewHolder(View itemView) {
@@ -206,6 +227,7 @@ public class Dealing extends Fragment {
                 ivDealImage = (ImageView) itemView.findViewById(R.id.ivDealImage);
                 ivMail = (ImageView) itemView.findViewById(R.id.ivMail);
                 ivCar = (ImageView) itemView.findViewById(R.id.ivCar);
+                ivMap = (ImageView) itemView.findViewById(R.id.ivMap);
                 tvDealGoods = (TextView) itemView.findViewById(R.id.tvDealGoods);
                 tvDealQty = (TextView) itemView.findViewById(R.id.tvDealQty);
                 tvDealUser = (TextView) itemView.findViewById(R.id.tvDealUser);

@@ -9,46 +9,60 @@
     android:orientation="vertical"
     tools:context="com.example.ntut.weshare.MainActivity">
 
+    <TextView
+        android:id="@+id/tvMarkerDrag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:text="目標" />
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="490dp">
 
         <fragment
             android:id="@+id/fmMap"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="#ff0000"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/edAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:hint="地址" />
-
-            <Button
-                android:id="@+id/btSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onListenterSearch"
-                android:text="@string/tx_search" />
-
-            <Button
-                android:id="@+id/btNavigate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onListenterNavigate"
-                android:text="地點" />
-
-
-        </LinearLayout>
-
-
     </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:background="#ccc"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edAddress"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:hint="地址" />
+
+        <Button
+            android:id="@+id/btSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onListenterSearch"
+            android:text="@string/tx_search" />
+
+        <Button
+            android:id="@+id/btMark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onListenterMark"
+            android:text="打地標" />
+
+        <Button
+            android:id="@+id/btNavigate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onListenterNavigate"
+            android:text="決定地點" />
+
+
+    </LinearLayout>
+
+
 </LinearLayout>
