@@ -30,22 +30,19 @@ import android.widget.TextView;
 
 import com.example.ntut.weshare.dealDetail.dealDetailActivity;
 import com.example.ntut.weshare.feedback.FeedbackFragment;
-import com.example.ntut.weshare.feedback.MapActivity;
-import com.example.ntut.weshare.feedback.MapFragment;
 import com.example.ntut.weshare.goods.GoodsBoxPageActivity;
 import com.example.ntut.weshare.goods.GoodsMsgFragment;
 import com.example.ntut.weshare.homeGoodsDetail.changeFragment;
 import com.example.ntut.weshare.homeGoodsDetail.loveFragment;
 import com.example.ntut.weshare.homeGoodsDetail.wishFragment;
-import com.example.ntut.weshare.icon.InstitutionkFragment;
-import com.example.ntut.weshare.member.InstitutionSearchFragment;
-import com.example.ntut.weshare.message.MessageFragment;
 import com.example.ntut.weshare.icon.SearchFragment;
+import com.example.ntut.weshare.member.InstitutionSearchFragment;
 import com.example.ntut.weshare.member.MemberLoginActivity;
 import com.example.ntut.weshare.member.MemberRegisterTypeActivity;
 import com.example.ntut.weshare.member.MemberUpdateIndActivity;
 import com.example.ntut.weshare.member.MemberUpdateOrgChooseActivity;
-import com.example.ntut.weshare.member.historyFragment;
+import com.example.ntut.weshare.message.MessageFragment;
+import com.example.ntut.weshare.message.MsgReplyWebSockt;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -308,10 +305,9 @@ public class MainActivity extends AppCompatActivity {
         MenuItem loginItem = view.getMenu().findItem(R.id.item_login);
         MenuItem registerItem = view.getMenu().findItem(R.id.item_register);
         MenuItem logoutItem = view.getMenu().findItem(R.id.item_logout);
-
+        MenuItem feedbackItem = view.getMenu().findItem(R.id.item_feedback);
         MenuItem memberItem = view.getMenu().findItem(R.id.item_memberCentre);
         MenuItem goodsItem = view.getMenu().findItem(R.id.item_goodsManage);
-
         View header = view.inflateHeaderView(R.layout.navigate_header);
         ImageView ivUser = (ImageView) header.findViewById(R.id.ivUser);
         TextView tvUserName = (TextView) header.findViewById(R.id.tvUserName);
@@ -333,6 +329,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             loginItem.setVisible(true);
             registerItem.setVisible(true);
+            feedbackItem.setVisible(false);
             logoutItem.setVisible(false);
             memberItem.setVisible(false);
             goodsItem.setVisible(false);
@@ -386,13 +383,12 @@ public class MainActivity extends AppCompatActivity {
                         setTitle(R.string.tx_goodsMsg);
                         break;
                     case R.id.item_feedback:
-//                        fragment = new MapFragment();
+//                        fragment = new FeedbackFragment();
 //                        switchFragment(fragment);
 //                        setTitle(R.string.tx_feedback);
-
-                        updateIntent = new Intent();
-                        updateIntent.setClass(MainActivity.this, MapActivity.class);
-                        startActivity(updateIntent);
+                        intent = new Intent();
+                        intent.setClass(MainActivity.this, MsgReplyWebSockt.class);
+                        startActivity(intent);
                         break;
                     case R.id.item_login:
                         updateIntent = new Intent();

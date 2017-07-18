@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -85,7 +84,7 @@ public class NotDeal extends Fragment {
                 //Common.showToast(getActivity(), "沒有未同意的交易訂單");
                 ivNoDeal.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setVisibility(View.GONE);
-                rvNotDeal.setBackgroundResource(R.drawable.deal_icon);
+                ivNoDeal.setBackgroundResource(R.drawable.not_deal_page);
             } else {
                 rvNotDeal.setAdapter(new NotDealRecyclerViewAdapter(getActivity(), deals));
             }

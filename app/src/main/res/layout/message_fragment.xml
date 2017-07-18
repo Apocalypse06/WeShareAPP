@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:layout_width="match_parent"
@@ -6,6 +6,12 @@
     android:background="#FFFFFF"
     android:clickable="true"
     android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivNoMsg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/not_msg_page" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,4 +31,4 @@
 
 
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

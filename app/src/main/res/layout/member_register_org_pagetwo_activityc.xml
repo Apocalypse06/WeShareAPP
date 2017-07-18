@@ -8,11 +8,11 @@
         android:id="@+id/activity_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:orientation="vertical"
-        tools:context="com.example.ntut.weshare.MainActivity">
+        tools:context="com.example.ntut.weshare.MainActivity"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="55dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:hint="輸入負責人"
                 android:padding="5dp" />
         </LinearLayout>
@@ -90,9 +90,10 @@
 
             <Spinner
                 android:id="@+id/spOrgType"
-                android:layout_width="210dp"
+                android:layout_width="195dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"></Spinner>
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/edittext_goods"></Spinner>
 
 
         </LinearLayout>
@@ -115,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:hint="請輸入立案核准"
                 android:padding="5dp" />
         </LinearLayout>
@@ -138,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:hint="請輸入勸募許可"
                 android:padding="5dp" />
 
@@ -160,14 +161,15 @@
                 android:id="@+id/etContext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:gravity="top"
                 android:hint="請輸入簡介"
                 android:inputType="textMultiLine"
                 android:maxLines="10"
-                android:minLines="3"
+                android:minLines="4"
                 android:padding="5dp" />
 
         </LinearLayout>
@@ -175,7 +177,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:gravity="center"
             android:orientation="horizontal">
 

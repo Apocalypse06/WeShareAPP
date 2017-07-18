@@ -36,6 +36,7 @@ public class GoodsBoxPageGive extends Fragment {
     private static final String TAG = "GoodsBoxPageGive";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvGoods;
+    private ImageView ivNoGoods;
 
     public void onResume() {
         super.onResume();
@@ -67,7 +68,7 @@ public class GoodsBoxPageGive extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
+        ivNoGoods = (ImageView) view.findViewById(R.id.ivNoGoods);
         rvGoods = (RecyclerView) view.findViewById(R.id.rvGoodsG);
         rvGoods.setLayoutManager(new LinearLayoutManager(getActivity()));
         FloatingActionButton btAdd = (FloatingActionButton) view.findViewById(R.id.btAdd);
@@ -79,11 +80,14 @@ public class GoodsBoxPageGive extends Fragment {
 
             }
         });
+        ivNoGoods.setVisibility(View.GONE);
         return view;
     }
 
 
     private void showAllGoods() {
+        ivNoGoods.setVisibility(View.GONE);
+        swipeRefreshLayout.setVisibility(View.VISIBLE);
         if (Common.networkConnected(getActivity())) {
             String url = Common.URL + "GoodsServlet";
             SharedPreferences pref = this.getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
@@ -97,6 +101,8 @@ public class GoodsBoxPageGive extends Fragment {
             }
             if (goods == null || goods.isEmpty()) {
                 // Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
+                ivNoGoods.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
             } else {
                 rvGoods.setAdapter(new GoodsBoxPageGive.GoodsRecyclerViewAdapter(getActivity(), goods));
 

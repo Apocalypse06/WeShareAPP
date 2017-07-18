@@ -11,7 +11,7 @@
         android:id="@+id/ivNoDeal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/deal_icon" />
+        android:background="@drawable/not_dealing_page" />
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -28,7 +28,6 @@ public class MessageBean implements Serializable {
         this.msgSourceId = msgSourceId;
         this.msgEndId = msgEndId;
         this.msgText = msgText;
-        this.roomNo = roomNo;
     }
 
     public MessageBean(int msgNo, int msgStatus, String msgSourceId, String msgEndId, String msgText, int roomNo) {

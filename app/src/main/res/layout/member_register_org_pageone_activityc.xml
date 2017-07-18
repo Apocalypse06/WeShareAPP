@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:padding="5dp"
                 android:hint="輸入帳號"
                  />
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:hint="輸入密碼"
                 android:inputType="textPassword"
                 android:padding="5dp" />
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:hint="輸入名稱"
                 android:padding="5dp" />
             <!--android:layout_marginLeft="185dp"-->
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:hint="輸入電話號碼"
                 android:inputType="number"
                 android:padding="5dp" />
@@ -175,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="19dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:hint="輸入Email"
                 android:padding="5dp" />
 
@@ -199,7 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_c"
+                android:background="@drawable/edittext_goods"
                 android:hint="輸入地址"
                 android:padding="5dp" />
 

@@ -35,9 +35,10 @@ import java.util.concurrent.ExecutionException;
 
 
 public class GoodsBoxPageWish extends Fragment {
-    private static final String TAG ="GoodsBoxPageWish";
+    private static final String TAG = "GoodsBoxPageWish";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvGoods;
+    private ImageView ivNoGoods;
 
     public void onResume() {
         super.onResume();
@@ -53,6 +54,7 @@ public class GoodsBoxPageWish extends Fragment {
             startActivity(MainIntent);
         }
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class GoodsBoxPageWish extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
+        ivNoGoods = (ImageView) view.findViewById(R.id.ivNoGoods);
         rvGoods = (RecyclerView) view.findViewById(R.id.rvGoodsW);
         rvGoods.setLayoutManager(new LinearLayoutManager(getActivity()));
         FloatingActionButton btAdd = (FloatingActionButton) view.findViewById(R.id.btAdd);
@@ -80,16 +82,19 @@ public class GoodsBoxPageWish extends Fragment {
 
             }
         });
+        ivNoGoods.setVisibility(View.GONE);
         return view;
     }
 
 
     private void showAllGoods() {
+        ivNoGoods.setVisibility(View.GONE);
+        swipeRefreshLayout.setVisibility(View.VISIBLE);
         if (Common.networkConnected(getActivity())) {
             String url = Common.URL + "GoodsServlet";
             SharedPreferences pref = this.getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
             String user = pref.getString("user", "");
-            String ACTION="getSelfWish";
+            String ACTION = "getSelfWish";
             List<Goods> goods = null;
             try {
                 goods = new GoodsGetSelfTask().execute(url, user, ACTION).get();
@@ -98,6 +103,8 @@ public class GoodsBoxPageWish extends Fragment {
             }
             if (goods == null || goods.isEmpty()) {
                 // Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
+                ivNoGoods.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
             } else {
                 rvGoods.setAdapter(new GoodsBoxPageWish.GoodsRecyclerViewAdapter(getActivity(), goods));
 
@@ -106,6 +113,7 @@ public class GoodsBoxPageWish extends Fragment {
             Common.showToast(getActivity(), R.string.msg_NoNetwork);
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -127,6 +135,7 @@ public class GoodsBoxPageWish extends Fragment {
         public int getItemCount() {
             return goods.size();
         }
+
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = layoutInflater.inflate(R.layout.goods_recycleview_wish1, parent, false);
@@ -134,103 +143,105 @@ public class GoodsBoxPageWish extends Fragment {
 
         }
 
-    @Override
-    public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
-        final Goods good = goods.get(position);
-        String url = Common.URL + "GoodsServlet";
-        int gid = good.getGoodsNo();
-        int imageSize = 250;
-        new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
+        @Override
+        public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
+            final Goods good = goods.get(position);
+            String url = Common.URL + "GoodsServlet";
+            int gid = good.getGoodsNo();
+            int imageSize = 250;
+            new GoodsGetImageTask(myViewHolder.imageView).execute(url, gid, imageSize);
 
-        myViewHolder.ivIsInst.setVisibility(View.GONE);
-        myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
+            myViewHolder.ivIsInst.setVisibility(View.GONE);
+            myViewHolder.tvGoodsTitle.setText(good.getGoodsName());
 //        myViewHolder.tvGoodsClass.setText("類型：" + changeType2String(good.getGoodsType()));
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        final String exdate = sdf.format(good.getDeadLine());
-        myViewHolder.tvNeedTime.setText("到期日：" + exdate);
-        myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
-        myViewHolder.background.setBackgroundColor(Color.rgb(251,225,232));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            final String exdate = sdf.format(good.getDeadLine());
+            myViewHolder.tvNeedTime.setText("到期日：" + exdate);
+            myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
+            myViewHolder.background.setBackgroundColor(Color.rgb(251, 225, 232));
 
-        myViewHolder.ivMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(getActivity(), view);
-                popupMenu.getMenuInflater().inflate(R.menu.menu_goodcardview, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            myViewHolder.ivMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+                    popupMenu.getMenuInflater().inflate(R.menu.menu_goodcardview, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.goodsMenuUpdate:
-                                Intent intent = new Intent();
-                                intent.setClass(getActivity(), GoodsUpdateActivity.class);
-                                Bundle bundle = new Bundle();
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.goodsMenuUpdate:
+                                    Intent intent = new Intent();
+                                    intent.setClass(getActivity(), GoodsUpdateActivity.class);
+                                    Bundle bundle = new Bundle();
 
-                                bundle.putSerializable("goods", good);
-                                intent.putExtra("intentGoods", bundle);
-                                startActivity(intent);
-                                break;
-                            case R.id.goodsMenuDelete:
-                                if (Common.networkConnected(getActivity())) {
-                                    String url = Common.URL + "GoodsServlet";
-                                    String action = "goodsDelete";
-                                    int count = 0;
-                                    try {
-                                        count = new GoodsUpdateTask().execute(url, action, good, null).get();
-                                    } catch (Exception e) {
-                                        Log.e(TAG, e.toString());
-                                    }
-                                    if (count == 0) {
-                                        Common.showToast(getActivity(), R.string.msg_deleteFail);
+                                    bundle.putSerializable("goods", good);
+                                    intent.putExtra("intentGoods", bundle);
+                                    startActivity(intent);
+                                    break;
+                                case R.id.goodsMenuDelete:
+                                    if (Common.networkConnected(getActivity())) {
+                                        String url = Common.URL + "GoodsServlet";
+                                        String action = "goodsDelete";
+                                        int count = 0;
+                                        try {
+                                            count = new GoodsUpdateTask().execute(url, action, good, null).get();
+                                        } catch (Exception e) {
+                                            Log.e(TAG, e.toString());
+                                        }
+                                        if (count == 0) {
+                                            Common.showToast(getActivity(), R.string.msg_deleteFail);
+                                        } else {
+                                            Common.showToast(getActivity(), R.string.msg_deleteSuccess);
+                                        }
                                     } else {
-                                        Common.showToast(getActivity(), R.string.msg_deleteSuccess);
+                                        Common.showToast(getActivity(), R.string.msg_NoNetwork);
                                     }
-                                } else {
-                                    Common.showToast(getActivity(), R.string.msg_NoNetwork);
-                                }
-                                break;
+                                    break;
+                            }
+                            return true;
                         }
-                        return true;
-                    }
 
-                });
-                popupMenu.show();
-            }});
+                    });
+                    popupMenu.show();
+                }
+            });
 
 
-        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), GoodsInfoActivity.class);
-                Bundle bundle = new Bundle();
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), GoodsInfoActivity.class);
+                    Bundle bundle = new Bundle();
 
-                bundle.putSerializable("goods",good);
-                intent.putExtra("intentGoods",bundle);
-                startActivity(intent);
-            }
-        });
-
-    }
-    class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView,ivMenu,ivIsInst;
-        TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
-        LinearLayout background;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.iv_image);
-            ivIsInst=(ImageView)itemView.findViewById(R.id.iv_isInst);
-            tvGoodsTitle = (TextView) itemView.findViewById(R.id.tv_goodsTitle);
-//            tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
-            tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
-            tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
-            ivMenu=(ImageView)itemView.findViewById(R.id.icon_menu);
-            background=(LinearLayout) itemView.findViewById(R.id.lnwish);
+                    bundle.putSerializable("goods", good);
+                    intent.putExtra("intentGoods", bundle);
+                    startActivity(intent);
+                }
+            });
 
         }
-    }
+
+        class MyViewHolder extends RecyclerView.ViewHolder {
+            ImageView imageView, ivMenu, ivIsInst;
+            TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
+            LinearLayout background;
+
+            public MyViewHolder(View itemView) {
+                super(itemView);
+                imageView = (ImageView) itemView.findViewById(R.id.iv_image);
+                ivIsInst = (ImageView) itemView.findViewById(R.id.iv_isInst);
+                tvGoodsTitle = (TextView) itemView.findViewById(R.id.tv_goodsTitle);
+//            tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
+                tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
+                tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
+                ivMenu = (ImageView) itemView.findViewById(R.id.icon_menu);
+                background = (LinearLayout) itemView.findViewById(R.id.lnwish);
+
+            }
+        }
     }
 
     public String changeType2String(int type) {

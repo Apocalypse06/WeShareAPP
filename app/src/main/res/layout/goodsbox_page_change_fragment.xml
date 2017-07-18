@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:clickable="true">
+    android:clickable="true"
+    android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/ivNoGoods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/not_goods_page" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
         <!--SwipeRefreshLayout下拉更新-->
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/gb_swipeRefreshLayoutC"
@@ -40,12 +44,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="24dp"
-                android:src="@drawable/ic_add"
-                app:elevation="6dp"
                 android:onClick="newGoods"
-                app:rippleColor="#FFFFFF"
+                android:src="@drawable/ic_add"
                 android:tint="@color/wallet_highlighted_text_holo_dark"
-                app:backgroundTint="@android:color/holo_blue_dark"/>
+                app:backgroundTint="@android:color/holo_blue_dark"
+                app:elevation="6dp"
+                app:rippleColor="#FFFFFF" />
         </android.support.design.widget.CoordinatorLayout>
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

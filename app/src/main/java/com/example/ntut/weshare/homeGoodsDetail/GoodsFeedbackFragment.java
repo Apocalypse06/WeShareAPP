@@ -29,6 +29,7 @@ public class GoodsFeedbackFragment extends Fragment {
     private static final String TAG = "MsgListFragment";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvMsgs;
+    private ImageView ivNoFeedback;
     private static Goods good;
 
     @Nullable
@@ -52,7 +53,8 @@ public class GoodsFeedbackFragment extends Fragment {
 
         rvMsgs = (RecyclerView) view.findViewById(R.id.rvMsgs);
         rvMsgs.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        ivNoFeedback = (ImageView) view.findViewById(R.id.ivNoFeedback);
+        ivNoFeedback.setVisibility(View.GONE);
         return view;
     }
 
@@ -65,7 +67,9 @@ public class GoodsFeedbackFragment extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (fbs == null || fbs.isEmpty()) {
-                Common.showToast(getActivity(), "此人尚未有評價");
+//                Common.showToast(getActivity(), "此人尚未有評價");
+                ivNoFeedback.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
             } else {
                 //Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
                 rvMsgs.setAdapter(new FbsRecyclerViewAdapter(getActivity(), fbs));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)

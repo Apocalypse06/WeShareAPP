@@ -32,6 +32,7 @@ public class MessageFragment extends Fragment {
     private static final String TAG = "MsgListFragment";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvMsgs;
+    private ImageView ivNoMsg;
 
 
     @Nullable
@@ -52,7 +53,8 @@ public class MessageFragment extends Fragment {
 
         rvMsgs = (RecyclerView) view.findViewById(R.id.rvMsgs);
         rvMsgs.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        ivNoMsg = (ImageView) view.findViewById(R.id.ivNoMsg);
+        ivNoMsg.setVisibility(View.GONE);
         return view;
     }
 
@@ -68,7 +70,9 @@ public class MessageFragment extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (msgs == null || msgs.isEmpty()) {
-                Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
+//                Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
+                ivNoMsg.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
             } else {
                 //Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
                 rvMsgs.setAdapter(new MsgsRecyclerViewAdapter(getActivity(), msgs));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)

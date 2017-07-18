@@ -235,8 +235,6 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
         //------------OnMarkerDragListener---------------------------
         @Override
         public void onMarkerDragStart(Marker marker) {//點擊
-//            String text = "onMarkerDragStart";
-//            tvMarkerDrag.setText(text);
             finalMarkSreach = marker.getPosition().latitude + "," + marker.getPosition().longitude;
             locationGatAddress(finalMarkSreach);
         }
@@ -244,9 +242,9 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
         @Override
         public void onMarkerDragEnd(Marker marker) {//放開
             String text = "onMarkerDragEnd";
-            finalMarkName = "" + marker.getPosition().longitude + "," + marker.getPosition().latitude;
+            finalMarkName = marker.getPosition().latitude + "," + marker.getPosition().longitude;
             finalMarkSreach = marker.getPosition().latitude + "," + marker.getPosition().longitude;
-//            tvMarkerDrag.setText("面交經緯度:\n經=" + marker.getPosition().longitude + "\n緯度=" + marker.getPosition().latitude);
+//            tvMarkerDrag.setText("latitude=" + marker.getPosition().latitude + "\nlongitude=" + marker.getPosition().longitude);
             locationGatAddress(finalMarkSreach);
         }
 
@@ -358,7 +356,7 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
                     address.getLongitude());
             finalMarkName = address.getLatitude() + "," + address.getLongitude();
             String snippet = address.getAddressLine(0);//取得地址index(0)
-            tvMarkerDrag.setText("面交地址123=" + snippet);
+            // tvMarkerDrag.setText("面交地址=" + snippet);
             map.addMarker(new MarkerOptions().position(position)
                     .title(locationName).snippet(snippet));
             map.addMarker(new MarkerOptions().position(position)
@@ -371,6 +369,7 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
             map.animateCamera(CameraUpdateFactory
                     .newCameraPosition(cameraPosition));
             //-------------------------------------------------------------
+
         }
     }
 

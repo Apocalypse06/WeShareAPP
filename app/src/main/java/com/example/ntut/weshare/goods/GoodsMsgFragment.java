@@ -14,7 +14,7 @@ public class GoodsMsgFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.goodsbox_fragment, container, false);
+        View view = inflater.inflate(R.layout.goods_msg_fragment, container, false);
 
         return view;
     }

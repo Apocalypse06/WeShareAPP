@@ -30,10 +30,11 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 
-public class GoodsBoxPageChange  extends Fragment {
+public class GoodsBoxPageChange extends Fragment {
     private static final String TAG = "GoodsBoxPageChange";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvGoods;
+    private ImageView ivNoGoods;
 
     public void onResume() {
         super.onResume();
@@ -65,7 +66,7 @@ public class GoodsBoxPageChange  extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
+        ivNoGoods = (ImageView) view.findViewById(R.id.ivNoGoods);
         rvGoods = (RecyclerView) view.findViewById(R.id.rvGoodsC);
         rvGoods.setLayoutManager(new LinearLayoutManager(getActivity()));
         FloatingActionButton btAdd = (FloatingActionButton) view.findViewById(R.id.btAdd);
@@ -77,11 +78,14 @@ public class GoodsBoxPageChange  extends Fragment {
 
             }
         });
+        ivNoGoods.setVisibility(View.GONE);
         return view;
     }
 
 
     private void showAllGoods() {
+        ivNoGoods.setVisibility(View.GONE);
+        swipeRefreshLayout.setVisibility(View.VISIBLE);
         if (Common.networkConnected(getActivity())) {
             String url = Common.URL + "GoodsServlet";
             SharedPreferences pref = this.getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
@@ -95,6 +99,8 @@ public class GoodsBoxPageChange  extends Fragment {
             }
             if (goods == null || goods.isEmpty()) {
                 // Common.showToast(getActivity(), R.string.msg_NoGoodsFound);
+                ivNoGoods.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
             } else {
                 rvGoods.setAdapter(new GoodsBoxPageChange.GoodsRecyclerViewAdapter(getActivity(), goods));
 
@@ -158,7 +164,7 @@ public class GoodsBoxPageChange  extends Fragment {
 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()){
+                            switch (item.getItemId()) {
                                 case R.id.goodsMenuUpdate:
                                     Intent intent = new Intent();
                                     intent.setClass(getActivity(), GoodsUpdateActivity.class);
@@ -196,8 +202,8 @@ public class GoodsBoxPageChange  extends Fragment {
 
                     popupMenu.show();
 
-                }});
-
+                }
+            });
 
 
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -216,20 +222,20 @@ public class GoodsBoxPageChange  extends Fragment {
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView,ivMenu,ivIsInst;
+            ImageView imageView, ivMenu, ivIsInst;
             TextView tvGoodsTitle, tvGoodsClass, tvNeedTime, tvNeedNum;
             LinearLayout background;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                ivIsInst= (ImageView) itemView.findViewById(R.id.iv_isInst);
+                ivIsInst = (ImageView) itemView.findViewById(R.id.iv_isInst);
                 imageView = (ImageView) itemView.findViewById(R.id.iv_image);
                 tvGoodsTitle = (TextView) itemView.findViewById(R.id.tv_goodsTitle);
 //                tvGoodsClass = (TextView) itemView.findViewById(R.id.tv_goodsClass);
                 tvNeedTime = (TextView) itemView.findViewById(R.id.tv_needTime);
                 tvNeedNum = (TextView) itemView.findViewById(R.id.tv_needNum);
-                ivMenu=(ImageView)itemView.findViewById(R.id.icon_menu);
-                background=(LinearLayout)itemView.findViewById(R.id.lnwish);
+                ivMenu = (ImageView) itemView.findViewById(R.id.icon_menu);
+                background = (LinearLayout) itemView.findViewById(R.id.lnwish);
             }
         }
     }

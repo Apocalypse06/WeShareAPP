@@ -1,6 +1,7 @@
 package com.example.ntut.weshare.dealDetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -84,9 +85,12 @@ public class Dealed extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (deals == null || deals.isEmpty()) {
+//                ivNoDeal.setVisibility(View.VISIBLE);
+//                swipeRefreshLayout.setVisibility(View.GONE);
+//                Common.showToast(getActivity(), "沒有完成的交易訂單");
                 ivNoDeal.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setVisibility(View.GONE);
-                Common.showToast(getActivity(), "沒有完成的交易訂單");
+                ivNoDeal.setBackgroundResource(R.drawable.not_dealed_page);
             } else {
                 rvNotDeal.setAdapter(new NotDealRecyclerViewAdapter(getActivity(), deals));
             }
@@ -178,6 +182,14 @@ public class Dealed extends Fragment {
                 myViewHolder.tvDealUser.setText("帳號：" + deal.getSourceId());
             }
 
+            if (deal.getEndShipWay() == 0) {
+                myViewHolder.ivCar.setVisibility(View.GONE);
+                myViewHolder.ivMap.setImageResource(R.drawable.map_icon);
+            } else {
+                myViewHolder.ivMap.setVisibility(View.GONE);
+                myViewHolder.ivCar.setImageResource(R.drawable.car_icon);
+            }
+
             SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
             String postTime = sdFormat.format(deal.getShipDate());
             myViewHolder.tvDealTime.setText("完成交易：" + postTime);
@@ -242,10 +254,33 @@ public class Dealed extends Fragment {
                 }
             });
 
+            myViewHolder.ivCar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dealStatic = deal;
+                    CarDealedDialogFragment msg = new CarDealedDialogFragment();
+                    msg.setRef(Dealed.this);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    msg.show(fragmentManager, "alert");
+                }
+            });
+
+            myViewHolder.ivMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), MapActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("deal", deal);
+                    intent.putExtra("intentdDeal", bundle);
+                    startActivity(intent);
+                }
+            });
+
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView ivDealImage, ivFbNot, ivFbed, ivRmNot, ivRmed;
+            ImageView ivDealImage, ivFbNot, ivFbed, ivRmNot, ivRmed, ivCar, ivMap;
             TextView tvDealGoods, tvDealQty, tvDealUser, tvDealTime;
 
             public MyViewHolder(View itemView) {
@@ -255,6 +290,8 @@ public class Dealed extends Fragment {
                 ivFbed = (ImageView) itemView.findViewById(R.id.ivFbed);
                 ivRmNot = (ImageView) itemView.findViewById(R.id.ivRmNot);
                 ivRmed = (ImageView) itemView.findViewById(R.id.ivRmed);
+                ivCar = (ImageView) itemView.findViewById(R.id.ivCar);
+                ivMap = (ImageView) itemView.findViewById(R.id.ivMap);
                 tvDealGoods = (TextView) itemView.findViewById(R.id.tvDealGoods);
                 tvDealQty = (TextView) itemView.findViewById(R.id.tvDealQty);
                 tvDealUser = (TextView) itemView.findViewById(R.id.tvDealUser);

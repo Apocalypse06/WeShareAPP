@@ -85,9 +85,12 @@ public class Dealing extends Fragment {
                 Log.e(TAG, e.toString());
             }
             if (deals == null || deals.isEmpty()) {
+//                ivNoDeal.setVisibility(View.VISIBLE);
+//                swipeRefreshLayout.setVisibility(View.GONE);
+//                Common.showToast(getActivity(), "沒有正在進行的交易訂單");
                 ivNoDeal.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setVisibility(View.GONE);
-                Common.showToast(getActivity(), "沒有正在進行的交易訂單");
+                ivNoDeal.setBackgroundResource(R.drawable.not_dealing_page);
             } else {
                 rvNotDeal.setAdapter(new NotDealRecyclerViewAdapter(getActivity(), deals));
             }
@@ -168,10 +171,6 @@ public class Dealing extends Fragment {
                 @Override
                 public void onClick(View view) {
                     dealStatic = deal;
-//                    NotDeal.AlertDialogFragment alertFragment = new NotDeal.AlertDialogFragment();//建立物件
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    alertFragment.show(fragmentManager, "alert");//顯示警示框
-
                     DealingDialogFragment detail = new DealingDialogFragment();
                     detail.setRef(Dealing.this);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -210,8 +209,8 @@ public class Dealing extends Fragment {
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), ChooseMapActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("deal",deal);
-                    intent.putExtra("intentdDeal",bundle);
+                    bundle.putSerializable("deal", deal);
+                    intent.putExtra("intentdDeal", bundle);
                     startActivity(intent);
                 }
             });

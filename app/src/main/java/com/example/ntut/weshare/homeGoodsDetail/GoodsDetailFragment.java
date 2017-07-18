@@ -93,6 +93,7 @@ public class GoodsDetailFragment extends Fragment {
             btAccept.setText("我想要");
         } else if (good.getGoodsStatus() == 3) {
             llBackground.setBackgroundColor(Color.parseColor("#ff44f8ac"));
+            btAccept.setText("交換");
         }
         tvGoodsName.setText(good.getGoodsName());
 
@@ -111,7 +112,7 @@ public class GoodsDetailFragment extends Fragment {
                 Log.e("Local", e.toString());
             }
             if (local == null) {
-                Common.showToast(getActivity(), "+++++++" + good.getGoodsLoc());
+                Common.showToast(getActivity(), "物資地點：" + good.getGoodsLoc());
             } else {
                 tvLoc.setText("地點 " + local.get(0).getLocalName());
             }
@@ -139,7 +140,7 @@ public class GoodsDetailFragment extends Fragment {
                                             SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, Context.MODE_PRIVATE);
                                             account = pref.getString("user", "");
                                             if (account == "") {
-                                                Toast.makeText(getActivity(), "請註冊登入WeShare後，再過來設定您的物資箱喔~",
+                                                Toast.makeText(getActivity(), "請先登入WeShare",
                                                         Toast.LENGTH_SHORT).show();
                                                 return;
                                             } else if (account.equalsIgnoreCase(good.getIndId())) {

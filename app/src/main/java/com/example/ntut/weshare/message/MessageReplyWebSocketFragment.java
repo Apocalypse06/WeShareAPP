@@ -12,11 +12,11 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +29,21 @@ import android.widget.TextView;
 import com.example.ntut.weshare.Common;
 import com.example.ntut.weshare.R;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class MessageReplyFragment extends Fragment {
+public class MessageReplyWebSocketFragment extends Fragment {
     private static final String TAG = "MsgListFragment";
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvMsgs;
@@ -46,7 +55,13 @@ public class MessageReplyFragment extends Fragment {
     Bitmap bitmap = null;
     private byte[] image = null;
 
-    private TextView tvsendMsg, tvgetMsg;
+    private String account = null;
+
+    private MyWebSocketClient myWebSocketClient;
+    private static final String SERVER_URI = "ws://10.0.2.2:8080/WeShare/message/MyWebSocketServer/";
+    private static final String USER_NAME = "Android";
+    private static final String KEY_USER_NAME = "userName";
+    private static final String KEY_MESSAGE = "message";
 
     private static final int REQUEST_PICK_IMAGE = 1;
 
@@ -90,9 +105,28 @@ public class MessageReplyFragment extends Fragment {
             }
         });
 
+        SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+        account = pref.getString("user", "");
+
+        URI uri = null;
+        try {
+            String serverURI = SERVER_URI + "/" + account + "/" + "1";
+//            uri = new URI(SERVER_URI);
+            uri = new URI(serverURI);
+        } catch (URISyntaxException e) {
+            Log.e(TAG, e.toString());
+        }
+        myWebSocketClient = new MyWebSocketClient(uri);
+        myWebSocketClient.connect();
+
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        showAllMsgs();
+    }
 
     private void showAllMsgs() {
         if (Common.networkConnected(getActivity())) {//檢查網路
@@ -116,7 +150,7 @@ public class MessageReplyFragment extends Fragment {
             if (msgs == null || msgs.isEmpty()) {
                 Common.showToast(getActivity(), R.string.msg_NoMsgsFound);
             } else {
-                rvMsgs.setAdapter(new MessageReplyFragment.MsgsRecyclerViewAdapter(getActivity(), msgs));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
+                rvMsgs.setAdapter(new MessageReplyWebSocketFragment.MsgsRecyclerViewAdapter(getActivity(), msgs));//畫面RecyclerView(畫面,資料)，getActivity()取的他所依附的頁面(主頁面)
                 rvMsgs.scrollToPosition(msgs.size() - 1);
             }
         } else {
@@ -158,10 +192,11 @@ public class MessageReplyFragment extends Fragment {
                 SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
                 String account = pref.getString("user", "");
                 if (account.equalsIgnoreCase(msgs.get(0).getMsgSourceId())) {
-                    msgg = new MessageBean(1, 2, account, msgs.get(0).getMsgEndId(), text, msgs.get(0).getRoomNo());
+                    msgg = new MessageBean(1, 1, account, msgs.get(0).getMsgEndId(), text, msgs.get(0).getRoomNo());
                 } else if (account.equalsIgnoreCase(msgs.get(0).getMsgEndId())) {
-                    msgg = new MessageBean(1, 2, account, msgs.get(0).getMsgSourceId(), text, msgs.get(0).getRoomNo());
+                    msgg = new MessageBean(1, 1, account, msgs.get(0).getMsgSourceId(), text, msgs.get(0).getRoomNo());
                 }
+
                 try {
                     if (image != null) {
                         msgg.setMsgFileName("MsgFileName");
@@ -186,13 +221,8 @@ public class MessageReplyFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        showAllMsgs();
-    }
 
-    private class MsgsRecyclerViewAdapter extends RecyclerView.Adapter<MessageReplyFragment.MsgsRecyclerViewAdapter.MyViewHolder> {//CH05 RecyclerView
+    private class MsgsRecyclerViewAdapter extends RecyclerView.Adapter<MessageReplyWebSocketFragment.MsgsRecyclerViewAdapter.MyViewHolder> {//CH05 RecyclerView
         private LayoutInflater layoutInflater;
         private List<MessageBean> msgs;
 
@@ -207,13 +237,13 @@ public class MessageReplyFragment extends Fragment {
         }
 
         @Override
-        public MessageReplyFragment.MsgsRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MessageReplyWebSocketFragment.MsgsRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = layoutInflater.inflate(R.layout.message_sent_item, parent, false);
-            return new MessageReplyFragment.MsgsRecyclerViewAdapter.MyViewHolder(itemView);
+            return new MessageReplyWebSocketFragment.MsgsRecyclerViewAdapter.MyViewHolder(itemView);
         }
 
         @Override
-        public void onBindViewHolder(MessageReplyFragment.MsgsRecyclerViewAdapter.MyViewHolder myViewHolder, int position) {//將圖文顯示出來
+        public void onBindViewHolder(MessageReplyWebSocketFragment.MsgsRecyclerViewAdapter.MyViewHolder myViewHolder, int position) {//將圖文顯示出來
             final MessageBean msg = msgs.get(position);//文字資料
             //要縮圖的大小像素，要放在250*250的框
             //這邊啟動AsyncTask，抓圖片
@@ -276,5 +306,62 @@ public class MessageReplyFragment extends Fragment {
             }
         }
     }
+
+    class MyWebSocketClient extends WebSocketClient {
+
+        public MyWebSocketClient(URI serverURI) {
+            // Draft_17是連接協議，就是標準的RFC 6455（JSR256）
+            super(serverURI, new Draft_17());
+        }
+
+        @Override
+        public void onOpen(ServerHandshake handshakedata) {
+            Log.d(TAG, "onOpen: handshakedata.toString() = " + handshakedata.toString());
+        }
+
+        @Override
+        public void onMessage(final String message) {
+            Log.d(TAG, "onMessage: " + message);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        JSONObject jsonObject = new JSONObject(message);
+                        String userName = jsonObject.get(KEY_USER_NAME).toString();
+                        String message = jsonObject.get(KEY_MESSAGE).toString();
+                        String text = userName + ": " + message + "\n";
+//                        tvMessage.append(text);
+//                        scrollView.fullScroll(View.FOCUS_DOWN);
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.toString());
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onClose(int code, String reason, boolean remote) {
+            String text = String.format(Locale.getDefault(),
+                    "code = %d, reason = %s, remote = %b",
+                    code, reason, remote);
+            Log.d(TAG, "onClose: " + text);
+        }
+
+        @Override
+        public void onError(Exception ex) {
+            Log.d(TAG, "onError: exception = " + ex.toString());
+        }
+    }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            if (myWebSocketClient != null) {
+//                myWebSocketClient.close();
+//                showToast(R.string.text_LeftChatRoom);
+//            }
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
 }

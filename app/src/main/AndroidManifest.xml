@@ -131,16 +131,22 @@
             android:launchMode="singleTask"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".feedback.MapActivity"
-            android:label="地圖"
-            android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity" />
-
-        <activity
             android:name=".dealDetail.ChooseMapActivity"
             android:label="面交地點選擇"
             android:launchMode="singleTask"
             android:parentActivityName=".dealDetail.dealDetailActivity" />
+        <activity
+            android:name=".dealDetail.MapActivity"
+            android:label="面交地點"
+            android:launchMode="singleTask"
+            android:parentActivityName=".dealDetail.dealDetailActivity" />
+
+        <activity
+            android:name=".message.MsgReplyWebSockt"
+            android:label="Socket回復"
+            android:launchMode="singleTask"
+            android:parentActivityName=".dealDetail.dealDetailActivity" />
+
     </application>
 
 </manifest>
