@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.example.ntut.weshare.dealDetail.dealDetailActivity;
 import com.example.ntut.weshare.feedback.FeedbackFragment;
+import com.example.ntut.weshare.feedback.FeedbackFragment1;
 import com.example.ntut.weshare.goods.GoodsBoxPageActivity;
 import com.example.ntut.weshare.goods.GoodsMsgFragment;
 import com.example.ntut.weshare.homeGoodsDetail.changeFragment;
@@ -383,12 +384,13 @@ public class MainActivity extends AppCompatActivity {
                         setTitle(R.string.tx_goodsMsg);
                         break;
                     case R.id.item_feedback:
-//                        fragment = new FeedbackFragment();
-//                        switchFragment(fragment);
-//                        setTitle(R.string.tx_feedback);
-                        intent = new Intent();
-                        intent.setClass(MainActivity.this, MsgReplyWebSockt.class);
-                        startActivity(intent);
+                        fragment = new FeedbackFragment1();
+                        switchFragment(fragment);
+                        setTitle(R.string.tx_feedback);
+
+//                        updateIntent = new Intent();
+//                        updateIntent.setClass(MainActivity.this, MapActivity.class);
+//                        startActivity(updateIntent);
                         break;
                     case R.id.item_login:
                         updateIntent = new Intent();

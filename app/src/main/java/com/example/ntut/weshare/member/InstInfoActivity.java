@@ -3,7 +3,10 @@ package com.example.ntut.weshare.member;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -131,6 +134,7 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
                 mMapView.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(GoogleMap googleMap) {
+                        LatLng myPosition;
                         String locationName=user.getAddress();
                         Geocoder gcd=new Geocoder(getApplicationContext(), Locale.getDefault());
                         List<android.location.Address> addressList = null;
@@ -166,6 +170,7 @@ public class InstInfoActivity extends AppCompatActivity implements OnMapReadyCal
                                     PackageManager.PERMISSION_GRANTED) {
                                googleMap.setMyLocationEnabled(true);}
                         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+
                         }
                     }
                 });

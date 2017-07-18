@@ -16,7 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 // for insert, ic_update, ic_delete a spot
-class SendMsgTask extends AsyncTask<Object, Integer, Integer> {
+public class SendMsgTask extends AsyncTask<Object, Integer, Integer> {
     private final static String TAG = "SendMagTask";
 
     @Override
