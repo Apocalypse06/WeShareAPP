@@ -179,9 +179,9 @@
                     android:id="@+id/btCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="取消"
-                    android:textColor="#FF44AA"
-                    android:background="@drawable/buttonstylered"/>
+                    android:text="返回"
+                    android:textColor="#444444"
+                    android:background="@drawable/buttonstylegray"/>
 
                 <Button
                     android:id="@+id/btAccept"

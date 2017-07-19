@@ -177,8 +177,9 @@ public class FeedbackFragment1 extends Fragment {
                     }
                     if (count == 0) {
                         Common.showToast(getActivity(), R.string.msg_SendFail);
-                    }else{Common.showToast(getActivity(), R.string.msg_SendSuccess);
-
+                    }else{Common.showToast(getActivity(), R.string.msg_SendSuccess1);
+                        etFeedback.setText("");
+                        spClass.setSelection(0);
                     }
 
                 }else {

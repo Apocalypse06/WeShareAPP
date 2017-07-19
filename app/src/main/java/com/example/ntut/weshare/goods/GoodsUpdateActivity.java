@@ -257,7 +257,7 @@ public class GoodsUpdateActivity extends AppCompatActivity {
         lnlt = (LinearLayout) findViewById(R.id.upback);
     }
 
-    public void onPickUpPictureClick(View view) {
+    public void onPickPictureClick(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_PICK_IMAGE);
