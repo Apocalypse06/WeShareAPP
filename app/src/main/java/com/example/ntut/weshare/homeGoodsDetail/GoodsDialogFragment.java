@@ -68,7 +68,7 @@ public class GoodsDialogFragment extends DialogFragment {//必須繼承DialogFra
             llBackground.setBackgroundColor(Color.parseColor("#ff44f8ac"));
         }
 
-
+            etQty.setHint("最高可捐獻數量為 "+ref.goodsPublic.getQty());
         tvGoodsName.setText(ref.goodsPublic.getGoodsName());
         if (ref.goodsPublic.getGoodsShipWay() == 1) {
             final String[] classes = {"面交"};
