@@ -25,7 +25,7 @@
 
         <ImageView
             android:id="@+id/iv_image"
-            android:layout_width="150dp"
+            android:layout_width="125dp"
             android:layout_height="match_parent"
             android:layout_weight="0.16"
             android:layout_marginRight="20dp"
@@ -104,7 +104,7 @@
                 android:layout_below="@+id/tv_goodsClass"
                 android:layout_marginTop="10dp"
                 android:text="需求期限："
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_weight="1"/>
                 <ImageView
                     android:id="@+id/iv_isInst"

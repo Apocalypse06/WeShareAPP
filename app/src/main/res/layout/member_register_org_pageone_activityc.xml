@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="180dp"
+                android:layout_marginLeft="155dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/tx_defualtPicture" />
 
@@ -31,7 +31,7 @@
                 android:id="@+id/ivHelp"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="130dp"
+                android:layout_marginLeft="110dp"
                 android:onClick="onHelpClick"
                 android:src="@drawable/weshare_logo" />
         </LinearLayout>

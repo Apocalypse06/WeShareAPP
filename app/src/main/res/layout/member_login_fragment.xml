@@ -112,7 +112,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="230dp"
+        android:layout_marginLeft="220dp"
         android:layout_marginTop="280dp"
         android:text="@string/tx_fpassword"
         android:textColor="#003399" />

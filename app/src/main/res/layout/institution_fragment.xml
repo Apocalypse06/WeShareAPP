@@ -17,7 +17,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:layout_width="260dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"

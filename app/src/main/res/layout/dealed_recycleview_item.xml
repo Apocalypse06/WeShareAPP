@@ -41,7 +41,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right"
-                android:layout_marginLeft="205dp"
+                android:layout_marginLeft="165dp"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/feedback_not_icon" />
 
@@ -50,7 +50,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right"
-                android:layout_marginLeft="205dp"
+                android:layout_marginLeft="165dp"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/feedbacked_icon" />
 
@@ -59,7 +59,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right"
-                android:layout_marginLeft="205dp"
+                android:layout_marginLeft="165dp"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/recommend_not_icon" />
 
@@ -68,7 +68,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right"
-                android:layout_marginLeft="205dp"
+                android:layout_marginLeft="165dp"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/recommend_icon" />
 
@@ -77,7 +77,7 @@
                 android:layout_width="40dp"
                 android:layout_height="45dp"
                 android:layout_gravity="right"
-                android:layout_marginLeft="205dp"
+                android:layout_marginLeft="165dp"
                 android:layout_marginTop="60dp" />
 
             <ImageView
@@ -85,7 +85,7 @@
                 android:layout_width="40dp"
                 android:layout_height="45dp"
                 android:layout_gravity="right"
-                android:layout_marginLeft="205dp"
+                android:layout_marginLeft="165dp"
                 android:layout_marginTop="60dp" />
 
             <LinearLayout
@@ -142,11 +142,9 @@
                     android:layout_alignLeft="@+id/tv_goodsClass"
                     android:layout_alignStart="@+id/tv_goodsClass"
                     android:layout_below="@+id/tv_goodsClass"
-
                     android:layout_marginTop="10dp"
                     android:text="時間"
-                    android:textSize="15dp" />
-
+                    android:textSize="12dp" />
 
             </LinearLayout>
         </RelativeLayout>

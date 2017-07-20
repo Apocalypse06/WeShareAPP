@@ -26,7 +26,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="130dp"
+                android:layout_marginLeft="85dp"
                 android:onClick="onHelpClick"
                 android:src="@drawable/weshare_logo" />
         </LinearLayout>
