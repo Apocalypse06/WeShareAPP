@@ -111,5 +111,6 @@
     <string name="text_MessageEmpty">訊息為空</string>
     <string name="text_LeftChatRoom">離開聊天室</string>
     <string name="msg_SendSuccess1">您的訊息已寄出</string>
+    <string name="msg_LoginFailAndCheck">登入失敗，請確認您的帳號密碼</string>
 
 </resources>

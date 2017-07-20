@@ -395,4 +395,7 @@ public class ChooseMapActivity extends AppCompatActivity implements OnMapReadyCa
             Common.showToast(this, R.string.msg_NoNetwork);
         }
     }
+    public void onHelpClick(View view) {
+        edAddress.setText("台北市大同區忠孝東路四段17巷2號");
+    }
 }

@@ -18,7 +18,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="480dp">
+        android:layout_height="460dp">
 
         <fragment
             android:id="@+id/fmMap"
@@ -64,6 +64,13 @@
                 android:layout_height="wrap_content"
                 android:onClick="onListenterNavigate"
                 android:text="決定地點" />
+            <ImageView
+                android:id="@+id/ivHelp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="110dp"
+                android:onClick="onHelpClick"
+                android:src="@drawable/weshare_logo" />
         </LinearLayout>
 
     </LinearLayout>

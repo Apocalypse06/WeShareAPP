@@ -58,14 +58,19 @@ public class MemberLoginActivity extends AppCompatActivity {
             List<User> users = null;
             try {
                 userName = new UserLoginTask().execute(url, action, user).get();
-                users = new UserGetAllTask().execute(url, account).get();
+//                users = new UserGetAllTask().execute(url, account).get();
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
-            if (userName == "null") {
-                Common.showToast(MemberLoginActivity.this, R.string.msg_LoginFail);
+            if (userName.equalsIgnoreCase("-1")) {
+                Common.showToast(MemberLoginActivity.this, R.string.msg_LoginFailAndCheck);
             } else {
                 Common.showToast(MemberLoginActivity.this, R.string.msg_LoginSuccess);
+                try {
+                    users = new UserGetAllTask().execute(url, account).get();
+                } catch (Exception e) {
+                    Log.e(TAG, e.toString());
+                }
                 SharedPreferences pref = getSharedPreferences(Common.PREF_FILE,
                         MODE_PRIVATE);
                 pref.edit()
@@ -96,5 +101,15 @@ public class MemberLoginActivity extends AppCompatActivity {
         updateIntent = new Intent();
         updateIntent.setClass(MemberLoginActivity.this, MemberRegisterTypeActivity.class);
         startActivity(updateIntent);
+    }
+
+    public void onHelpIndClick(View view) {
+        etAccount.setText("zxc");
+        etPassword.setText("123456");
+    }
+
+    public void onHelpOrgClick(View view) {
+        etAccount.setText("jack");
+        etPassword.setText("123");
     }
 }
