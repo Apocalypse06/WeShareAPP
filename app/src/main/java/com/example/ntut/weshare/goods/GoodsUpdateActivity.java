@@ -60,6 +60,9 @@ public class GoodsUpdateActivity extends AppCompatActivity {
     private File file;
     private Calendar cld;
     private Goods good;
+
+
+
     TextView tvname;
     TextView tvqty;
     TextView tvtype;
@@ -123,13 +126,13 @@ public class GoodsUpdateActivity extends AppCompatActivity {
                                               public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                                   switch (spState.getSelectedItem().toString()) {
                                                       case "許願池(募資)":
-                                                          colorChange(255, 151, 151);
+                                                          colorChange(251, 225, 232);
                                                           break;
                                                       case "送愛心(捐贈)":
-                                                          colorChange(239, 123, 0);
+                                                          colorChange(248, 188, 124);
                                                           break;
                                                       case "以物易物":
-                                                          colorChange(1, 180, 104);
+                                                          colorChange(68, 248, 172);
                                                           break;
                                                   }
                                               }
@@ -296,15 +299,17 @@ public class GoodsUpdateActivity extends AppCompatActivity {
         }
     }
     public void onUpdateGoodsResult(View view) {
-        //物品名稱驗證
 
+        //物品名稱驗證
         if (etName.getText().toString().trim().length() <= 0) {
-            etName.setText(etName.getHint());
+            etName.setText(good.getGoodsName());
 
         }
         //數量驗證
-        if (etQty.getText().toString().trim().isEmpty()) {
-            etQty.setText(etQty.getHint());
+        if (etQty.getText().toString().trim().isEmpty()|etQty.getText().toString().equals("0")) {
+//            etQty.setText(good.getQty());
+            Common.showToast(GoodsUpdateActivity.this, R.string.msg_QtyIsInvalid);
+        return;
         }
 
 
@@ -399,6 +404,7 @@ public class GoodsUpdateActivity extends AppCompatActivity {
 
 
     }
+
 
     public int colorChange(int r,int g,int b) {
         tvname.setBackgroundColor(Color.rgb(r,g,b));

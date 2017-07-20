@@ -58,6 +58,18 @@
                     android:background="@drawable/edittext_goods"
                     android:padding="5dp"
                     android:layout_marginBottom="5dp" />
+                <LinearLayout
+                    android:onClick="onHelpWish1"
+                    android:id="@+id/help_wish1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#ff9797">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/weshare_logo"/></LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -87,7 +99,20 @@
                     android:background="@drawable/edittext_goods"
                     android:padding="5dp"
                     android:layout_marginBottom="5dp" />
+                <LinearLayout
+                    android:onClick="onHelpWish2"
+                    android:id="@+id/help_wish2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#ff9797"
+                    android:layout_marginLeft="10dp">
 
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/weshare_logo"
+                        android:id="@+id/imageView2" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -109,6 +134,17 @@
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="50dp" />
+                <LinearLayout
+                    android:onClick="onHelpGive1"
+                    android:id="@+id/help_give1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#F8BC7C">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/weshare_logo"/></LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -200,7 +236,8 @@
                     android:layout_height="wrap_content"
                     android:text="日期選擇"
                     android:layout_marginLeft="80dp"
-                    android:layout_weight="0.05" />
+                    android:layout_weight="0.05"
+                    android:background="@drawable/buttonstyleyellow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -249,7 +286,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/bt_BackGBList"
                     android:onClick="onBackgood"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:background="@drawable/buttonstylegray"/>
 
                 <Button
                     android:text="新增物資"
@@ -258,7 +296,8 @@
                     android:onClick="onNewGoodsResult"
                     android:id="@+id/bt_NewGoodsResult"
                     android:layout_marginLeft="40dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:background="@drawable/buttonstyle"/>
             </LinearLayout>
 
 

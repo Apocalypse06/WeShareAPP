@@ -61,7 +61,9 @@
             android:id="@+id/btCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="取消" />
+            android:text="取消"
+            android:background="@drawable/buttonstylered"
+            />
 
 
         <Button
@@ -69,7 +71,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
-            android:text="寄出" />
+            android:text="寄出"
+            android:background="@drawable/buttonstyle"
+            />
     </LinearLayout>
 
 </LinearLayout>

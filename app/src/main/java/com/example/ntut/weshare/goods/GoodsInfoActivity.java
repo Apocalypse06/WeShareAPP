@@ -55,9 +55,6 @@ public class GoodsInfoActivity extends AppCompatActivity {
             finish();
             Intent MainIntent = new Intent(this, MainActivity.class);
             startActivity(MainIntent);
-        } else {
-            Toast.makeText(this, user,
-                    Toast.LENGTH_SHORT).show();
         }
     }
 

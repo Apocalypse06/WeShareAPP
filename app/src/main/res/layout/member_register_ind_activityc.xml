@@ -208,13 +208,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="100dp"
                 android:onClick="onCancelClick"
+                android:background="@drawable/buttonstylered"
                 android:text="@string/tx_cancel" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onRegisterClick"
-                android:text="@string/tx_enter" />
+                android:text="@string/tx_enter"
+                android:background="@drawable/buttonstyle"
+                />
         </LinearLayout>
 
     </LinearLayout>

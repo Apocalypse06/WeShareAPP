@@ -72,6 +72,9 @@ public class GoodsInsertActivity extends AppCompatActivity {
     private ScrollView sv;
     private String[] loc2;
     private LinearLayout lnlt;
+    private LinearLayout wish1;
+    private LinearLayout wish2;
+    private LinearLayout give1;
     private int countLoc;
     private Timestamp now = new Timestamp(System.currentTimeMillis());
     private static final int REQUEST_PICK_IMAGE = 1;
@@ -156,6 +159,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
                         long nowtime = c.getTime().getTime();
                         deadlinedate = cld.getTime().getTime();
                         Log.e("d", "" + cld.getTime().getTime());
+
                         if (deadlinedate <= nowtime) {
 
                         }
@@ -195,6 +199,9 @@ public class GoodsInsertActivity extends AppCompatActivity {
         tvnote = (TextView) findViewById(R.id.textView14);
         sv = (ScrollView) findViewById(R.id.sv_newgood);
         lnlt = (LinearLayout) findViewById(R.id.newback);
+        wish1= (LinearLayout) findViewById(R.id.help_wish1);
+        wish2= (LinearLayout) findViewById(R.id.help_wish2);
+        give1= (LinearLayout) findViewById(R.id.help_give1);
 //        sv=(ScrollView)findViewById(R.id.sv_newgood);
 //        sv.fullScroll(View.FOCUS_DOWN);
     }
@@ -290,6 +297,7 @@ public class GoodsInsertActivity extends AppCompatActivity {
         }
 
 
+
         //相片驗證
         if (image == null) {
             Common.showToast(this, R.string.msg_NoImage);
@@ -358,9 +366,6 @@ public class GoodsInsertActivity extends AppCompatActivity {
                 case "其他":
                     intspClass = 5;
                     break;
-                case "樂":
-                    intspClass = 6;
-                    break;
             }
 
             switch (spDlvWay.getSelectedItem().toString()) {
@@ -398,6 +403,33 @@ public class GoodsInsertActivity extends AppCompatActivity {
 
     }
 
+    public void onHelpWish1(View view){
+        etName.setText("玩偶");
+        etQty.setText("10");
+        spState.setSelection(0);
+        spClass.setSelection(4);
+        spLoc.setSelection(3);
+        spDlvWay.setSelection(2);
+        etComment.setText("希望有人能夠提供玩偶陪伴需要的小孩子們。");
+    }
+    public void onHelpWish2(View view){
+        etName.setText("衣服");
+        etQty.setText("20");
+        spState.setSelection(0);
+        spClass.setSelection(1);
+        spLoc.setSelection(3);
+        spDlvWay.setSelection(2);
+        etComment.setText("最近天氣越來越冷希望能有好心人提供禦寒衣物。");
+    }
+    public void onHelpGive1(View view){
+        etName.setText("包包");
+        etQty.setText("5");
+        spState.setSelection(1);
+        spClass.setSelection(1);
+        spLoc.setSelection(3);
+        spDlvWay.setSelection(2);
+        etComment.setText("多的包包。");
+    }
     public int colorChange(int r, int g, int b) {
         tvname.setBackgroundColor(Color.rgb(r, g, b));
         tvqty.setBackgroundColor(Color.rgb(r, g, b));
@@ -411,6 +443,8 @@ public class GoodsInsertActivity extends AppCompatActivity {
         lnlt.setBackgroundColor(Color.rgb(r, g, b));
         return 0;
     }
+
+
 }
 
 

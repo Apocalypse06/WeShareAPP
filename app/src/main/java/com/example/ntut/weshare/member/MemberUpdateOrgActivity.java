@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ntut.weshare.Common;
+import com.example.ntut.weshare.MainActivity;
 import com.example.ntut.weshare.R;
 
 import java.io.ByteArrayOutputStream;
@@ -236,7 +237,10 @@ public class MemberUpdateOrgActivity extends AppCompatActivity {
                 Common.showToast(MemberUpdateOrgActivity.this, R.string.msg_updateFail);
             } else {
                 Common.showToast(MemberUpdateOrgActivity.this, R.string.msg_updateSuccessAndLogin);
-                finish();
+                cleanPreferences();
+                Intent updateIntent = new Intent();
+                updateIntent.setClass(MemberUpdateOrgActivity.this, MemberLoginActivity.class);
+                startActivity(updateIntent);
             }
         } else
 
@@ -249,5 +253,16 @@ public class MemberUpdateOrgActivity extends AppCompatActivity {
 
     public void onCancelClick(View view) {
         finish();
+    }
+
+    private void cleanPreferences() {
+        SharedPreferences pref = getSharedPreferences(Common.PREF_FILE,
+                MODE_PRIVATE);
+        pref.edit()
+                .putString("user", "")
+                .putString("password", "")
+                .putString("name", "")
+                .putBoolean("login", false)
+                .apply();
     }
 }

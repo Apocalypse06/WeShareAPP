@@ -156,7 +156,6 @@ public class GoodsBoxPageGive extends Fragment {
             myViewHolder.tvNeedTime.setText("到期日：" + exdate);
             myViewHolder.tvNeedNum.setText("數量：" + good.getQty());
             myViewHolder.background.setBackgroundColor(Color.rgb(248, 188, 124));
-
             myViewHolder.ivMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

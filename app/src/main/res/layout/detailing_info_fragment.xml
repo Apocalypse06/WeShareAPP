@@ -217,7 +217,7 @@
                     android:id="@+id/btRefuse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:background="@drawable/buttonstylered"
                     android:text="取消" />
 
                 <Button
@@ -225,6 +225,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
+                    android:background="@drawable/buttonstyle"
                     android:text="返回" />
 
             </LinearLayout>

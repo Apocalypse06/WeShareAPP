@@ -174,14 +174,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="返回"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:background="@drawable/buttonstylegray"
+            />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="90dp"
             android:text="我要給評"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:background="@drawable/buttonstyle"
+            />
     </LinearLayout>
 
 

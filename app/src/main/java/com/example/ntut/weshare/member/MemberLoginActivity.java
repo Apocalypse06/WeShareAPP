@@ -62,7 +62,7 @@ public class MemberLoginActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
-            if (userName == null) {
+            if (userName == "null") {
                 Common.showToast(MemberLoginActivity.this, R.string.msg_LoginFail);
             } else {
                 Common.showToast(MemberLoginActivity.this, R.string.msg_LoginSuccess);

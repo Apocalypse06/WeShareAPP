@@ -90,7 +90,7 @@ public class MsgDealingDialogFragment extends DialogFragment {//必須繼承Dial
                 String account = pref.getString("user", "");
 
 
-                msg = new MessageBean(1, 1, createDate, account, sendTo, text);
+                msg = new MessageBean(1, 2, createDate, account, sendTo, text);
                 try {
                     count = new SendMsgTask().execute(url, action, msg).get();
                 } catch (Exception e) {

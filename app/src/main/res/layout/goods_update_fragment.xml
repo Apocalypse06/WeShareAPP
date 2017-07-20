@@ -194,7 +194,8 @@
                     android:layout_height="wrap_content"
                     android:text="日期選擇"
                     android:layout_marginLeft="80dp"
-                    android:layout_weight="0.05" />
+                    android:layout_weight="0.05"
+                    android:background="@drawable/buttonstyleyellow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -241,14 +242,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/bt_BackGood"
-                    android:onClick="onBackgood" />
+                    android:onClick="onBackgood"
+                    android:background="@drawable/buttonstylegray"/>
                 <Button
                     android:text="更新物資"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="onUpdateGoodsResult"
                     android:id="@+id/bt_updateGoodSubmit"
-                    android:layout_marginLeft="40dp"/>
+                    android:layout_marginLeft="40dp"
+                    android:background="@drawable/buttonstyle"/>
             </LinearLayout>
 
         </LinearLayout>
