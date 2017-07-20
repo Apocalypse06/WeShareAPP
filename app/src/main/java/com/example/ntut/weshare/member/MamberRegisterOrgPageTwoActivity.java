@@ -177,7 +177,6 @@ public class MamberRegisterOrgPageTwoActivity extends AppCompatActivity {
         } else {
             Common.showToast(this, R.string.msg_NoNetwork);
         }
-
     }
 
     public void onUpStateClick(View view) {
@@ -185,9 +184,9 @@ public class MamberRegisterOrgPageTwoActivity extends AppCompatActivity {
     }
 
     public void onHelpClick(View view) {
-        etLeader.setText("林怡君院長");
-        etRegisterNo.setText("F12849924");
-        etRaiseNo.setText("AFS10S98G4");
-        etContext.setText("這裡是愛心育幼院，請大家多多指教");
+        etLeader.setText("王世欽");
+        etRegisterNo.setText("台內社字第0990099863號");
+        etRaiseNo.setText("衛部救字第1051360842號");
+        etContext.setText("將SERVICE(S)服務與LOVE(L)愛影響人們為核心，並以手語符號傳遞(愛)，帶出彼此合而為一(圓)的心，蔓延SPREAD至全世界。");
     }
 }

@@ -203,7 +203,7 @@ public class MemberUpdateIndActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
 
-        User user = new User(account, NewPW, name, tal, email, address);//傳送文字資料
+        User user = new User(account, NewPW, name, tal, email, address, userOld.get(0).getIdType());//傳送文字資料
 
         int count = 0;
         String url = Common.URL + "UserServlet";

@@ -1,114 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/activity_login"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.example.ntut.weshare.MainActivity"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/activity_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            tools:context="com.example.ntut.weshare.MainActivity">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="155dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/tx_defualtPicture" />
+
+                <ImageView
+                    android:id="@+id/ivHelp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="110dp"
+                    android:onClick="onHelpClick"
+                    android:src="@drawable/weshare_logo" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivOrg"
+                android:layout_width="150dp"
+                android:layout_height="150sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:onClick="onPickPictureOrgClick"
+                android:src="@drawable/org_house_default" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="155dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/tx_defualtPicture" />
-
-            <ImageView
-                android:id="@+id/ivHelp"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="110dp"
-                android:onClick="onHelpClick"
-                android:src="@drawable/weshare_logo" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/ivOrg"
-            android:layout_width="150dp"
-            android:layout_height="150sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:onClick="onPickPictureOrgClick"
-            android:src="@drawable/org_house_default" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/tx_updatePictureNote" />
+                android:text="@string/tx_updatePictureNote" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="負責人："
-                android:textSize="25sp" />
-
-            <EditText
-                android:id="@+id/etLeader"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/edittext_goods"
-                android:hint="輸入負責人"
-                android:padding="5dp" />
-        </LinearLayout>
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="負責人："
+                    android:textSize="25sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="機構類型："
-                android:textSize="25sp" />
+                <EditText
+                    android:id="@+id/etLeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/edittext_goods"
+                    android:hint="輸入負責人"
+                    android:padding="5dp" />
+            </LinearLayout>
 
-            <Spinner
-                android:id="@+id/spOrgType"
-                android:layout_width="195dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/edittext_goods"></Spinner>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="機構類型："
+                    android:textSize="25sp" />
+
+                <Spinner
+                    android:id="@+id/spOrgType"
+                    android:layout_width="145dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:background="@drawable/edittext_goods"></Spinner>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="立案核准："
+                    android:textSize="25sp" />
 
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="立案核准："
-                android:textSize="25sp" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/etRegisterNo"
@@ -119,19 +125,21 @@
                 android:background="@drawable/edittext_goods"
                 android:hint="請輸入立案核准"
                 android:padding="5dp" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="勸募許可："
-                android:textSize="25sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="勸募許可："
+                    android:textSize="25sp" />
+
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/etRaiseNo"
@@ -143,19 +151,20 @@
                 android:hint="請輸入勸募許可"
                 android:padding="5dp" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="簡介介紹："
-                android:textSize="25sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="簡介介紹："
+                    android:textSize="25sp" />
+
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/etContext"
@@ -172,27 +181,26 @@
                 android:minLines="4"
                 android:padding="5dp" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="100dp"
-                android:onClick="onUpStateClick"
-                android:text="@string/tx_UpState" />
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onRegisterClick"
-                android:text="@string/tx_register" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="100dp"
+                    android:onClick="onUpStateClick"
+                    android:text="@string/tx_UpState" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRegisterClick"
+                    android:text="@string/tx_register" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

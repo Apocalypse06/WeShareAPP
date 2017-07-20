@@ -20,6 +20,7 @@ import com.example.ntut.weshare.R;
 import com.example.ntut.weshare.goods.Goods;
 import com.example.ntut.weshare.message.MessageBean;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -112,16 +113,21 @@ public class GoodsFeedbackFragment extends Fragment {
 
             myViewHolder.tvAccount.setText("帳號：" + fb.getFbSourceId());
             myViewHolder.tvFb.setText("評價：" + fb.getFbText());
+            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            String postTime = sdFormat.format(fb.getPostDate());
+            myViewHolder.tvPostTime.setText(postTime);
+            myViewHolder.tvFbScore.setText("分數：" + fb.getFbScore());
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView tvAccount, tvFb;
+            TextView tvAccount, tvFb, tvPostTime, tvFbScore;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 tvAccount = (TextView) itemView.findViewById(R.id.tvAccount);
                 tvFb = (TextView) itemView.findViewById(R.id.tvFb);
-
+                tvPostTime = (TextView) itemView.findViewById(R.id.tvPostTime);
+                tvFbScore = (TextView) itemView.findViewById(R.id.tvFbScore);
             }
         }
     }

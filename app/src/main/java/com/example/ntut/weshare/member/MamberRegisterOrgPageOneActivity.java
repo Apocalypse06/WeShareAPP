@@ -58,14 +58,6 @@ public class MamberRegisterOrgPageOneActivity extends AppCompatActivity {
         etAddress = (EditText) findViewById(R.id.etAddress);
     }
 
-    public void onHelpClick() {
-        etAccount.setText("jack");
-        etPassword.setText("123");
-        etName.setText("王大明");
-        etTal.setText("0226227777");
-        etEmail.setText("jack@yahoo.com.tw");
-        etAddress.setText("新北市北投區");
-    }
 
     public void onPickPictureClick(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK,
@@ -175,11 +167,11 @@ public class MamberRegisterOrgPageOneActivity extends AppCompatActivity {
 
     public void onHelpClick(View view) {
         etAccount.setText("jack");
-        etPassword.setText("123");
-        etName.setText("王大明");
-        etTal.setText("0226227777");
-        etEmail.setText("jack@yahoo.com.tw");
-        etAddress.setText("新北市北投區");
+        etPassword.setText("123456");
+        etName.setText("陳維如");
+        etTal.setText("0226227754");
+        etEmail.setText("kks0158@yahoo.com.tw");
+        etAddress.setText("新北市北投區中正路51巷6弄");
     }
 
 }

@@ -84,7 +84,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="10dp">
 
                 <Spinner
                     android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_marginRight="20dp">
+                android:layout_marginRight="10dp">
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                     android:layout_weight="0.5"
                     android:text="許願池"
                     android:textColor="#ff9797"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     />
 
                 <CheckBox
@@ -133,7 +133,7 @@
                     android:text="送愛心"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textColor="#ef7b00"/>
 
                 <CheckBox
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:text="以物易物"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textColor="#01B468"/>
 
         </LinearLayout>

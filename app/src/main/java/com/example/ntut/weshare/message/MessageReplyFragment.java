@@ -177,6 +177,7 @@ public class MessageReplyFragment extends Fragment {
                     Common.showToast(getActivity(), R.string.msg_SendFail);
                 } else {
                     edText.setText("");
+                    image = null;
                     rvMsgs.scrollToPosition(msgs.size() - 1);
                     showAllMsgs();
                 }

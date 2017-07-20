@@ -164,11 +164,11 @@ public class MemberRegisterIndActivity extends AppCompatActivity {
 
     public void onHelpClick(View view) {
         etAccount.setText("jack");
-        etPassword.setText("123");
-        etName.setText("王大明");
-        etTal.setText("0226227777");
-        etEmail.setText("jack@yahoo.com.tw");
-        etAddress.setText("新北市北投區");
+        etPassword.setText("123456");
+        etName.setText("社團法人台灣基督教好牧人全人關顧協會");
+        etTal.setText("0424063624");
+        etEmail.setText("slow.service.learning@gmail.com");
+        etAddress.setText("台中市北區錦新街30號11樓");
     }
 }
 //

@@ -110,6 +110,6 @@ public class MemberLoginActivity extends AppCompatActivity {
 
     public void onHelpOrgClick(View view) {
         etAccount.setText("jack");
-        etPassword.setText("123");
+        etPassword.setText("123456");
     }
 }
