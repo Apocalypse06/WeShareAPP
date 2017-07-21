@@ -104,7 +104,7 @@ public class MemberLoginActivity extends AppCompatActivity {
     }
 
     public void onHelpIndClick(View view) {
-        etAccount.setText("zxc");
+        etAccount.setText("kt40909");
         etPassword.setText("123456");
     }
 
