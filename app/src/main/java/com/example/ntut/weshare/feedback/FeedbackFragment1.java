@@ -32,6 +32,8 @@ import com.example.ntut.weshare.message.SendMsgTask;
 
 import java.io.ByteArrayOutputStream;
 
+import static com.example.ntut.weshare.R.drawable.picture_icon;
+
 
 public class FeedbackFragment1 extends Fragment {
     private static final String TAG = "FeedbackFragment1";
@@ -180,8 +182,11 @@ public class FeedbackFragment1 extends Fragment {
                     }else{Common.showToast(getActivity(), R.string.msg_SendSuccess1);
                         etFeedback.setText("");
                         spClass.setSelection(0);
+                        ivAddPic.setImageBitmap(null);
+                        tvPicTx.setVisibility(View.VISIBLE);
+                        ivAddPic.setImageResource(R.drawable.picture_icon);
+                        image=null;
                     }
-
                 }else {
                         Common.showToast(getActivity(), R.string.msg_NoNetwork);
                     }
