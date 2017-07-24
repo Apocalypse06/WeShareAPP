@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ntut.weshare.Common;
@@ -27,6 +28,7 @@ public class SendTextDialogFragment extends DialogFragment {//必須繼承Dialog
     private EditText etSendContext;
     private Button btSend;
     private Button btCancel;
+    private ImageView ivHelp;
 
     private Dealing ref;
 
@@ -42,7 +44,14 @@ public class SendTextDialogFragment extends DialogFragment {//必須繼承Dialog
         etSendContext = (EditText) view.findViewById(R.id.etSendContext);
         btSend = (Button) view.findViewById(R.id.btSedn);
         btCancel = (Button) view.findViewById(R.id.btCancel);
+        ivHelp = (ImageView) view.findViewById(R.id.ivHelp);
 
+        ivHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etSendContext.setText("黑貓宅急便\nHF20A5821");
+            }
+        });
 
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
