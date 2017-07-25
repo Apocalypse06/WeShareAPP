@@ -295,7 +295,11 @@ public class GoodsInsertActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             return;
         }
-
+        //日期驗證
+        if(deadlinedate<now.getTime()){
+            Common.showToast(GoodsInsertActivity.this, R.string.msg_DeadLineIsInvalid);
+            return;
+        }
 
 
         //相片驗證
