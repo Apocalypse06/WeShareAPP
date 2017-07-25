@@ -112,5 +112,6 @@
     <string name="text_LeftChatRoom">離開聊天室</string>
     <string name="msg_SendSuccess1">您的訊息已寄出</string>
     <string name="msg_LoginFailAndCheck">登入失敗，請確認您的帳號密碼</string>
+    <string name="msg_DeadLineIsInvalid">請勿輸入小於現在時間的日期</string>
 
 </resources>

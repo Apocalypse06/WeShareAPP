@@ -127,12 +127,15 @@ public class GoodsUpdateActivity extends AppCompatActivity {
                                                   switch (spState.getSelectedItem().toString()) {
                                                       case "許願池(募資)":
                                                           colorChange(251, 225, 232);
+                                                          intspState=1;
                                                           break;
                                                       case "送愛心(捐贈)":
                                                           colorChange(248, 188, 124);
+                                                          intspState=2;
                                                           break;
                                                       case "以物易物":
                                                           colorChange(68, 248, 172);
+                                                          intspState=3;
                                                           break;
                                                   }
                                               }
@@ -224,13 +227,13 @@ public class GoodsUpdateActivity extends AppCompatActivity {
                         long nowtime=c.getTime().getTime();
                         deadlinedate=cld.getTime().getTime();
                         Log.e("d",""+cld.getTime().getTime());
-                        if(deadlinedate<=nowtime){
-                        }
                     }
                 }, mYear,mMonth, mDay).show();
             }
         });
-
+        if(deadlinedate==0){
+            deadlinedate=good.getDeadLine();
+        }
     }
     private String setDateFormat(int year,int monthOfYear,int dayOfMonth){
         return String.valueOf(year) + "-"
@@ -311,8 +314,11 @@ public class GoodsUpdateActivity extends AppCompatActivity {
             Common.showToast(GoodsUpdateActivity.this, R.string.msg_QtyIsInvalid);
         return;
         }
-
-
+        //日期驗證
+        if(deadlinedate<now.getTime()){
+            Common.showToast(GoodsUpdateActivity.this, R.string.msg_DeadLineIsInvalid);
+            return;
+        }
         //相片驗證
         if (image == null) {
             String url = Common.URL + "GoodsServlet";
@@ -380,7 +386,7 @@ public class GoodsUpdateActivity extends AppCompatActivity {
             }
 
             String url = Common.URL + "GoodsServlet";
-            Goods goods = new Goods(good.getGoodsNo(), good.getGoodsStatus(), now, user,goodName ,intspClass,
+            Goods goods = new Goods(good.getGoodsNo(), intspState, now, user,goodName ,intspClass,
                     qtyParseInt, countLoc, comment, intspDlvWay, deadlinedate,"goodsfilename");
             String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
             String action = "goodsUpdate";
